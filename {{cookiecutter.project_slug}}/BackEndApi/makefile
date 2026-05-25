@@ -43,10 +43,12 @@ mnm:# Make and migrate
 
 test:
 	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py migrate
+	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --validate
 	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django pytest
 
 test-verbose:
 	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py migrate
+	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --validate
 	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django pytest -v
 
 me:# Make empty migration
@@ -67,3 +69,9 @@ tools:
 logs:
 	docker compose -f $(DOCKER_COMPOSE_FILE) logs -f -t
 	
+
+schema:
+	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --file /app/openapi.schema.json --validate
+
+schema-check:
+	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --validate

@@ -41,6 +41,12 @@ commands:
     run: "python manage.py test --verbosity 2"
     service: backend
 
+  test_contract:
+    label: "Validate API Contract"
+    description: "Validate backend OpenAPI schema and frontend generated API types."
+    run: "python manage.py spectacular --validate && npm install && npm run validate:api-contract"
+    service: playwright
+
   test_e2e:
     label: "Run E2E Tests"
     description: "Run UI guardrails and Playwright end-to-end tests with screenshot capture."

@@ -78,8 +78,11 @@ smoke_test:
       run: "python manage.py test pm_auth --verbosity 2 --noinput"
       service: backend
     - label: "Package Tests (Billing)"
-      run: "python manage.py test pm_billing --verbosity 2 --noinput"
+      run: "for i in $(seq 1 12); do python manage.py shell -c 'from django.db import connection; c = connection.cursor(); c.execute(\"SELECT 1\")' && break; echo 'waiting for db...'; sleep 2; done && python manage.py test pm_billing --verbosity 2 --noinput"
       service: backend
+    - label: "Frontend Contract Validation"
+      run: "npm install && npm run validate:api-contract"
+      service: playwright
     - label: "E2E Tests"
       run: "npm install && npm run test:e2e:ci"
       service: playwright

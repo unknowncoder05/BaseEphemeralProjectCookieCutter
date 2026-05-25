@@ -163,6 +163,16 @@ The generated `projectmaker.yml` declares 6 services:
 
 **Deployment commands:** `migrate` · `collectstatic` · `createsuperuser` · `test`
 
+## Verification Policy (Agent + CI)
+
+All automated agents and CI smoke runs must execute API-contract verification before E2E:
+
+- Backend schema validation: `python manage.py spectacular --validate`
+- Frontend contract/type validation: `npm run validate:api-contract`
+- E2E entrypoint: `npm run test:e2e:ci` (already chains contract validation)
+
+In this template, these checks are wired in `projectmaker.yml` under `smoke_test.steps`, and in `projectmaker.dev.yml` via the `test_contract`/`test_e2e` command flow.
+
 ## Documentation
 
 See the `docs/` directory in your generated project for:

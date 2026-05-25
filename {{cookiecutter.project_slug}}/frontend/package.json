@@ -45,11 +45,14 @@
     "lint:i18n": "eslint --config .eslintrc.i18n.json --ext .js,.jsx,.ts,.tsx src --ignore-pattern 'src/i18n/**' --ignore-pattern 'src/**/*.test.*' --ignore-pattern 'src/**/*.spec.*' --ignore-pattern 'src/e2e/**'",
     "lint:styles": "stylelint \"src/**/*.css\"",
     "test:e2e": "playwright test",
-    "test:e2e:ci": "npm run ui:guardrails && playwright test",
+    "test:e2e:ci": "npm run validate:api-contract && npm run ui:guardrails && playwright test",
     "eject": "react-scripts eject",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
-    "ui:guardrails": "npm run lint:i18n && npm run lint:styles && node ./scripts/check-ui-guardrails.mjs"
+    "ui:guardrails": "npm run validate:api-contract && npm run lint:i18n && npm run lint:styles && node ./scripts/check-ui-guardrails.mjs",
+    "gen:api-types": "node ./scripts/generate-api-types.mjs",
+    "sync:api-types": "npm run gen:api-types",
+    "validate:api-contract": "npm run sync:api-types && npm run type-check"
   },
   "eslintConfig": {
     "extends": [
@@ -79,6 +82,10 @@
     "postcss": "^8.5.6",
     "stylelint": "^16.25.0",
     "stylelint-config-standard": "^39.0.1",
-    "tailwindcss": "^3.4.18"
+    "tailwindcss": "^3.4.18",
+    "openapi-typescript": "^6.7.6"
+  },
+  "overrides": {
+    "@types/d3-dispatch": "3.0.6"
   }
 }

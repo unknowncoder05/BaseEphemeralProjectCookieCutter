@@ -263,3 +263,13 @@ class Profile(models.Model):
 
 ### Known Issues / TODOs
 - (none — add items here as you work on the project)
+
+## Agent Verification Requirements
+
+When an agent runs testing or smoke validation for this template, run these checks in order:
+
+1. Backend schema validation: `python manage.py spectacular --validate`
+2. Frontend API contract and type validation: `npm run validate:api-contract`
+3. End-to-end tests: `npm run test:e2e:ci`
+
+These checks are wired into `projectmaker.yml` `smoke_test.steps` and `projectmaker.dev.yml` (`test_contract` and `test_e2e` commands), and should not be skipped.
