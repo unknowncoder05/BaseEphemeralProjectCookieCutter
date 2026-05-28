@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
     'pm_utils',
     'pm_billing',
     'pm_ai',
+    'pm_sqlite_snapshots.apps.SQLiteSnapshotsConfig',
 
     "admin_interface",
     "colorfield",

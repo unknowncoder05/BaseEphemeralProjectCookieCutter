@@ -26,23 +26,37 @@ ALLOWED_HOSTS = ['*']
 DB_CREDENTIALS = os.getenv('DB_CREDENTIALS')
 if DB_CREDENTIALS:
     DB_CREDENTIALS = json.loads(DB_CREDENTIALS)
-    DATABASE_DEFAULT = {
-        'ENGINE': DB_CREDENTIALS.get('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': DB_CREDENTIALS.get('POSTGRES_DB'),
-        'USER': DB_CREDENTIALS.get('POSTGRES_USER'),
-        'PASSWORD': DB_CREDENTIALS.get('POSTGRES_PASSWORD'),
-        'PORT': DB_CREDENTIALS.get('POSTGRES_PORT'),
-        'HOST': DB_CREDENTIALS.get('POSTGRES_HOST'),
-    }
+    _db_engine = DB_CREDENTIALS.get('DB_ENGINE', 'django.db.backends.postgresql')
+    if _db_engine == 'django.db.backends.sqlite3':
+        DATABASE_DEFAULT = {
+            'ENGINE': _db_engine,
+            'NAME': DB_CREDENTIALS.get('SQLITE_DATABASE_PATH') or DB_CREDENTIALS.get('DB_NAME') or '/tmp/app.sqlite3',
+        }
+    else:
+        DATABASE_DEFAULT = {
+            'ENGINE': _db_engine,
+            'NAME': DB_CREDENTIALS.get('POSTGRES_DB'),
+            'USER': DB_CREDENTIALS.get('POSTGRES_USER'),
+            'PASSWORD': DB_CREDENTIALS.get('POSTGRES_PASSWORD'),
+            'PORT': DB_CREDENTIALS.get('POSTGRES_PORT'),
+            'HOST': DB_CREDENTIALS.get('POSTGRES_HOST'),
+        }
 else:
-    DATABASE_DEFAULT = {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.getenv('POSTGRES_DB'),
-        'USER': os.getenv('POSTGRES_USER'),
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
-        'PORT': os.getenv('POSTGRES_PORT'),
-        'HOST': os.getenv('POSTGRES_HOST'),
-    }
+    _db_engine = os.getenv('DB_ENGINE', 'django.db.backends.postgresql')
+    if _db_engine == 'django.db.backends.sqlite3':
+        DATABASE_DEFAULT = {
+            'ENGINE': _db_engine,
+            'NAME': os.getenv('SQLITE_DATABASE_PATH') or os.getenv('DB_NAME') or '/tmp/app.sqlite3',
+        }
+    else:
+        DATABASE_DEFAULT = {
+            'ENGINE': _db_engine,
+            'NAME': os.getenv('POSTGRES_DB'),
+            'USER': os.getenv('POSTGRES_USER'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD'),
+            'PORT': os.getenv('POSTGRES_PORT'),
+            'HOST': os.getenv('POSTGRES_HOST'),
+        }
 
 DATABASES = {
     'default': DATABASE_DEFAULT
@@ -52,6 +66,27 @@ DATABASES['default']['CONN_MAX_AGE'] = env.int('CONN_MAX_AGE', default=60)  # NO
 
 if DATABASES['default']['ENGINE'] == 'postgres':
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
+
+SQLITE_SNAPSHOTS = {
+    'ENABLED': os.getenv('SQLITE_SNAPSHOTS_ENABLED', 'False') == 'True',
+    'DATABASE_ALIAS': os.getenv('SQLITE_SNAPSHOTS_DATABASE_ALIAS', 'default'),
+    'INTERVAL_SECONDS': int(os.getenv('SQLITE_SNAPSHOTS_INTERVAL_SECONDS', '300')),
+    'EXPORT_ON_SHUTDOWN': os.getenv('SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN', 'True') == 'True',
+    'RESTORE_ON_STARTUP': os.getenv('SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP', 'True') == 'True',
+    'RESTORE_IF_DB_MISSING': os.getenv('SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING', 'True') == 'True',
+    'FAIL_STARTUP_IF_RESTORE_MISSING': os.getenv('SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING', 'False') == 'True',
+    'LOCK_PATH': os.getenv('SQLITE_SNAPSHOTS_LOCK_PATH', '/tmp/pm_sqlite_snapshots.lock'),
+    'STORAGE': {
+        'BACKEND': os.getenv('SQLITE_SNAPSHOTS_STORAGE_BACKEND', 'pm_sqlite_snapshots.storage.s3.S3SnapshotStorage'),
+        'BUCKET': os.getenv('SQLITE_SNAPSHOTS_S3_BUCKET', os.getenv('AWS_PRIVATE_STORAGE_BUCKET_NAME', '')),
+        'PREFIX': os.getenv('SQLITE_SNAPSHOTS_S3_PREFIX', '{{ cookiecutter.project_slug }}/sqlite/'),
+        'REGION': os.getenv('AWS_REGION', os.getenv('AWS_REGION_NAME', 'us-east-1')),
+        'PATH': os.getenv('SQLITE_SNAPSHOTS_LOCAL_PATH', '/tmp/sqlite-snapshots'),
+    },
+    'RETENTION': {
+        'KEEP_LAST': int(os.getenv('SQLITE_SNAPSHOTS_KEEP_LAST', '20')),
+    },
+}
 
 # Static  files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

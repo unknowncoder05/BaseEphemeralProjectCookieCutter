@@ -3,6 +3,7 @@ pm-utils @ git+https://github.com/unknowncoder05/pm-utils.git
 pm-auth @ git+https://github.com/unknowncoder05/pm-auth.git
 pm-billing @ git+https://github.com/unknowncoder05/pm-billing.git
 pm-ai @ git+https://github.com/unknowncoder05/pm-ai.git
+pm-sqlite-snapshots @ git+https://github.com/unknowncoder05/pm-sqlite-snapshots.git
 
 # Base
 pytz
