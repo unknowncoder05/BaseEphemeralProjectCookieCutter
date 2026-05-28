@@ -755,6 +755,115 @@ services:
             label: "Puerto de la base de datos"
             description: "Puerto TCP en el que escucha PostgreSQL."
 
+      DB_ENGINE: &sqlite_snapshot_db_engine
+        type: select
+        label: "Database Engine"
+        description: "Django database engine. Use SQLite for ephemeral deployments that persist through snapshots."
+        section: Database
+        required: false
+        default: "django.db.backends.postgresql"
+        options:
+          - "django.db.backends.postgresql"
+          - "django.db.backends.sqlite3"
+
+      SQLITE_DATABASE_PATH: &sqlite_snapshot_database_path
+        type: string
+        label: "SQLite Database Path"
+        description: "Filesystem path for the SQLite database when DB_ENGINE is sqlite3."
+        placeholder: "/tmp/projectmaker.sqlite3"
+        section: Database
+        required: false
+        default: "/tmp/projectmaker.sqlite3"
+
+      SQLITE_SNAPSHOTS_ENABLED: &sqlite_snapshots_enabled
+        type: boolean
+        label: "SQLite Snapshots Enabled"
+        description: "Enable periodic SQLite exports to object storage."
+        section: Storage
+        required: false
+        default: "false"
+
+      SQLITE_SNAPSHOTS_STORAGE_BACKEND: &sqlite_snapshots_storage_backend
+        type: select
+        label: "SQLite Snapshot Storage"
+        description: "Storage backend for SQLite snapshot archives."
+        section: Storage
+        required: false
+        default: "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
+        options:
+          - "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
+          - "pm_sqlite_snapshots.storage.local.LocalSnapshotStorage"
+
+      SQLITE_SNAPSHOTS_S3_BUCKET: &sqlite_snapshots_s3_bucket
+        type: string
+        label: "SQLite Snapshot S3 Bucket"
+        description: "Private S3 bucket used for SQLite snapshot archives."
+        placeholder: "my-private-bucket"
+        section: Storage
+        required: false
+        default: "{{resources.storage.private_media.bucket_name}}"
+
+      SQLITE_SNAPSHOTS_S3_PREFIX: &sqlite_snapshots_s3_prefix
+        type: string
+        label: "SQLite Snapshot S3 Prefix"
+        description: "S3 key prefix for SQLite snapshot archives."
+        placeholder: "my-app/sqlite/"
+        section: Storage
+        required: false
+        default: "{{project_slug}}/sqlite/"
+
+      SQLITE_SNAPSHOTS_INTERVAL_SECONDS: &sqlite_snapshots_interval
+        type: number
+        label: "SQLite Snapshot Interval"
+        description: "Seconds between periodic SQLite snapshot exports."
+        section: Storage
+        required: false
+        default: "300"
+        min: 60
+        max: 86400
+
+      SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: &sqlite_snapshots_export_shutdown
+        type: boolean
+        label: "Export SQLite On Shutdown"
+        description: "Export a SQLite snapshot when the process exits normally."
+        section: Storage
+        required: false
+        default: "true"
+
+      SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: &sqlite_snapshots_restore_startup
+        type: boolean
+        label: "Restore SQLite On Startup"
+        description: "Restore the latest SQLite snapshot during startup."
+        section: Storage
+        required: false
+        default: "true"
+
+      SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: &sqlite_snapshots_restore_missing
+        type: boolean
+        label: "Restore SQLite If Missing"
+        description: "Only restore automatically when the SQLite file is missing."
+        section: Storage
+        required: false
+        default: "true"
+
+      SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING: &sqlite_snapshots_fail_missing
+        type: boolean
+        label: "Fail If SQLite Snapshot Missing"
+        description: "Fail startup when restore is enabled and no snapshot exists."
+        section: Storage
+        required: false
+        default: "false"
+
+      SQLITE_SNAPSHOTS_KEEP_LAST: &sqlite_snapshots_keep_last
+        type: number
+        label: "SQLite Snapshots To Keep"
+        description: "Number of latest SQLite snapshots retained by prune operations."
+        section: Storage
+        required: false
+        default: "20"
+        min: 1
+        max: 100
+
       # ── Cache ──────────────────────────────────────────────────────────────
       REDIS_URL:
         type: string
@@ -1137,6 +1246,19 @@ services:
           es:
             label: "Puerto de la base de datos"
             description: "Puerto en el que escucha PostgreSQL."
+
+      DB_ENGINE: *sqlite_snapshot_db_engine
+      SQLITE_DATABASE_PATH: *sqlite_snapshot_database_path
+      SQLITE_SNAPSHOTS_ENABLED: *sqlite_snapshots_enabled
+      SQLITE_SNAPSHOTS_STORAGE_BACKEND: *sqlite_snapshots_storage_backend
+      SQLITE_SNAPSHOTS_S3_BUCKET: *sqlite_snapshots_s3_bucket
+      SQLITE_SNAPSHOTS_S3_PREFIX: *sqlite_snapshots_s3_prefix
+      SQLITE_SNAPSHOTS_INTERVAL_SECONDS: *sqlite_snapshots_interval
+      SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: *sqlite_snapshots_export_shutdown
+      SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: *sqlite_snapshots_restore_startup
+      SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: *sqlite_snapshots_restore_missing
+      SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING: *sqlite_snapshots_fail_missing
+      SQLITE_SNAPSHOTS_KEEP_LAST: *sqlite_snapshots_keep_last
 
       # ── Cache ──────────────────────────────────────────────────────────────
       REDIS_URL:
