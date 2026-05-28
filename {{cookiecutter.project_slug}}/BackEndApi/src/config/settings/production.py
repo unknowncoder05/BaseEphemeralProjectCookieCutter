@@ -67,6 +67,10 @@ DATABASES['default']['CONN_MAX_AGE'] = env.int('CONN_MAX_AGE', default=60)  # NO
 if DATABASES['default']['ENGINE'] == 'postgres':
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
+_sqlite_snapshot_s3_bucket = os.getenv('SQLITE_SNAPSHOTS_S3_BUCKET', '')
+if _sqlite_snapshot_s3_bucket.startswith('{{resources.'):
+    _sqlite_snapshot_s3_bucket = ''
+
 SQLITE_SNAPSHOTS = {
     'ENABLED': os.getenv('SQLITE_SNAPSHOTS_ENABLED', 'False') == 'True',
     'DATABASE_ALIAS': os.getenv('SQLITE_SNAPSHOTS_DATABASE_ALIAS', 'default'),
@@ -78,7 +82,7 @@ SQLITE_SNAPSHOTS = {
     'LOCK_PATH': os.getenv('SQLITE_SNAPSHOTS_LOCK_PATH', '/tmp/pm_sqlite_snapshots.lock'),
     'STORAGE': {
         'BACKEND': os.getenv('SQLITE_SNAPSHOTS_STORAGE_BACKEND', 'pm_sqlite_snapshots.storage.s3.S3SnapshotStorage'),
-        'BUCKET': os.getenv('SQLITE_SNAPSHOTS_S3_BUCKET', os.getenv('AWS_PRIVATE_STORAGE_BUCKET_NAME', '')),
+        'BUCKET': _sqlite_snapshot_s3_bucket or os.getenv('AWS_PRIVATE_STORAGE_BUCKET_NAME', ''),
         'PREFIX': os.getenv('SQLITE_SNAPSHOTS_S3_PREFIX', '{{ cookiecutter.project_slug }}/sqlite/'),
         'REGION': os.getenv('AWS_REGION', os.getenv('AWS_REGION_NAME', 'us-east-1')),
         'PATH': os.getenv('SQLITE_SNAPSHOTS_LOCAL_PATH', '/tmp/sqlite-snapshots'),
