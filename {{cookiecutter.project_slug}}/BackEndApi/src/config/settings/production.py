@@ -68,7 +68,7 @@ if DATABASES['default']['ENGINE'] == 'postgres':
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 _sqlite_snapshot_s3_bucket = os.getenv('SQLITE_SNAPSHOTS_S3_BUCKET', '')
-if _sqlite_snapshot_s3_bucket.startswith('{{resources.'):
+if _sqlite_snapshot_s3_bucket.startswith('{% raw %}{{resources.{% endraw %}'):
     _sqlite_snapshot_s3_bucket = ''
 
 SQLITE_SNAPSHOTS = {
