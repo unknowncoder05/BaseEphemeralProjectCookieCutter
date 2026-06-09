@@ -26,6 +26,11 @@ if [ -f "${REQ_PATH}" ]; then
         echo "[dev] Packages installed."
     else
         echo "[dev] Requirements unchanged — skipping pip install."
+        if ! python -c "import django" 2>/dev/null; then
+            echo "[dev] venv corrupt despite matching hash — forcing reinstall..."
+            pip install -r "${REQ_PATH}" 2>&1
+            echo "${CURRENT_HASH}" > "${HASH_FILE}"
+        fi
     fi
 else
     echo "[dev] Requirements file not found at ${REQ_PATH} — skipping pip install."

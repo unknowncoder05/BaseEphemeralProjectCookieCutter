@@ -5,7 +5,7 @@
         infra-plan infra-apply infra-destroy infra-output \
         backend-logs task-logs lambda-logs alarm-status \
         start-backend ping-backend stop-backend task-status \
-        build-backend push-backend clean
+        build-backend push-backend clean test-backend test-frontend
 
 # Colors
 BLUE := \033[0;34m
@@ -285,9 +285,17 @@ dev-backend: ## Start backend development server
 	@echo "$(BLUE)Starting backend dev server...$(NC)"
 	@cd BackEndApi && docker-compose -f local.yml up
 
-test-frontend: ## Run frontend tests
+test-backend: ## Run backend tests inside the dev container
+	@echo "$(BLUE)Running backend tests...$(NC)"
+	@docker compose -f docker-compose.dev.yml run --rm \
+	  -e DJANGO_SETTINGS_MODULE=config.settings.test \
+	  -e POSTGRES_PASSWORD=$${POSTGRES_PASSWORD:-projectmaker_password} \
+	  -e DJANGO_SECRET_KEY=$${DJANGO_SECRET_KEY:-insecure-test-secret} \
+	  backend sh -lc 'cd /project/BackEndApi/src && python manage.py test $(TEST)'
+
+test-frontend: ## Run frontend tests inside the dev container
 	@echo "$(BLUE)Running frontend tests...$(NC)"
-	@cd frontend && npm test
+	@docker compose -f docker-compose.dev.yml run --rm --no-deps frontend sh -lc 'npm install --silent && CI=true npm test -- --watchAll=false'
 
 build-frontend: ## Build frontend for production
 	@echo "$(BLUE)Building frontend...$(NC)"
