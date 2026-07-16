@@ -19,6 +19,26 @@ commands:
     run: "python manage.py migrate --noinput"
     service: backend
 
+  createsuperuser:
+    label: "Create Superuser"
+    description: "Create a Django admin superuser non-interactively."
+    run: "DJANGO_SUPERUSER_PASSWORD={password} python manage.py createsuperuser --noinput --username {username} --email {email}"
+    service: backend
+    params:
+      username:
+        type: string
+        label: "Username"
+        required: true
+        default: "admin"
+      email:
+        type: email
+        label: "Email"
+        required: true
+      password:
+        type: secret
+        label: "Password"
+        required: true
+
   setup_admin:
     label: "Setup Admin Account"
     description: "Create or update an administrative account non-interactively."
@@ -44,13 +64,13 @@ commands:
   test_contract:
     label: "Validate API Contract"
     description: "Validate backend OpenAPI schema and frontend generated API types."
-    run: "python manage.py spectacular --validate && npm install && npm run validate:api-contract"
+    run: "python manage.py spectacular --validate && ./scripts/install-deps.sh && npm run validate:api-contract"
     service: playwright
 
   test_e2e:
     label: "Run E2E Tests"
     description: "Run UI guardrails and Playwright end-to-end tests with screenshot capture."
-    run: "npm install && npm run test:e2e:ci"
+    run: "./scripts/install-deps.sh && npm run test:e2e:ci"
     service: playwright
 
 sections:
@@ -413,7 +433,7 @@ services:
     cpu: 0.25
     memory: 512
     image: mcr.microsoft.com/playwright:v1.59.1-jammy
-    command: sh -c "npm install && ./node_modules/.bin/playwright test"
+    command: sh -c "./scripts/install-deps.sh && npm run test:e2e:mocked"
     depends_on:
       - frontend
     volumes:

@@ -6,10 +6,13 @@ FROM node:22-alpine
 
 WORKDIR /app
 
+RUN apk add --no-cache chromium nss freetype harfbuzz ca-certificates ttf-freefont
+
 # Install dependencies — layer-cached until package.json changes.
 # node_modules are preserved by the named volume declared in projectmaker.dev.yml,
 # so they survive the ./frontend:/app bind-mount overlay.
 COPY package.json package-lock.json* ./
-RUN npm install
+COPY scripts/install-deps.sh ./scripts/install-deps.sh
+RUN ./scripts/install-deps.sh
 
 CMD ["npm", "start"]

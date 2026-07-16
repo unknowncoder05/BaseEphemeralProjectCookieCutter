@@ -6,14 +6,16 @@ WORKDIR /app
 
 # Copy package files
 COPY package.json package-lock.json* ./
+COPY scripts/install-deps.sh ./scripts/install-deps.sh
 
-# Install dependencies
-RUN npm install && npm cache clean --force
+# Install dependencies from the lockfile when available.
+RUN ./scripts/install-deps.sh && npm cache clean --force
 
 # Copy source code
 COPY . .
 
 # Declare build-time args (values come from docker-compose / root .env — nothing hardcoded here)
+ARG REACT_APP_PROJECT_NAME="{{ cookiecutter.project_name }}"
 ARG REACT_APP_API_URL
 ARG REACT_APP_API_GATEWAY_START_ENDPOINT
 ARG REACT_APP_KEEP_ALIVE_INTERVAL
@@ -33,6 +35,7 @@ ARG REACT_APP_PRIMARY_800
 ARG REACT_APP_PRIMARY_900
 
 # Expose them as env vars so react-scripts picks them up (shell env overrides .env file)
+ENV REACT_APP_PROJECT_NAME=${REACT_APP_PROJECT_NAME}
 ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 ENV REACT_APP_API_GATEWAY_START_ENDPOINT=${REACT_APP_API_GATEWAY_START_ENDPOINT}
 ENV REACT_APP_KEEP_ALIVE_INTERVAL=${REACT_APP_KEEP_ALIVE_INTERVAL}

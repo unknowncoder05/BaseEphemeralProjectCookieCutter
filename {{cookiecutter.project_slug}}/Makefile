@@ -295,7 +295,7 @@ test-backend: ## Run backend tests inside the dev container
 
 test-frontend: ## Run frontend tests inside the dev container
 	@echo "$(BLUE)Running frontend tests...$(NC)"
-	@docker compose -f docker-compose.dev.yml run --rm --no-deps frontend sh -lc 'npm install --silent && CI=true npm test -- --watchAll=false'
+	@docker compose -f docker-compose.dev.yml run --rm --no-deps frontend sh -lc './scripts/install-deps.sh --silent && CI=true npm test -- --watchAll=false'
 
 build-frontend: ## Build frontend for production
 	@echo "$(BLUE)Building frontend...$(NC)"

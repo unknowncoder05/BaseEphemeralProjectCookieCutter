@@ -54,8 +54,14 @@ commands:
 
   test_e2e:
     label: "Run E2E Tests"
-    description: "Execute Playwright end-to-end tests."
-    run: "npm install && ./node_modules/.bin/playwright test"
+    description: "Execute mocked Playwright UI tests without backend contract generation."
+    run: "npm ci --prefer-offline && npm run test:e2e:mocked"
+    service: playwright
+
+  test_e2e_full:
+    label: "Run Full-Stack E2E Tests"
+    description: "Run API contract validation, UI guardrails, and Playwright tests."
+    run: "npm ci --prefer-offline && npm run test:e2e:ci"
     service: playwright
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -81,10 +87,13 @@ smoke_test:
       run: "for i in $(seq 1 12); do python manage.py shell -c 'from django.db import connection; c = connection.cursor(); c.execute(\"SELECT 1\")' && break; echo 'waiting for db...'; sleep 2; done && python manage.py test pm_billing --verbosity 2 --noinput"
       service: backend
     - label: "Frontend Contract Validation"
-      run: "npm install && npm run validate:api-contract"
+      run: "npm ci --prefer-offline && npm run validate:api-contract"
       service: playwright
-    - label: "E2E Tests"
-      run: "npm install && npm run test:e2e:ci"
+    - label: "Mocked E2E Tests"
+      run: "npm ci --prefer-offline && npm run test:e2e:mocked"
+      service: playwright
+    - label: "Full-Stack E2E Tests"
+      run: "npm ci --prefer-offline && npm run test:e2e:ci"
       service: playwright
 
 # ──────────────────────────────────────────────────────────────────────────────
@@ -534,7 +543,7 @@ services:
     cpu: 0.25
     memory: 512
     image: mcr.microsoft.com/playwright:v1.59.1-jammy
-    command: sh -c "npm install && ./node_modules/.bin/playwright test"
+    command: sh -c "npm ci --prefer-offline && npm run test:e2e:mocked"
     depends_on:
       - frontend
     volumes:
