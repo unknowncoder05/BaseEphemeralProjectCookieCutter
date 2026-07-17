@@ -269,6 +269,7 @@ media/
 rest_api/media/
 
 .pytest_cache/
+.ruff_cache/
 
 
 .ipython/
