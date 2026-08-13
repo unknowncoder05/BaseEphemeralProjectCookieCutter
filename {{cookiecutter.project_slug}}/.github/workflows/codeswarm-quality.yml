@@ -24,8 +24,8 @@ jobs:
         run: pre-commit run --all-files --show-diff-on-failure
       - name: Run changed-file CodeSwarm policy
         env:
-          PR_BASE_REF: ${{ github.base_ref }}
-          PUSH_BEFORE: ${{ github.event.before }}
+          PR_BASE_REF: {% raw %}${{ github.base_ref }}{% endraw %}
+          PUSH_BEFORE: {% raw %}${{ github.event.before }}{% endraw %}
         run: |
           if [ -n "$PR_BASE_REF" ]; then
             git fetch origin "$PR_BASE_REF" --depth=1
