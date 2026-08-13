@@ -9,6 +9,7 @@
   "aws_region": "us-east-1",
   "timezone": "America/New_York",
   "use_ai_integration": "y",
+  "use_github_integration": "y",
   "python_version": "3.11",
   "node_version": "20",
   "_copy_without_render": [

@@ -41,7 +41,7 @@ Services:
 ├── BackEndApi/          # Django backend
 │   ├── src/
 │   │   ├── api/
-│   │   │   ├── items/  # Example CRUD module — copy this pattern for new modules
+│   │   │   ├── items/  # Removable scaffold CRUD module — copy this pattern for new modules
 │   │   │   ├── users/  # Authentication, profiles, GitHub OAuth
 │   │   │   ├── ws/     # WebSocket consumer
 │   │   │   └── utils/  # Shared utilities (health check, keep-alive)
@@ -70,7 +70,7 @@ Services:
 - **VerifyAccount**: OTP/Email verification after signup.
 - **VerifyLogin**: Second-factor or additional login verification if required.
 - **Dashboard**: Central hub for authenticated users.
-- **ItemsPage**: Generic CRUD interface for managing items (example module).
+- **ItemsPage**: Removable CRUD scaffold used as an implementation example. It is not a product surface and should be removed, renamed, or replaced during project-specific coding.
 - **SettingsPage**: User profile and application preferences.
 - **ServerStartPage**: Initial state while waiting for backend/database to be ready.
 - **ServerDown**: Error view shown when the backend API is unreachable.
@@ -80,12 +80,12 @@ Services:
 1.  **Entry**: `HomePage` or `ServerStartPage` (if backend is warming up).
 2.  **Authentication**: `HomePage` -> `AuthPage` (Login/Signup).
 3.  **Post-Auth**: `AuthPage` -> `Dashboard`.
-4.  **Feature Access**: `Dashboard` -> `ItemsPage` or `SettingsPage`.
+4.  **Feature Access**: `Dashboard` -> product-specific pages or `SettingsPage`. Use `ItemsPage` only while the scaffold is still being replaced.
 5.  **Error States**: Any page -> `ServerDown` (API failure) or `NotFoundPage` (invalid URL).
 
 ### Redundancy Check
 - `AuthPage` serves both Login and Signup to reduce boilerplate.
-- `ItemsPage` is a template for all future CRUD modules; do not create separate pages for simple list/detail views if they can be handled via dynamic routing or components within `ItemsPage`.
+- `ItemsPage` and visible `Items` navigation are removable scaffold. Replace or delete them when product-specific surfaces are defined.
 
 ## Backend API Mapping
 
@@ -136,8 +136,8 @@ All routes are defined in \`frontend/src/App.tsx\`.
 | \`/verify\` | No | \`VerifyAccount\` |
 | \`/verify-login\` | No | \`VerifyLogin\` |
 | \`/dashboard\` | Yes | \`Dashboard\` |
-| \`/items\` | Yes | \`ItemsPage\` |
-| \`/items/:id\` | Yes | \`ItemsPage\` |
+| \`/items\` | Yes | \`ItemsPage\` - removable scaffold/example route |
+| \`/items/:id\` | Yes | \`ItemsPage\` - removable scaffold/example route |
 | \`/settings\` | Yes | \`SettingsPage\` |
 | \`/server-down\` | No | \`ServerDown\` |
 | \`/start-server\` | No | \`ServerStartPage\` |
@@ -237,14 +237,14 @@ class Profile(models.Model):
 - [x] GitHub OAuth integration — \`api/users/\`
 - [x] WebSocket consumer with JWT auth — \`api/ws/consumers.py\`
 - [x] Background task processing (Celery + Redis) — \`api/items/tasks.py\`
-- [x] Example CRUD module (\`items\`) with ViewSet, serializers, service layer, tests — \`api/items/\`
+- [x] Removable scaffold CRUD module (\`items\`) with ViewSet, serializers, service layer, tests — \`api/items/\`
 - [x] S3 file upload integration — \`api/utils/\`
 - [x] Health check + keep-alive endpoints — \`api/utils/views.py\`
 - [x] React auth flow (login/signup/verify) — \`frontend/src/pages/AuthPage.tsx\`
 - [x] Redux auth state with JWT persistence — \`frontend/src/store/authSlice.ts\`
 - [x] Dark mode toggle (ThemeContext) — \`frontend/src/context/ThemeContext.tsx\`
 - [x] Backend health polling + server start page — \`frontend/src/services/BackendManager.ts\`
-- [x] Items CRUD UI — \`frontend/src/pages/ItemsPage.tsx\`
+- [x] Removable Items CRUD scaffold — \`frontend/src/pages/ItemsPage.tsx\`
 - [x] User settings page — \`frontend/src/pages/SettingsPage.tsx\`
 - [x] i18n support (EN/ES) — \`frontend/src/i18n/\`
 

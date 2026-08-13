@@ -82,7 +82,7 @@ const ItemsPage: React.FC = () => {
     if (!selectedItem) {
       return (
         <div className="text-center py-12 bg-white dark:bg-secondary-800 rounded-xl border border-secondary-200 dark:border-secondary-700">
-          <p className="text-secondary-500 dark:text-secondary-400">{t('items.notFound')}</p>
+          <p className="text-secondary-500 dark:text-secondary-300">{t('items.notFound')}</p>
           <Button
             onClick={handleBackToList}
             className="mt-4"
@@ -125,7 +125,7 @@ const ItemsPage: React.FC = () => {
 
         <div className="space-y-6">
           <div>
-            <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">{t('items.fields.description')}</h3>
+            <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-300 uppercase tracking-wider">{t('items.fields.description')}</h3>
             <p className="mt-1 text-secondary-900 dark:text-secondary-200">
               {selectedItem.description || t('items.noDescription')}
             </p>
@@ -133,13 +133,13 @@ const ItemsPage: React.FC = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">{t('items.detail.owner')}</h3>
+              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-300 uppercase tracking-wider">{t('items.detail.owner')}</h3>
               <p className="mt-1 text-secondary-900 dark:text-secondary-200 font-medium">
                 {selectedItem.owner.first_name} {selectedItem.owner.last_name}
               </p>
             </div>
             <div>
-              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider">{t('items.detail.created')}</h3>
+              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-300 uppercase tracking-wider">{t('items.detail.created')}</h3>
               <p className="mt-1 text-secondary-900 dark:text-secondary-200">
                 {new Date(selectedItem.created_at).toLocaleString()}
               </p>
@@ -148,7 +148,7 @@ const ItemsPage: React.FC = () => {
 
           {Object.keys(selectedItem.metadata).length > 0 && (
             <div className="pt-4 border-t border-secondary-100 dark:border-secondary-700">
-              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-400 uppercase tracking-wider mb-2">{t('items.detail.metadata')}</h3>
+              <h3 className="text-sm font-medium text-secondary-500 dark:text-secondary-300 uppercase tracking-wider mb-2">{t('items.detail.metadata')}</h3>
               <pre className="p-4 bg-secondary-50 dark:bg-secondary-900/50 rounded-lg text-xs overflow-auto text-secondary-700 dark:text-secondary-300 border border-secondary-200 dark:border-secondary-800">
                 {JSON.stringify(selectedItem.metadata, null, 2)}
               </pre>

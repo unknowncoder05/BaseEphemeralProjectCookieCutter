@@ -1,5 +1,7 @@
 """Main URLs module."""
 
+import importlib.util
+
 # Django
 from django.conf import settings
 from django.conf.urls.static import static
@@ -36,4 +38,9 @@ urlpatterns = [
     re_path(settings.API_URI + '/', include('api.items.urls')),
     re_path(settings.API_URI + '/', include('pm_billing.api.billing.urls')),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]
+
+if importlib.util.find_spec('pm_github') is not None:
+    urlpatterns.append(re_path(settings.API_URI + '/github/', include('pm_github.api.urls')))
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -14,6 +14,10 @@ class User(AbstractPMUser):
     Inherits core fields from AbstractPMUser.
     """
     document_type = models.ForeignKey(DocumentType, on_delete=models.SET_NULL, null=True, blank=True)
+    github_id = models.CharField(max_length=50, null=True, blank=True, unique=True)
+    github_username = models.CharField(max_length=100, null=True, blank=True)
+    github_access_token = models.TextField(null=True, blank=True)
+    github_token_expires_at = models.DateTimeField(null=True, blank=True)
 
     class Meta(AbstractPMUser.Meta):
         swappable = 'AUTH_USER_MODEL'

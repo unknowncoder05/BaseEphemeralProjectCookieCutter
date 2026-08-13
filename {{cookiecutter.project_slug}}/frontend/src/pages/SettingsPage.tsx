@@ -13,9 +13,12 @@ export const SettingsPage: React.FC = () => {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const { user } = useAppSelector((state) => state.auth);
+  // PM_GITHUB_START
   const [isConnectingGitHub, setIsConnectingGitHub] = useState(false);
   const [isDisconnectingGitHub, setIsDisconnectingGitHub] = useState(false);
+  // PM_GITHUB_END
 
+  // PM_GITHUB_START
   const handleGitHubCallback = useCallback(async (code: string, state: string) => {
     setIsConnectingGitHub(true);
     try {
@@ -29,9 +32,11 @@ export const SettingsPage: React.FC = () => {
       setIsConnectingGitHub(false);
     }
   }, [dispatch, t]);
+  // PM_GITHUB_END
 
   // Handle GitHub OAuth callback
   useEffect(() => {
+    // PM_GITHUB_START
     const code = searchParams.get('code');
     const state = searchParams.get('state');
     const storedState = sessionStorage.getItem('github_oauth_state');
@@ -50,8 +55,10 @@ export const SettingsPage: React.FC = () => {
       // Exchange code for token
       handleGitHubCallback(code, state);
     }
-  }, [searchParams, handleGitHubCallback]);
+    // PM_GITHUB_END
+  }, [searchParams, handleGitHubCallback, t]);
 
+  // PM_GITHUB_START
   const handleConnectGitHub = async () => {
     setIsConnectingGitHub(true);
     try {
@@ -85,6 +92,7 @@ export const SettingsPage: React.FC = () => {
       setIsDisconnectingGitHub(false);
     }
   };
+  // PM_GITHUB_END
 
   return (
     <div className="min-h-screen bg-secondary-50 dark:bg-secondary-900 transition-colors">
@@ -94,7 +102,7 @@ export const SettingsPage: React.FC = () => {
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate(-1)}
-              className="p-2 hover:bg-secondary-100 dark:hover:bg-secondary-700 rounded-lg transition-colors text-secondary-600 dark:text-secondary-400"
+              className="p-2 hover:bg-secondary-100 dark:hover:bg-secondary-700 rounded-lg transition-colors text-secondary-600 dark:text-secondary-300"
             >
               <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -110,30 +118,31 @@ export const SettingsPage: React.FC = () => {
         <Breadcrumbs />
         
         {/* Profile Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-secondary-200 mb-6">
-          <div className="px-6 py-4 border-b border-secondary-200">
-            <h2 className="text-lg font-semibold text-secondary-900">{t('settings.profile.title')}</h2>
+        <div className="pm-surface-panel rounded-lg shadow-sm mb-6">
+          <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
+            <h2 className="text-lg font-semibold pm-text-strong">{t('settings.profile.title')}</h2>
           </div>
           <div className="px-6 py-4">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-white text-2xl font-semibold">
+              <div className="w-16 h-16 bg-primary-700 rounded-full flex items-center justify-center text-white text-2xl font-semibold">
                 {user?.email?.charAt(0).toUpperCase() || 'U'}
               </div>
               <div>
-                <p className="text-lg font-medium text-secondary-900">
+                <p className="text-lg font-medium pm-text-strong">
                   {user?.first_name} {user?.last_name}
                 </p>
-                <p className="text-sm text-secondary-500">{user?.email}</p>
+                <p className="text-sm pm-text-muted">{user?.email}</p>
               </div>
             </div>
           </div>
         </div>
 
+        {/* PM_GITHUB_START */}
         {/* Integrations Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-secondary-200">
-          <div className="px-6 py-4 border-b border-secondary-200">
-            <h2 className="text-lg font-semibold text-secondary-900">{t('settings.integrations.title')}</h2>
-            <p className="text-sm text-secondary-500 mt-1">{t('settings.integrations.subtitle')}</p>
+        <div className="pm-surface-panel rounded-lg shadow-sm">
+          <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
+            <h2 className="text-lg font-semibold pm-text-strong">{t('settings.integrations.title')}</h2>
+            <p className="text-sm pm-text-muted mt-1">{t('settings.integrations.subtitle')}</p>
           </div>
           <div className="px-6 py-4">
             {/* GitHub Integration */}
@@ -168,7 +177,7 @@ export const SettingsPage: React.FC = () => {
                   <button
                     onClick={handleConnectGitHub}
                     disabled={isConnectingGitHub}
-                    className="px-4 py-2 text-sm font-medium text-white bg-secondary-900 hover:bg-secondary-800 dark:bg-primary-600 dark:hover:bg-primary-700 rounded-lg transition-colors disabled:opacity-50"
+                    className="px-4 py-2 text-sm font-medium text-white bg-secondary-900 hover:bg-secondary-800 dark:bg-primary-700 dark:hover:bg-primary-800 rounded-lg transition-colors disabled:opacity-50"
                   >
                     {isConnectingGitHub ? t('settings.github.connecting') : t('settings.github.connect')}
                   </button>
@@ -177,6 +186,7 @@ export const SettingsPage: React.FC = () => {
             </div>
           </div>
         </div>
+        {/* PM_GITHUB_END */}
       </div>
     </div>
   );

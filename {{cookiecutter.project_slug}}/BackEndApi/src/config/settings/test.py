@@ -79,7 +79,7 @@ EMAIL_NO_REPLY = 'test@example.com'
 
 # aws settings
 AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'bucket')
-AWS_DEFAULT_ACL = 'public-read'
+AWS_DEFAULT_ACL = 'private'
 AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
 AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
 

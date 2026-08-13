@@ -52,7 +52,7 @@ export const ItemCard: React.FC<ItemCardProps> = ({
         </Badge>
       </div>
 
-      <div className="text-sm text-secondary-500 dark:text-secondary-400 mb-4">
+      <div className="text-sm text-secondary-500 dark:text-secondary-300 mb-4">
         <p>{t('items.card.by', { owner: item.owner_name })}</p>
         <p>{t('items.card.created', { date: formatDate(item.created_at) })}</p>
       </div>

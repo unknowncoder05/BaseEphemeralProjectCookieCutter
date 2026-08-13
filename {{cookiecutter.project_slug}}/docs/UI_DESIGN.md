@@ -39,7 +39,7 @@ This file describes the visual and interaction contract for the Base Ephemeral t
 - Last updated: 2026-05-03
 
 ## View or Component: ItemsPage
-- Purpose: single surface for item list, item detail, create, and edit modes.
+- Purpose: removable scaffold showing item list, item detail, create, and edit modes. This is an example implementation pattern, not a product-specific surface.
 - Location: `frontend/src/pages/ItemsPage.tsx`
 - Layout structure: shared navbar/breadcrumbs, then route-driven content block that swaps by mode.
 - Visual style: card-based CRUD layout with gentle borders, skeleton loaders, and inline action bars.
@@ -47,7 +47,7 @@ This file describes the visual and interaction contract for the Base Ephemeral t
 - Interactions: create, view, edit, archive, activate, delete, back.
 - Responsive behavior: list grid and action groups wrap on small screens.
 - Accessibility notes: destructive actions rely on explicit confirmation dialogs.
-- Reuse constraints: keep CRUD flows inside this page family instead of scattering them across separate pages.
+- Reuse constraints: remove, rename, or replace this page when the product domain is defined; do not preserve visible `Items` navigation in generated apps unless the user explicitly asks for a generic item manager.
 - Last updated: 2026-05-03
 
 ## View or Component: SettingsPage

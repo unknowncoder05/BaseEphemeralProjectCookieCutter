@@ -72,7 +72,7 @@ export const Navbar: React.FC = () => {
             <button
               onClick={toggleTheme}
               title={isDark ? t('theme.light') : t('theme.dark')}
-              className="p-2 rounded-lg text-secondary-500 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors"
+              className="p-2 rounded-lg text-secondary-500 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors"
             >
               {isDark ? (
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -123,13 +123,13 @@ export const Navbar: React.FC = () => {
               )}
             </div>
 
-            <span className="text-sm text-secondary-500 dark:text-secondary-400 ml-2 mr-1 hidden sm:block">
+            <span className="text-sm text-secondary-500 dark:text-secondary-300 ml-2 mr-1 hidden sm:block">
               {user?.email}
             </span>
 
             <button
               onClick={handleLogout}
-              className="text-sm text-secondary-500 dark:text-secondary-400 hover:text-secondary-700 dark:hover:text-secondary-200 px-3 py-1.5 hover:bg-secondary-100 dark:hover:bg-secondary-700 rounded-lg transition-colors"
+              className="text-sm text-secondary-500 dark:text-secondary-300 hover:text-secondary-700 dark:hover:text-secondary-200 px-3 py-1.5 hover:bg-secondary-100 dark:hover:bg-secondary-700 rounded-lg transition-colors"
             >
               {t('nav.logout')}
             </button>

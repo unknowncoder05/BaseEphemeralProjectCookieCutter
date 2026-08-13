@@ -16,7 +16,7 @@ commands:
   migrate:
     label: "Run Migrations"
     description: "Apply any pending database migrations."
-    run: "python manage.py migrate --noinput"
+    run: "python manage.py migrate_with_db_lock --noinput"
     service: backend
 
   createsuperuser:
@@ -72,6 +72,48 @@ commands:
     description: "Run UI guardrails and Playwright end-to-end tests with screenshot capture."
     run: "./scripts/install-deps.sh && npm run test:e2e:ci"
     service: playwright
+
+verification_policy:
+  default_tier: heavy
+  tiers:
+    docs:
+      description: "Documentation-only changes use cheap diff/docs checks and skip app builds, Docker prewarm, and browser E2E unless explicitly requested."
+      match:
+        task_types: ["documentation"]
+        paths:
+          - "README*"
+          - "CHANGELOG*"
+          - "LICENSE*"
+          - "docs/**"
+          - "*.md"
+          - "*.mdx"
+          - "*.rst"
+          - "*.txt"
+        exclude_paths:
+          - "**/requirements*.txt"
+          - "**/constraints*.txt"
+          - "**/projectmaker.yml"
+          - "**/projectmaker.dev.yml"
+      prewarm: false
+      inline_build: false
+      inline_test: false
+      inline_steps: []
+      inline_e2e: false
+      background_e2e: false
+    light:
+      description: "Frontend/static changes run targeted lint/type checks inline and defer expensive E2E."
+      inline_test: false
+      inline_steps: ["lint", "typecheck", "type-check", "type_check", "tsc"]
+      inline_e2e: false
+      background_e2e: true
+    heavy:
+      description: "Backend, dependency, infrastructure, config, migration, and runtime changes require full inline verification."
+      prewarm: true
+      inline_build: true
+      inline_test: true
+      inline_steps: all
+      inline_e2e: true
+      background_e2e: false
 
 sections:
   Security:
@@ -433,7 +475,8 @@ services:
     cpu: 0.25
     memory: 512
     image: mcr.microsoft.com/playwright:v1.59.1-jammy
-    command: sh -c "./scripts/install-deps.sh && npm run test:e2e:mocked"
+    working_dir: /app
+    command: sh -c "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"
     depends_on:
       - frontend
     volumes:

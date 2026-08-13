@@ -15,10 +15,12 @@ import {
   ValidateAccountRequest,
   User,
   AuthTokens,
+  // PM_GITHUB_START
   GitHubAuthUrlResponse,
   GitHubCallbackRequest,
   GitHubCallbackResponse,
   GitHubStatusResponse
+  // PM_GITHUB_END
 } from '../types/auth';
 import {
   Item,
@@ -199,7 +201,7 @@ class ApiService {
   // ==================================================================
   // GITHUB OAUTH ENDPOINTS
   // ==================================================================
-
+  // PM_GITHUB_START
   async getGitHubAuthUrl(): Promise<AxiosResponse<GitHubAuthUrlResponse>> {
     return this.api.get('/github/auth-url/');
   }
@@ -215,6 +217,7 @@ class ApiService {
   async getGitHubStatus(): Promise<AxiosResponse<GitHubStatusResponse>> {
     return this.api.get('/github/status/');
   }
+  // PM_GITHUB_END
 
   // ==================================================================
   // ITEMS ENDPOINTS (Example CRUD module)

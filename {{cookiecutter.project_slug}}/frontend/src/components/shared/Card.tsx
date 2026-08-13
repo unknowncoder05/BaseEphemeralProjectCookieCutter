@@ -21,13 +21,13 @@ export const Card: React.FC<CardProps> = ({
 
   return (
     <div
-      className={`bg-white rounded-lg shadow-md border border-secondary-200 ${hoverStyles} ${className}`}
+      className={`pm-surface-panel rounded-lg shadow-md ${hoverStyles} ${className}`}
       onClick={onClick}
     >
       {(title || description) && (
-        <div className="px-6 py-4 border-b border-secondary-200">
-          {title && <h3 className="text-lg font-semibold text-secondary-900">{title}</h3>}
-          {description && <p className="mt-1 text-sm text-secondary-600">{description}</p>}
+        <div className="px-6 py-4 border-b border-[var(--border-subtle)]">
+          {title && <h3 className="text-lg font-semibold pm-text-strong">{title}</h3>}
+          {description && <p className="mt-1 text-sm pm-text-muted">{description}</p>}
         </div>
       )}
       <div className="px-6 py-4">

@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const ServerDown: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleRetry = () => {
     // Clear any stored error state and try to go back to home
@@ -14,7 +16,7 @@ const ServerDown: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 text-center">
         <div>
           <div className="mx-auto flex items-center justify-center h-24 w-24 rounded-full bg-red-100 mb-4">
@@ -35,37 +37,37 @@ const ServerDown: React.FC = () => {
           </div>
 
           <h2 className="mt-6 text-center text-3xl font-extrabold text-secondary-900">
-            Server Error
+            {t('serverDown.title')}
           </h2>
 
-          <p className="mt-2 text-center text-sm text-secondary-600">
-            We're experiencing technical difficulties. Our servers are currently unavailable.
+          <p className="mt-2 text-center text-sm text-secondary-600 dark:text-secondary-300">
+            {t('serverDown.description')}
           </p>
 
           <p className="mt-4 text-center text-sm text-secondary-500">
-            Please try again in a few moments. If the problem persists, contact support.
+            {t('serverDown.retryHint')}
           </p>
         </div>
 
         <div className="mt-8 space-y-4">
           <button
             onClick={handleRetry}
-            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
-            Retry
+            {t('serverDown.retry')}
           </button>
 
           <button
             onClick={handleGoHome}
-            className="w-full flex justify-center py-2 px-4 border border-secondary-300 text-sm font-medium rounded-md text-secondary-700 bg-white hover:bg-secondary-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="w-full flex justify-center py-2 px-4 border border-secondary-300 text-sm font-medium rounded-md text-secondary-700 dark:text-secondary-100 bg-white dark:bg-secondary-800 hover:bg-secondary-50 dark:hover:bg-secondary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
-            Go to Home
+            {t('serverDown.goHome')}
           </button>
         </div>
 
         <div className="mt-6">
-          <p className="text-xs text-secondary-400">
-            Error Code: 500 - Internal Server Error
+          <p className="text-xs text-secondary-600 dark:text-secondary-300">
+            {t('serverDown.errorCode')}
           </p>
         </div>
       </div>

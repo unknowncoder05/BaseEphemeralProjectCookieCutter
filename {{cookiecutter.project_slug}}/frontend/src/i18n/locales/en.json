@@ -205,6 +205,34 @@
       "sync": "• Syncing database from S3"
     }
   },
+  "verification": {
+    "accountTitle": "Verify Your Account",
+    "loginTitle": "Verify Your Login",
+    "subtitle": "Enter the verification code sent to your phone",
+    "phoneNumber": "Phone Number",
+    "code": "Verification Code",
+    "codePlaceholder": "Enter verification code",
+    "verifying": "Verifying...",
+    "verifyAccount": "Verify Account",
+    "resend": "Resend verification code",
+    "resent": "Verification code resent successfully.",
+    "backToSignup": "Back to sign up",
+    "backToLogin": "Back to login"
+  },
+  "serverDown": {
+    "title": "Server Error",
+    "description": "We're experiencing technical difficulties. Our servers are currently unavailable.",
+    "retryHint": "Please try again in a few moments. If the problem persists, contact support.",
+    "retry": "Retry",
+    "goHome": "Go to Home",
+    "errorCode": "Error Code: 500 - Internal Server Error"
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "description": "The page you're looking for doesn't exist or has been moved.",
+    "errorCode": "Error Code: 404",
+    "goHome": "Go to Home"
+  },
   "settings": {
     "title": "Settings",
     "profile": {

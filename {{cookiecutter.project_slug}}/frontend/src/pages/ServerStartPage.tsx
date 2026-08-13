@@ -30,8 +30,8 @@ const ServerStartPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 flex items-center justify-center p-4">
-      <div className="max-w-md w-full bg-white rounded-lg shadow-xl p-8">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 to-primary-100 dark:from-secondary-900 dark:to-secondary-800 flex items-center justify-center p-4">
+      <div className="max-w-md w-full pm-surface-panel rounded-lg shadow-xl p-8">
         <div className="text-center">
           {/* Icon */}
           <div className="mx-auto w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mb-4">
@@ -56,7 +56,7 @@ const ServerStartPage: React.FC = () => {
           </h1>
 
           {/* Description */}
-          <p className="text-secondary-600 mb-6">
+          <p className="text-secondary-600 dark:text-secondary-300 mb-6">
             {t('serverStart.description')}
           </p>
 
@@ -67,7 +67,7 @@ const ServerStartPage: React.FC = () => {
             className={`w-full py-3 px-6 rounded-lg font-semibold text-white transition-all duration-200 ${
               isStarting
                 ? 'bg-secondary-400 cursor-not-allowed'
-                : 'bg-primary-600 hover:bg-primary-700 active:scale-95'
+                : 'bg-primary-700 hover:bg-primary-800 active:scale-95'
             }`}
           >
             {isStarting ? (

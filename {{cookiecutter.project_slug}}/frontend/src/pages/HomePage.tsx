@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
             <button
               onClick={toggleTheme}
               aria-label={isDark ? t('theme.light') : t('theme.dark')}
-              className="p-2 rounded-lg text-secondary-500 dark:text-secondary-400 hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors"
+              className="p-2 rounded-lg text-secondary-500 dark:text-secondary-300 hover:bg-secondary-100 dark:hover:bg-secondary-700 transition-colors"
             >
               {isDark ? (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -51,7 +51,7 @@ const HomePage: React.FC = () => {
             {isAuthenticated ? (
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-4 py-1.5 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors"
+                className="px-4 py-1.5 bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 text-white text-sm font-medium rounded-lg transition-colors"
               >
                 {t('home.nav.dashboard')}
               </button>
@@ -65,7 +65,7 @@ const HomePage: React.FC = () => {
                 </button>
                 <button
                   onClick={() => navigate('/signup')}
-                  className="px-4 py-1.5 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white text-sm font-medium rounded-lg transition-colors"
+                  className="px-4 py-1.5 bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 text-white text-sm font-medium rounded-lg transition-colors"
                 >
                   {t('home.nav.signup')}
                 </button>
@@ -87,7 +87,7 @@ const HomePage: React.FC = () => {
             {t('home.hero.title')}
           </h1>
 
-          <p className="text-xl text-secondary-500 dark:text-secondary-400 max-w-2xl mx-auto mb-8">
+          <p className="text-xl text-secondary-500 dark:text-secondary-300 max-w-2xl mx-auto mb-8">
             {t('home.hero.subtitle')}
           </p>
 
@@ -95,7 +95,7 @@ const HomePage: React.FC = () => {
             {isAuthenticated ? (
               <button
                 onClick={() => navigate('/dashboard')}
-                className="px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-medium rounded-lg transition-colors shadow-sm"
+                className="px-6 py-3 bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 text-white font-medium rounded-lg transition-colors shadow-sm"
               >
                 {t('home.hero.ctaDashboard')}
               </button>
@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
               <>
                 <button
                   onClick={() => navigate('/signup')}
-                  className="px-6 py-3 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 text-white font-medium rounded-lg transition-colors shadow-sm"
+                  className="px-6 py-3 bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 text-white font-medium rounded-lg transition-colors shadow-sm"
                 >
                   {t('home.hero.ctaSignup')}
                 </button>
@@ -120,7 +120,7 @@ const HomePage: React.FC = () => {
 
         {/* Features */}
         <div>
-          <p className="text-xs font-semibold uppercase tracking-widest text-secondary-400 dark:text-secondary-500 text-center mb-8">
+          <p className="text-xs font-semibold uppercase tracking-widest text-secondary-600 dark:text-secondary-300 text-center mb-8">
             {t('dashboard.features')}
           </p>
 
@@ -137,7 +137,7 @@ const HomePage: React.FC = () => {
                   <h3 className="font-semibold text-secondary-900 dark:text-white text-sm mb-1">
                     {t(`features.${f.key}`)}
                   </h3>
-                  <p className="text-xs text-secondary-500 dark:text-secondary-400 leading-relaxed">
+                  <p className="text-xs text-secondary-500 dark:text-secondary-300 leading-relaxed">
                     {t(`features.${f.key}Desc`)}
                   </p>
                 </div>

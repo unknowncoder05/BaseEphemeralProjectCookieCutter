@@ -75,7 +75,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignUp }) =>
           <h1 className="text-2xl font-bold text-secondary-900 dark:text-white">
             {t('auth.login.title')}
           </h1>
-          <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+          <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-300">
             {t('auth.login.subtitle')}
           </p>
         </div>
@@ -137,7 +137,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignUp }) =>
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
                   aria-label={showPassword ? t('auth.hidePassword') : t('auth.showPassword')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-600 dark:text-secondary-300 hover:text-secondary-700 dark:hover:text-secondary-100 transition-colors"
                 >
                   <EyeIcon open={showPassword} />
                 </button>
@@ -159,7 +159,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignUp }) =>
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 px-4 bg-primary-600 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-primary-600 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 bg-primary-700 hover:bg-primary-800 dark:bg-primary-700 dark:hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
             >
               {isLoading && (
                 <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -169,7 +169,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onSwitchToSignUp }) =>
           </form>
         </div>
 
-        <p className="mt-4 text-center text-sm text-secondary-500 dark:text-secondary-400">
+        <p className="mt-4 text-center text-sm text-secondary-500 dark:text-secondary-300">
           {t('auth.login.noAccount')}{' '}
           <button
             type="button"

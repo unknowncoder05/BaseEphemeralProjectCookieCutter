@@ -1,4 +1,5 @@
 """Base settings to build other settings files upon."""
+import importlib.util
 import os
 from datetime import timedelta
 
@@ -76,12 +77,17 @@ THIRD_PARTY_APPS = [
     'pm_utils',
     'pm_billing',
     'pm_ai',
-    'pm_sqlite_snapshots.apps.SQLiteSnapshotsConfig',
 
     "admin_interface",
     "colorfield",
     "django_celery_beat",
 ]
+
+if importlib.util.find_spec('pm_sqlite_snapshots') is not None:
+    THIRD_PARTY_APPS.append('pm_sqlite_snapshots.apps.SQLiteSnapshotsConfig')
+
+if importlib.util.find_spec('pm_github') is not None:
+    THIRD_PARTY_APPS.append('pm_github')
 
 LOCAL_APPS = [
     'api.users.apps.UsersAppConfig',

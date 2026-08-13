@@ -7,7 +7,7 @@ echo "[dev] Waiting for postgres..."
 python /wait_for_postgres.py
 
 echo "[dev] Running migrations..."
-python manage.py migrate --noinput
+python manage.py migrate_with_db_lock --noinput
 
 echo "[dev] Collecting static files..."
 python manage.py collectstatic --noinput --clear

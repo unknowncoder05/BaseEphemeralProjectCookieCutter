@@ -1,8 +1,10 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 const NotFoundPage: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 py-12 px-4 sm:px-6 lg:px-8">
@@ -26,24 +28,24 @@ const NotFoundPage: React.FC = () => {
           </div>
 
           <h2 className="mt-6 text-center text-3xl font-extrabold text-secondary-900 dark:text-secondary-100">
-            Page Not Found
+            {t('notFound.title')}
           </h2>
 
-          <p className="mt-2 text-center text-sm text-secondary-600 dark:text-secondary-400">
-            The page you're looking for doesn't exist or has been moved.
+          <p className="mt-2 text-center text-sm text-secondary-600 dark:text-secondary-300">
+            {t('notFound.description')}
           </p>
 
-          <p className="mt-4 text-center text-xs text-secondary-400 dark:text-secondary-500">
-            Error Code: 404
+          <p className="mt-4 text-center text-xs text-secondary-600 dark:text-secondary-300">
+            {t('notFound.errorCode')}
           </p>
         </div>
 
         <div className="mt-8">
           <button
             onClick={() => navigate('/')}
-            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+            className="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
           >
-            Go to Home
+            {t('notFound.goHome')}
           </button>
         </div>
       </div>

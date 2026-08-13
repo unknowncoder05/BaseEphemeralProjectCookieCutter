@@ -15,7 +15,10 @@ router = SimpleRouter()
 router.register(r'users', UsersViewSet, basename='users')
 router.register(r'auth', AuthViewSet, basename='auth')
 router.register(r'auth', PasswordResetViewSet, basename='auth-password')
-router.register(r'github', GitHubOAuthViewSet, basename='github')
+# PM_GITHUB_START
+if GitHubOAuthViewSet is not None:
+    router.register(r'github', GitHubOAuthViewSet, basename='github')
+# PM_GITHUB_END
 router.register(r'documents_types', DocumentTypeViewSet, basename='documents_types')
 router.register(r'bank', BankViewSet, basename='bank')
 router.register(r'bank_account_type', BankAccountTypeViewSet, basename='account_type')

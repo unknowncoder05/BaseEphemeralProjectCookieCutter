@@ -205,6 +205,34 @@
       "sync": "• Sincronizando la base de datos desde S3"
     }
   },
+  "verification": {
+    "accountTitle": "Verifica tu cuenta",
+    "loginTitle": "Verifica tu inicio de sesión",
+    "subtitle": "Ingresa el código de verificación enviado a tu teléfono",
+    "phoneNumber": "Número de teléfono",
+    "code": "Código de verificación",
+    "codePlaceholder": "Ingresa el código de verificación",
+    "verifying": "Verificando...",
+    "verifyAccount": "Verificar cuenta",
+    "resend": "Reenviar código de verificación",
+    "resent": "Código de verificación reenviado correctamente.",
+    "backToSignup": "Volver al registro",
+    "backToLogin": "Volver al inicio de sesión"
+  },
+  "serverDown": {
+    "title": "Error del servidor",
+    "description": "Estamos experimentando dificultades técnicas. Nuestros servidores no están disponibles.",
+    "retryHint": "Inténtalo de nuevo en unos momentos. Si el problema continúa, contacta soporte.",
+    "retry": "Reintentar",
+    "goHome": "Ir al inicio",
+    "errorCode": "Código de error: 500 - Error interno del servidor"
+  },
+  "notFound": {
+    "title": "Página no encontrada",
+    "description": "La página que buscas no existe o fue movida.",
+    "errorCode": "Código de error: 404",
+    "goHome": "Ir al inicio"
+  },
   "settings": {
     "title": "Configuración",
     "profile": {

@@ -98,7 +98,7 @@ export const CommandPalette: React.FC = () => {
       
       <div className="relative w-full max-w-lg overflow-hidden bg-white dark:bg-secondary-800 rounded-xl shadow-2xl border border-secondary-200 dark:border-secondary-700 mx-4">
         <div className="flex items-center px-4 py-3 border-b border-secondary-100 dark:border-secondary-700">
-          <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="w-5 h-5 text-secondary-600 dark:text-secondary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
           </svg>
           <input
@@ -130,12 +130,12 @@ export const CommandPalette: React.FC = () => {
                 </div>
                 <div className="ml-4 flex-1">
                   <p className="text-sm font-medium text-secondary-900 dark:text-white">{command.name}</p>
-                  <p className="text-xs text-secondary-500 dark:text-secondary-400">{command.description}</p>
+                  <p className="text-xs text-secondary-500 dark:text-secondary-300">{command.description}</p>
                 </div>
                 {command.shortcut && (
                   <div className="flex gap-1 ml-auto">
                     {command.shortcut.map((key) => (
-                      <kbd key={key} className="px-1.5 py-0.5 text-[10px] font-semibold text-secondary-400 bg-secondary-50 dark:bg-secondary-700 border border-secondary-200 dark:border-secondary-600 rounded uppercase">
+                      <kbd key={key} className="px-1.5 py-0.5 text-[10px] font-semibold text-secondary-600 dark:text-secondary-300 bg-secondary-50 dark:bg-secondary-700 border border-secondary-200 dark:border-secondary-600 rounded uppercase">
                         {key}
                       </kbd>
                     ))}
@@ -152,10 +152,10 @@ export const CommandPalette: React.FC = () => {
         
         <div className="px-4 py-3 bg-secondary-50 dark:bg-secondary-800/50 border-t border-secondary-100 dark:border-secondary-700 flex justify-between items-center">
           <div className="flex gap-4">
-            <span className="flex items-center text-[10px] text-secondary-400">
+            <span className="flex items-center text-[10px] text-secondary-600 dark:text-secondary-300">
               <kbd className="mr-1.5 px-1 py-0.5 bg-white dark:bg-secondary-700 border border-secondary-200 dark:border-secondary-600 rounded">{t('commandPalette.enterKey')}</kbd> {t('commandPalette.select')}
             </span>
-            <span className="flex items-center text-[10px] text-secondary-400">
+            <span className="flex items-center text-[10px] text-secondary-600 dark:text-secondary-300">
               <kbd className="mr-1.5 px-1 py-0.5 bg-white dark:bg-secondary-700 border border-secondary-200 dark:border-secondary-600 rounded">{t('commandPalette.arrowKeys')}</kbd> {t('commandPalette.navigate')}
             </span>
           </div>

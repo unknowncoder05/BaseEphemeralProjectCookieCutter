@@ -122,6 +122,42 @@ def replace_project_references():
         print(f"Updated {count} files with project references")
 
 
+def remove_github_integration():
+    """Remove GitHub-related code from the generated project."""
+    print("Removing GitHub integration...")
+
+    # Files to process for block removal
+    files_to_clean = [
+        os.path.join('BackEndApi', 'src', 'api', 'users', 'views', '__init__.py'),
+        os.path.join('BackEndApi', 'src', 'api', 'users', 'urls.py'),
+        os.path.join('frontend', 'src', 'types', 'auth.ts'),
+        os.path.join('frontend', 'src', 'services', 'api.ts'),
+        os.path.join('frontend', 'src', 'pages', 'SettingsPage.tsx'),
+    ]
+
+    for filepath in files_to_clean:
+        if not os.path.exists(filepath):
+            continue
+
+        with open(filepath, 'r', encoding='utf-8') as f:
+            lines = f.readlines()
+
+        new_lines = []
+        skip = False
+        for line in lines:
+            if 'PM_GITHUB_START' in line:
+                skip = True
+                continue
+            if 'PM_GITHUB_END' in line:
+                skip = False
+                continue
+            if not skip:
+                new_lines.append(line)
+
+        with open(filepath, 'w', encoding='utf-8') as f:
+            f.writelines(new_lines)
+
+
 def remove_ai_integration():
     """Remove AI-related files and dependencies if not selected."""
     # Files/directories to remove when AI integration is not selected
@@ -200,6 +236,10 @@ def main():
     if '{{ cookiecutter.use_ai_integration }}' != 'y':
         print("Removing AI integration files...")
         remove_ai_integration()
+
+    # Remove GitHub integration if not selected
+    if '{{ cookiecutter.use_github_integration }}' != 'y':
+        remove_github_integration()
 
     # Initialize git repository
     print("Initializing git repository...")

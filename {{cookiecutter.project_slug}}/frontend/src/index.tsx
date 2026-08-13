@@ -5,6 +5,8 @@ import './i18n';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+document.title = process.env.REACT_APP_PROJECT_NAME || '{{cookiecutter.project_name}}';
+
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

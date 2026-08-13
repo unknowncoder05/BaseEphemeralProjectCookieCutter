@@ -15,10 +15,13 @@ export interface User {
   verified_at?: string;
   created_at: string;
   updated_at: string;
+  // PM_GITHUB_START
   github_username?: string;
   github_connected?: boolean;
+  // PM_GITHUB_END
 }
 
+// PM_GITHUB_START
 export interface GitHubAuthUrlResponse {
   auth_url: string;
   state: string;
@@ -40,6 +43,7 @@ export interface GitHubStatusResponse {
   github_username: string | null;
   github_id: string | null;
 }
+// PM_GITHUB_END
 
 export interface AuthTokens {
   access: string;

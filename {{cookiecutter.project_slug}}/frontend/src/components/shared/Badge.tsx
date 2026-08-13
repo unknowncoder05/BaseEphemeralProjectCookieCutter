@@ -15,7 +15,7 @@ export const Badge: React.FC<BadgeProps> = ({
 }) => {
   const variants = {
     primary: 'bg-primary-50 text-primary-700 border-primary-100 dark:bg-primary-900/30 dark:text-primary-400 dark:border-primary-800',
-    secondary: 'bg-secondary-50 text-secondary-700 border-secondary-100 dark:bg-secondary-900/30 dark:text-secondary-400 dark:border-secondary-800',
+    secondary: 'pm-surface-muted pm-text-muted',
     success: 'bg-success-50 text-success-700 border-success-100 dark:bg-success-900/30 dark:text-success-400 dark:border-success-800',
     danger: 'bg-danger-50 text-danger-700 border-danger-100 dark:bg-danger-900/30 dark:text-danger-400 dark:border-danger-800',
     warning: 'bg-warning-50 text-warning-700 border-warning-100 dark:bg-warning-900/30 dark:text-warning-400 dark:border-warning-800',

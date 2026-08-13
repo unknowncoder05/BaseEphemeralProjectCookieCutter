@@ -19,7 +19,7 @@ const ComponentLibrary: React.FC = () => {
       <div className="max-w-6xl mx-auto space-y-12">
         <header>
           <h1 className="text-3xl font-bold text-secondary-900 dark:text-white">Component Library</h1>
-          <p className="text-secondary-500 dark:text-secondary-400">Professional components for {process.env.REACT_APP_PROJECT_NAME || 'My App'}</p>
+          <p className="text-secondary-500 dark:text-secondary-300">Professional components for {process.env.REACT_APP_PROJECT_NAME || 'My App'}</p>
         </header>
 
         {/* Breadcrumbs */}
@@ -97,10 +97,10 @@ const ComponentLibrary: React.FC = () => {
           <h2 className="text-xl font-semibold text-secondary-800 dark:text-secondary-200 border-b border-secondary-200 dark:border-secondary-700 pb-2">Cards</h2>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <Card title="Default Card" description="A basic card with title and description.">
-              <p className="text-sm text-secondary-600 dark:text-secondary-400">Card content goes here.</p>
+              <p className="text-sm text-secondary-600 dark:text-secondary-300">Card content goes here.</p>
             </Card>
             <Card title="Hoverable Card" description="Move your mouse over this card." hoverable>
-              <p className="text-sm text-secondary-600 dark:text-secondary-400">Perfect for clickable items.</p>
+              <p className="text-sm text-secondary-600 dark:text-secondary-300">Perfect for clickable items.</p>
             </Card>
             <Card className="border-primary-500 dark:border-primary-400">
               <div className="text-center py-4">
@@ -151,7 +151,7 @@ const ComponentLibrary: React.FC = () => {
         </section>
 
         <footer className="pt-12 pb-8 text-center border-t border-secondary-200 dark:border-secondary-700">
-          <p className="text-sm text-secondary-400 italic">Press Ctrl+K to open the Command Palette from anywhere.</p>
+          <p className="text-sm text-secondary-600 dark:text-secondary-300 italic">Press Ctrl+K to open the Command Palette from anywhere.</p>
         </footer>
       </div>
     </div>

@@ -1,9 +1,12 @@
 # ProjectMaker Shared Utilities
-pm-utils @ git+https://github.com/unknowncoder05/pm-utils.git
-pm-auth @ git+https://github.com/unknowncoder05/pm-auth.git
-pm-billing @ git+https://github.com/unknowncoder05/pm-billing.git
-pm-ai @ git+https://github.com/unknowncoder05/pm-ai.git
-pm-sqlite-snapshots @ git+https://github.com/unknowncoder05/pm-sqlite-snapshots.git
+pm-utils @ git+https://github.com/unknowncoder05/pm-utils.git@e8cee022d30a0ff48eb07dfcfaa26c330aadb7c6
+pm-auth @ git+https://github.com/unknowncoder05/pm-auth.git@6d92dcdeb404485b1211debe599e9eb2ed93a288
+{%- if cookiecutter.use_github_integration == 'y' %}
+pm-github @ file:///project/packages/pm-github
+{%- endif %}
+pm-billing @ git+https://github.com/unknowncoder05/pm-billing.git@39102d47ec18264e8a964ba0eafd0e1a84bd7385
+pm-ai @ git+https://github.com/unknowncoder05/pm-ai.git@c53e4e85eacb5d8301661158f49bd81b78def9ea
+pm-sqlite-snapshots @ file:///project/packages/pm-sqlite-snapshots
 
 # Base
 pytz

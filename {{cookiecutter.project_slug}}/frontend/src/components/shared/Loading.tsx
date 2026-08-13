@@ -39,13 +39,13 @@ export const Loading: React.FC<LoadingProps> = ({
           d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
         ></path>
       </svg>
-      {message && <p className="mt-4 text-secondary-600 text-sm">{message}</p>}
+      {message && <p className="mt-4 pm-text-muted text-sm">{message}</p>}
     </div>
   );
 
   if (fullScreen) {
     return (
-      <div className="fixed inset-0 bg-white bg-opacity-75 flex items-center justify-center z-50">
+      <div className="fixed inset-0 bg-white/75 dark:bg-secondary-900/75 flex items-center justify-center z-50">
         {spinner}
       </div>
     );

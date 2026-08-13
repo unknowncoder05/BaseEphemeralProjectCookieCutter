@@ -52,12 +52,12 @@ export const Modal: React.FC<ModalProps> = ({
           onClick={onClose}
         ></div>
 
-        <div className={`relative bg-white rounded-lg shadow-xl ${sizeStyles[size]} w-full`}>
-          <div className="flex items-center justify-between p-6 border-b border-secondary-200">
-            <h3 className="text-xl font-semibold text-secondary-900">{title}</h3>
+        <div className={`relative pm-surface-panel rounded-lg shadow-xl ${sizeStyles[size]} w-full`}>
+          <div className="flex items-center justify-between p-6 border-b border-[var(--border-subtle)]">
+            <h3 className="text-xl font-semibold pm-text-strong">{title}</h3>
             <button
               onClick={onClose}
-              className="text-secondary-400 hover:text-secondary-600 transition-colors"
+              className="pm-text-soft hover:text-[var(--text-strong)] transition-colors"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -70,7 +70,7 @@ export const Modal: React.FC<ModalProps> = ({
           </div>
 
           {footer && (
-            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-secondary-200 bg-secondary-50 rounded-b-lg">
+            <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[var(--border-subtle)] pm-surface-muted rounded-b-lg">
               {footer}
             </div>
           )}

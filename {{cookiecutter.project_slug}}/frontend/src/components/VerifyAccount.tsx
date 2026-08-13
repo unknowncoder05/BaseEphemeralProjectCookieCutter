@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import toast from 'react-hot-toast';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { validateAccount, requestValidateToken, clearError } from '../store/authSlice';
@@ -8,6 +9,7 @@ import { AUTH_PROVIDERS, AuthProvider } from '../utils/constants';
 
 const VerifyAccount: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const { isLoading, error } = useAppSelector((state) => state.auth);
@@ -53,21 +55,21 @@ const VerifyAccount: React.FC = () => {
         provider: provider
       })).unwrap();
 
-      toast.success('Verification code resent successfully!');
+      toast.success(t('verification.resent'));
     } catch (error) {
       // Error is handled by Redux
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-secondary-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen flex items-center justify-center bg-secondary-50 dark:bg-secondary-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
           <h2 className="mt-6 text-center text-3xl font-extrabold text-secondary-900">
-            Verify Your Account
+            {t('verification.accountTitle')}
           </h2>
-          <p className="mt-2 text-center text-sm text-secondary-600">
-            Enter the verification code sent to your phone
+          <p className="mt-2 text-center text-sm text-secondary-600 dark:text-secondary-300">
+            {t('verification.subtitle')}
           </p>
         </div>
 
@@ -75,7 +77,7 @@ const VerifyAccount: React.FC = () => {
           <div className="space-y-4">
             <div>
               <label htmlFor="phone-number" className="block text-sm font-medium text-secondary-700">
-                Phone Number
+                {t('verification.phoneNumber')}
               </label>
               <input
                 id="phone-number"
@@ -91,7 +93,7 @@ const VerifyAccount: React.FC = () => {
 
             <div>
               <label htmlFor="verification-code" className="block text-sm font-medium text-secondary-700">
-                Verification Code
+                {t('verification.code')}
               </label>
               <input
                 id="verification-code"
@@ -99,7 +101,7 @@ const VerifyAccount: React.FC = () => {
                 type="text"
                 required
                 className="mt-1 appearance-none relative block w-full px-3 py-2 border border-secondary-300 placeholder-secondary-500 text-secondary-900 rounded-md focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"
-                placeholder="Enter verification code"
+                placeholder={t('verification.codePlaceholder')}
                 value={verificationCode}
                 onChange={(e) => setVerificationCode(e.target.value)}
               />
@@ -116,15 +118,15 @@ const VerifyAccount: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-700 hover:bg-primary-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isLoading ? (
                 <div className="flex items-center">
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                  Verifying...
+                  {t('verification.verifying')}
                 </div>
               ) : (
-                'Verify Account'
+                t('verification.verifyAccount')
               )}
             </button>
           </div>
@@ -135,18 +137,18 @@ const VerifyAccount: React.FC = () => {
             type="button"
             onClick={handleResendCode}
             disabled={isLoading || !phoneNumber.trim()}
-            className="text-sm text-primary-600 hover:text-primary-500 disabled:text-secondary-400"
+            className="text-sm text-primary-600 hover:text-primary-500 disabled:text-secondary-600 dark:text-secondary-300"
           >
-            Resend verification code
+            {t('verification.resend')}
           </button>
 
           <div>
             <button
               type="button"
               onClick={() => navigate('/signup')}
-              className="text-sm text-secondary-600 hover:text-secondary-500"
+              className="text-sm text-secondary-600 dark:text-secondary-300 hover:text-secondary-500"
             >
-              Back to sign up
+              {t('verification.backToSignup')}
             </button>
           </div>
         </div>

@@ -35,7 +35,7 @@ export const Input: React.FC<InputProps> = ({
         <p className="mt-1 text-xs text-danger-600 dark:text-danger-400">{error}</p>
       )}
       {helperText && !error && (
-        <p className="mt-1 text-xs text-secondary-500 dark:text-secondary-400">{helperText}</p>
+        <p className="mt-1 text-xs text-secondary-500 dark:text-secondary-300">{helperText}</p>
       )}
     </div>
   );

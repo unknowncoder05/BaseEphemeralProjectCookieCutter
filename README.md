@@ -1,3 +1,5 @@
+![Template preview](docs/template-preview.svg)
+
 # Full-Stack Web Application Cookiecutter Template
 
 A production-ready Cookiecutter template for full-stack web applications featuring:
@@ -44,7 +46,8 @@ cookiecutter /path/to/BaseEphemeralCookieCutter
 | `aws_region` | us-east-1 | AWS region for deployment |
 | `timezone` | America/New_York | Default timezone |
 | `use_ai_integration` | y | Include OpenAI/Anthropic SDK dependencies (y/n) |
-| `python_version` | 3.11 | Python version for Docker images |
+| `use_github_integration` | y | Include GitHub OAuth integration (y/n) |
+| `python_version` | 3.11 | Python version to use in Docker/CI |
 | `node_version` | 20 | Node.js version for Docker images |
 
 ## Generated Project Structure
@@ -55,7 +58,7 @@ cookiecutter /path/to/BaseEphemeralCookieCutter
 ├── BackEndApi/              # Django REST backend
 │   ├── src/
 │   │   ├── api/
-│   │   │   ├── items/      # Example CRUD module — use as pattern for new modules
+│   │   │   ├── items/      # Removable scaffold CRUD module — use as pattern for new modules
 │   │   │   ├── users/      # Authentication, profiles, GitHub OAuth
 │   │   │   ├── ws/         # WebSocket consumer
 │   │   │   └── utils/      # Health check, keep-alive
@@ -121,7 +124,7 @@ cookiecutter /path/to/BaseEphemeralCookieCutter
 - Celery background task processing with Redis as broker
 - S3 integration for file uploads
 - GitHub OAuth integration
-- Example CRUD module (`items`) demonstrating ViewSet, serializer, service layer, and Celery task patterns
+- Removable scaffold CRUD module (`items`) demonstrating ViewSet, serializer, service layer, and Celery task patterns; replace or delete it when the product domain is defined.
 - pytest setup with fixtures and factories
 
 ### Frontend (React)

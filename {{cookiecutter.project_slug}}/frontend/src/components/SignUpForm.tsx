@@ -108,7 +108,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
           <h1 className="text-2xl font-bold text-secondary-900 dark:text-white">
             {t('auth.signup.title')}
           </h1>
-          <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-400">
+          <p className="mt-1 text-sm text-secondary-500 dark:text-secondary-300">
             {t('auth.signup.subtitle')}
           </p>
         </div>
@@ -159,7 +159,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
             <div>
               <label htmlFor="middle_name" className="block text-sm font-medium text-secondary-700 dark:text-secondary-300 mb-1">
                 {t('auth.signup.middleName')}
-                <span className="ml-1 text-xs font-normal text-secondary-400 dark:text-secondary-500">
+                <span className="ml-1 text-xs font-normal text-secondary-600 dark:text-secondary-300">
                   ({t('auth.signup.optional')})
                 </span>
               </label>
@@ -211,7 +211,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
                   type="button"
                   onClick={() => setShowPw((v) => !v)}
                   aria-label={showPw ? t('auth.hidePassword') : t('auth.showPassword')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-600 dark:text-secondary-300 hover:text-secondary-700 dark:hover:text-secondary-100 transition-colors"
                 >
                   <EyeIcon open={showPw} />
                 </button>
@@ -219,7 +219,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
               {errors.password ? (
                 <p className="mt-1 text-xs text-red-500 dark:text-red-400">{errors.password}</p>
               ) : (
-                <p className="mt-1 text-xs text-secondary-400 dark:text-secondary-500">{t('auth.signup.passwordHint')}</p>
+                <p className="mt-1 text-xs text-secondary-600 dark:text-secondary-300">{t('auth.signup.passwordHint')}</p>
               )}
               {form.password.length > 0 && (
                 <div className="mt-2">
@@ -233,7 +233,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
                       />
                     ))}
                   </div>
-                  <p className="mt-1 text-xs text-secondary-400 dark:text-secondary-500">
+                  <p className="mt-1 text-xs text-secondary-600 dark:text-secondary-300">
                     {t(`auth.signup.passwordStrength.${STRENGTH_KEY[strength]}`)}
                   </p>
                 </div>
@@ -260,7 +260,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
                   type="button"
                   onClick={() => setShowPwConfirm((v) => !v)}
                   aria-label={showPwConfirm ? t('auth.hidePassword') : t('auth.showPassword')}
-                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-400 dark:text-secondary-500 hover:text-secondary-600 dark:hover:text-secondary-300 transition-colors"
+                  className="absolute inset-y-0 right-0 pr-3 flex items-center text-secondary-600 dark:text-secondary-300 hover:text-secondary-700 dark:hover:text-secondary-100 transition-colors"
                 >
                   <EyeIcon open={showPwConfirm} />
                 </button>
@@ -280,7 +280,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full py-2.5 px-4 bg-success-500 hover:bg-primary-700 dark:bg-primary-500 dark:hover:bg-success-500 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
+              className="w-full py-2.5 px-4 bg-success-700 hover:bg-success-800 dark:bg-primary-700 dark:hover:bg-primary-800 disabled:opacity-50 disabled:cursor-not-allowed text-white font-medium rounded-lg text-sm transition-colors flex items-center justify-center gap-2"
             >
               {isLoading && (
                 <span className="inline-block w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -290,7 +290,7 @@ const SignUpForm: React.FC<SignUpFormProps> = ({ onSuccess, onSwitchToLogin }) =
           </form>
         </div>
 
-        <p className="mt-4 text-center text-sm text-secondary-500 dark:text-secondary-400">
+        <p className="mt-4 text-center text-sm text-secondary-500 dark:text-secondary-300">
           {t('auth.signup.hasAccount')}{' '}
           <button
             type="button"
