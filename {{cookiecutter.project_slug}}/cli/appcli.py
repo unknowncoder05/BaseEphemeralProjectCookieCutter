@@ -23,7 +23,7 @@ def manifest():
     required = ("app_id", "api_url", "health_path", "login_path")
     if not isinstance(value, dict) or any(not isinstance(value.get(key), str) or not value[key] for key in required):
         raise ValueError("CLI manifest must define non-empty " + ", ".join(required))
-    if not re.match(r"^[A-Za-z0-9][A-Za-z0-9._-]*$", value["app_id"]):
+    if not re.fullmatch(r"\w[\w.-]*", value["app_id"]):
         raise ValueError("CLI manifest app_id contains unsafe characters")
     return value
 
