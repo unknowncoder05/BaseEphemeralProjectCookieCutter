@@ -273,3 +273,14 @@ When an agent runs testing or smoke validation for this template, run these chec
 3. End-to-end tests: `npm run test:e2e:ci`
 
 These checks are wired into `projectmaker.yml` `smoke_test.steps` and `projectmaker.dev.yml` (`test_contract` and `test_e2e` commands), and should not be skipped.
+
+## Backend application CLI
+
+This project includes `./cli/app`, a dependency-free Python CLI for its own
+backend. Run `./cli/app --help` and read [cli/README.md](cli/README.md) for
+login, API requests, uploads, downloads, and configuring a deployed API URL.
+The CLI uses the backend's normal authorization; it does not access the database
+directly. Extend the CLI and its tests alongside new application workflows.
+
+`python3 scripts/check-app-cli.py` checks the CLI without a running application.
+It runs during template generation and in the required pre-commit gate.

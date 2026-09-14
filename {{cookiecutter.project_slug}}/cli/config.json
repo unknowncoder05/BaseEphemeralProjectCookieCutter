@@ -1,0 +1,7 @@
+{
+  "app_id": "{{ cookiecutter.project_slug }}",
+  "api_url": "http://localhost:8000/api/v1",
+  "health_path": "health/",
+  "login_path": "auth/login/",
+  "schema_path": "schema/"
+}

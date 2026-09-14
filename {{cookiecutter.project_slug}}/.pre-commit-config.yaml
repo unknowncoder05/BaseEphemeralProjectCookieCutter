@@ -44,3 +44,9 @@ repos:
         language: system
         files: ^frontend/.*\.(css|html|js|jsx|json|ts|tsx)$
         pass_filenames: false
+      - id: app-cli-contract
+        name: Application backend CLI contract
+        entry: python3 scripts/check-app-cli.py
+        language: system
+        pass_filenames: false
+        always_run: true

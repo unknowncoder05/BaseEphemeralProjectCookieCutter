@@ -3,6 +3,7 @@
 import os
 import shutil
 import subprocess
+import sys
 import json
 
 # Template variables (these will be replaced by Jinja2)
@@ -240,6 +241,9 @@ def main():
     # Remove GitHub integration if not selected
     if '{{ cookiecutter.use_github_integration }}' != 'y':
         remove_github_integration()
+
+    # An app without its backend CLI is not a complete template render.
+    subprocess.run([sys.executable, "scripts/check-app-cli.py"], check=True)
 
     # Initialize git repository
     print("Initializing git repository...")
