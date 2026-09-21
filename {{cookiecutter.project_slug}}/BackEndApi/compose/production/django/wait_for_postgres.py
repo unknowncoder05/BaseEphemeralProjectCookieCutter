@@ -4,8 +4,8 @@ from time import time, sleep
 
 import psycopg2
 
-check_timeout = os.getenv("DB_CHECK_TIMEOUT", 30)
-check_interval = os.getenv("DB_CHECK_INTERVAL", 1)
+check_timeout = float(os.getenv("DB_CHECK_TIMEOUT", "30"))
+check_interval = float(os.getenv("DB_CHECK_INTERVAL", "1"))
 interval_unit = "second" if check_interval == 1 else "seconds"
 config = {
     "dbname": os.getenv("POSTGRES_DB", "postgres"),
@@ -35,4 +35,4 @@ def pg_isready(host, user, password, dbname):
     return False
 
 
-pg_isready(**config)
+raise SystemExit(0 if pg_isready(**config) else 1)

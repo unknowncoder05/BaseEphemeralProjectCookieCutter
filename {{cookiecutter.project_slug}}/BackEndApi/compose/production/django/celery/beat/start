@@ -4,5 +4,7 @@ set -o errexit
 set -o pipefail
 set -o nounset
 
+/wait-for-schema
+
 rm -f './celerybeat.pid'
-celery -A config.celery_app beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler
+exec celery -A config.celery_app beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler

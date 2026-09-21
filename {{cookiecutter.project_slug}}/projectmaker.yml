@@ -52,6 +52,36 @@ commands:
     run: "python manage.py test --verbosity 2"
     service: backend
 
+  dbsnapshot_export:
+    label: "Export Database Snapshot"
+    description: "Export the current SQLite database to private object storage."
+    run: "python manage.py dbsnapshot_export"
+    service: backend
+
+  dbsnapshot_bootstrap:
+    label: "Initialize First Database Snapshot"
+    description: "New projects only: verify this namespace is empty, apply migrations, and export the first SQLite snapshot. Never use to recover missing existing data."
+    run: "python manage.py dbsnapshot_bootstrap"
+    service: backend
+
+  dbsnapshot_restore:
+    label: "Restore Latest Database Snapshot"
+    description: "Restore the latest SQLite database snapshot from private object storage."
+    run: "python manage.py dbsnapshot_restore --latest"
+    service: backend
+
+  dbsnapshot_list:
+    label: "List Database Snapshots"
+    description: "List available private SQLite database snapshots."
+    run: "python manage.py dbsnapshot_list"
+    service: backend
+
+  dbsnapshot_prune:
+    label: "Prune Database Snapshots"
+    description: "Apply the configured retention policy to SQLite database snapshots."
+    run: "python manage.py dbsnapshot_prune"
+    service: backend
+
   test_e2e:
     label: "Run E2E Tests"
     description: "Execute mocked Playwright UI tests without backend contract generation."
@@ -178,6 +208,24 @@ resources:
         provider: s3
         access: private
         public_read: false
+
+capabilities:
+  - id: durable-sqlite-snapshots
+    version: "1.0"
+    status: available
+    package:
+      name: pm-sqlite-snapshots
+      source: git+https://github.com/unknowncoder05/pm-sqlite-snapshots.git@5ea32b81d58847ca877056a39331877020b768be
+    summary: "Preserves SQLite state for a single-writer ephemeral deployment by restoring and exporting encrypted object-storage snapshots."
+    supported_workloads: [single_writer, preview, demo, low_volume]
+    not_suitable_for: [multi_replica, high_write_concurrency, high_value_production_data]
+    required_resources: [storage.private_media]
+    required_settings: [DB_ENGINE, SQLITE_DATABASE_PATH, SQLITE_SNAPSHOTS_ENABLED, SQLITE_SNAPSHOTS_S3_BUCKET]
+    commands: [dbsnapshot_bootstrap, dbsnapshot_export, dbsnapshot_restore, dbsnapshot_list, dbsnapshot_prune]
+    verification:
+      - "Verify the package imports in the production image."
+      - "Verify all stateful services use the same SQLite file."
+      - "Verify a saved record survives complete host replacement without paid provider work."
 
 services:
 
@@ -845,6 +893,7 @@ services:
           - "pm_sqlite_snapshots.storage.local.LocalSnapshotStorage"
 
       SQLITE_SNAPSHOTS_S3_BUCKET: &sqlite_snapshots_s3_bucket
+        durable_identity: {group: sqlite_snapshots, role: bucket}
         type: string
         label: "SQLite Snapshot S3 Bucket"
         description: "Private S3 bucket used for SQLite snapshot archives."
@@ -854,13 +903,14 @@ services:
         default: "{{resources.storage.private_media.bucket_name}}"
 
       SQLITE_SNAPSHOTS_S3_PREFIX: &sqlite_snapshots_s3_prefix
+        durable_identity: {group: sqlite_snapshots, role: prefix}
         type: string
         label: "SQLite Snapshot S3 Prefix"
         description: "S3 key prefix for SQLite snapshot archives."
         placeholder: "my-app/sqlite/"
         section: Storage
         required: false
-        default: "{{project_slug}}/sqlite/"
+        default: "__CODESWARM_STORAGE_SLUG__/sqlite/"
 
       SQLITE_SNAPSHOTS_INTERVAL_SECONDS: &sqlite_snapshots_interval
         type: number
@@ -902,7 +952,7 @@ services:
         description: "Fail startup when restore is enabled and no snapshot exists."
         section: Storage
         required: false
-        default: "false"
+        default: "true"
 
       SQLITE_SNAPSHOTS_KEEP_LAST: &sqlite_snapshots_keep_last
         type: number
