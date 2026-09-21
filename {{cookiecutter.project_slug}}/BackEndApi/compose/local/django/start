@@ -3,8 +3,7 @@
 set -o errexit
 set -o pipefail
 set -o nounset
-echo "Wait for postgres"
-python /wait_for_postgres.py &&
-#python manage.py migrate &&
+/wait-for-schema
+
 echo "Starting uvicorn (ASGI server with WebSocket support and auto-reload)..."
-uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --reload
+exec uvicorn config.asgi:application --host 0.0.0.0 --port 8000 --reload

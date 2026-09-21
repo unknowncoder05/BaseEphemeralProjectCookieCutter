@@ -62,6 +62,7 @@ def replace_project_references():
         'myproject': PROJECT_SLUG,
         'my-project': PROJECT_SLUG_DASHED,
         '{{cookiecutter.project_name}}': PROJECT_NAME,
+        '__CODESWARM_STORAGE_SLUG__': PROJECT_SLUG,
         # Legacy names that might still exist
         'BaseEphemeralCookieCutter': PROJECT_SLUG,
         'base-ephemeral-cookiecutter': PROJECT_SLUG_DASHED,

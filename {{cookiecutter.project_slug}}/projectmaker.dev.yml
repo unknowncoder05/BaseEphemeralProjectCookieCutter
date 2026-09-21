@@ -678,6 +678,7 @@ services:
           - "pm_sqlite_snapshots.storage.local.LocalSnapshotStorage"
 
       SQLITE_SNAPSHOTS_S3_BUCKET: &sqlite_snapshots_s3_bucket_dev
+        durable_identity: {group: sqlite_snapshots, role: bucket}
         type: string
         label: "SQLite Snapshot S3 Bucket"
         description: "Private S3 bucket used for SQLite snapshot archives."
@@ -686,12 +687,13 @@ services:
         default: "{{resources.storage.private_media.bucket_name}}"
 
       SQLITE_SNAPSHOTS_S3_PREFIX: &sqlite_snapshots_s3_prefix_dev
+        durable_identity: {group: sqlite_snapshots, role: prefix}
         type: string
         label: "SQLite Snapshot S3 Prefix"
         description: "S3 key prefix for SQLite snapshot archives."
         section: Storage
         required: false
-        default: "{{project_slug}}/sqlite/"
+        default: "__CODESWARM_STORAGE_SLUG__/sqlite/"
 
       SQLITE_SNAPSHOTS_INTERVAL_SECONDS: &sqlite_snapshots_interval_dev
         type: number
@@ -733,7 +735,7 @@ services:
         description: "Fail startup when restore is enabled and no snapshot exists."
         section: Storage
         required: false
-        default: "false"
+        default: "true"
 
       SQLITE_SNAPSHOTS_KEEP_LAST: &sqlite_snapshots_keep_last_dev
         type: number

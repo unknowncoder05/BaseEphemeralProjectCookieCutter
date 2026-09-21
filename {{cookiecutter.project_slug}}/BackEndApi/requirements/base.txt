@@ -6,7 +6,7 @@ pm-github @ file:///project/packages/pm-github
 {%- endif %}
 pm-billing @ git+https://github.com/unknowncoder05/pm-billing.git@39102d47ec18264e8a964ba0eafd0e1a84bd7385
 pm-ai @ git+https://github.com/unknowncoder05/pm-ai.git@c53e4e85eacb5d8301661158f49bd81b78def9ea
-pm-sqlite-snapshots @ file:///project/packages/pm-sqlite-snapshots
+pm-sqlite-snapshots @ git+https://github.com/unknowncoder05/pm-sqlite-snapshots.git@5ea32b81d58847ca877056a39331877020b768be
 
 # Base
 pytz

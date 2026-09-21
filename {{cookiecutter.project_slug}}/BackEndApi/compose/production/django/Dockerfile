@@ -37,6 +37,11 @@ COPY ./compose/production/django/celery/beat/start /start-celerybeat
 RUN sed -i 's/\r$//g' /start-celerybeat
 RUN chmod +x /start-celerybeat
 
+COPY ./compose/production/django/wait_for_postgres.py /wait_for_postgres.py
+COPY ./compose/common/django/wait-for-schema /wait-for-schema
+RUN sed -i 's/\r$//g' /wait-for-schema
+RUN chmod +x /wait-for-schema
+
 COPY ./compose/production/django/db-sync.sh /db-sync.sh
 RUN sed -i 's/\r//' /db-sync.sh
 RUN chmod +x /db-sync.sh
