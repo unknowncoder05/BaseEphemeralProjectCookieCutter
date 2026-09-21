@@ -42,6 +42,9 @@ RUN pip install -r /requirements/local.txt
 COPY ./compose/production/django/wait_for_postgres.py /wait_for_postgres.py
 # RUN chmod +x /wait_for_postgres.py
 
+COPY ./compose/common/django/wait-for-schema /wait-for-schema
+RUN chmod +x /wait-for-schema
+
 COPY ./compose/local/django/start /start
 RUN sed -i 's/\r//' /start
 RUN chmod +x /start

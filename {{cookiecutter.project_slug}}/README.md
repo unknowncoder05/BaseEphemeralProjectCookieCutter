@@ -2,6 +2,17 @@
 
 {{ cookiecutter.description }}
 
+## First SQLite Snapshot
+
+When opting into SQLite snapshots for a new project, run the deployment's
+`dbsnapshot_bootstrap` command before starting the web process. It checks
+that the namespace is empty, applies migrations, and exports the first
+snapshot using a one-shot container, so the web service need not be running.
+Confirm the snapshot appears with `dbsnapshot_list` before starting the app.
+This is a one-time operator action, not a setting to leave enabled. If an existing
+project reports a missing snapshot, recover its original bucket and prefix;
+do not export an empty replacement database.
+
 Full-stack web application with a **Django REST + WebSocket backend**, a **React 19 + TypeScript frontend**, **Celery** for background tasks, **PostgreSQL**, and **Redis**.
 
 ## Tech Stack

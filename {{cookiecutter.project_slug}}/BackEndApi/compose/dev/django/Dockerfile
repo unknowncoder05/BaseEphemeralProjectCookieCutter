@@ -29,9 +29,10 @@ COPY compose/dev/django/entrypoint.sh        /entrypoint.sh
 COPY compose/dev/django/start                /start
 COPY compose/dev/django/celery/worker/start  /start-celeryworker
 COPY compose/dev/django/celery/beat/start    /start-celerybeat
+COPY compose/common/django/wait-for-schema   /wait-for-schema
 COPY compose/production/django/wait_for_postgres.py /wait_for_postgres.py
 
-RUN chmod +x /entrypoint.sh /start /start-celeryworker /start-celerybeat
+RUN chmod +x /entrypoint.sh /start /start-celeryworker /start-celerybeat /wait-for-schema
 
 # Source will be overlaid by the bind mount at runtime
 WORKDIR /project/BackEndApi/src

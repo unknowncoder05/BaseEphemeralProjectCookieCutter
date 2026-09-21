@@ -68,22 +68,32 @@ if DATABASES['default']['ENGINE'] == 'postgres':
     DATABASES['default']['ENGINE'] = 'django.db.backends.postgresql'
 
 _sqlite_snapshot_s3_bucket = os.getenv('SQLITE_SNAPSHOTS_S3_BUCKET', '')
+def _snapshot_bool(name, default=False):
+    return os.getenv(name, str(default)).strip().lower() in ('true', '1', 'yes', 'on')
+
+
+_sqlite_snapshot_prefix = os.getenv('SQLITE_SNAPSHOTS_S3_PREFIX', '{{ cookiecutter.project_slug }}/sqlite/')
+if _snapshot_bool('SQLITE_SNAPSHOTS_ENABLED') and any(
+    token in _sqlite_snapshot_prefix for token in ('{' * 2, '}' * 2, '{' + '%', '%' + '}')
+):
+    raise ValueError('SQLite snapshot prefix must be a rendered, stable identity')
 if _sqlite_snapshot_s3_bucket.startswith('{% raw %}{{resources.{% endraw %}'):
     _sqlite_snapshot_s3_bucket = ''
 
 SQLITE_SNAPSHOTS = {
-    'ENABLED': os.getenv('SQLITE_SNAPSHOTS_ENABLED', 'False') == 'True',
+    'ENABLED': _snapshot_bool('SQLITE_SNAPSHOTS_ENABLED'),
     'DATABASE_ALIAS': os.getenv('SQLITE_SNAPSHOTS_DATABASE_ALIAS', 'default'),
     'INTERVAL_SECONDS': int(os.getenv('SQLITE_SNAPSHOTS_INTERVAL_SECONDS', '300')),
-    'EXPORT_ON_SHUTDOWN': os.getenv('SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN', 'True') == 'True',
-    'RESTORE_ON_STARTUP': os.getenv('SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP', 'True') == 'True',
-    'RESTORE_IF_DB_MISSING': os.getenv('SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING', 'True') == 'True',
-    'FAIL_STARTUP_IF_RESTORE_MISSING': os.getenv('SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING', 'False') == 'True',
+    'EXPORT_ON_SHUTDOWN': _snapshot_bool('SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN', True),
+    'RESTORE_ON_STARTUP': True,
+    'RESTORE_IF_DB_MISSING': _snapshot_bool('SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING', True),
+    'FAIL_STARTUP_IF_RESTORE_MISSING': True,
+    'REQUIRE_IDENTITY_RECEIPT': True,
     'LOCK_PATH': os.getenv('SQLITE_SNAPSHOTS_LOCK_PATH', '/tmp/pm_sqlite_snapshots.lock'),
     'STORAGE': {
         'BACKEND': os.getenv('SQLITE_SNAPSHOTS_STORAGE_BACKEND', 'pm_sqlite_snapshots.storage.s3.S3SnapshotStorage'),
         'BUCKET': _sqlite_snapshot_s3_bucket or os.getenv('AWS_PRIVATE_STORAGE_BUCKET_NAME', ''),
-        'PREFIX': os.getenv('SQLITE_SNAPSHOTS_S3_PREFIX', '{{ cookiecutter.project_slug }}/sqlite/'),
+        'PREFIX': _sqlite_snapshot_prefix,
         'REGION': os.getenv('AWS_REGION', os.getenv('AWS_REGION_NAME', 'us-east-1')),
         'PATH': os.getenv('SQLITE_SNAPSHOTS_LOCAL_PATH', '/tmp/sqlite-snapshots'),
     },
@@ -91,6 +101,8 @@ SQLITE_SNAPSHOTS = {
         'KEEP_LAST': int(os.getenv('SQLITE_SNAPSHOTS_KEEP_LAST', '20')),
     },
 }
+if DATABASES['default']['ENGINE'] == 'django.db.backends.sqlite3' and not SQLITE_SNAPSHOTS['ENABLED']:
+    raise ValueError('Production SQLite requires enabled durable snapshots')
 
 # Static  files
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
