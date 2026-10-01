@@ -1,6 +1,13 @@
 {% raw %}
 version: "1"
 
+# Rebuildable dependency caches are not application data.
+volumes:
+  pm_dev_frontend_node_modules:
+    persistence: ephemeral
+  playwright_node_modules:
+    persistence: ephemeral
+
 # Development variant — bind-mounted source, hot-reload servers, cached deps.
 # Used automatically when deployment.environment == 'development'.
 #
