@@ -473,35 +473,6 @@ services:
               label: "Primario 900"
               description: "Tono primario más oscuro — usado para texto de alto contraste y acentos profundos."
 
-    port: 80
-    public: true
-    route: /
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 10s
-    env:
-
-      # ── Application ──────────────────────────────────────────────────────
-      BACKEND_URL:
-        type: url
-        label: "Internal Backend URL"
-        description: "Docker-internal URL used by Nginx to proxy /api requests to the backend service. Should use the Docker Compose service name, not localhost."
-        placeholder: "{{backend.internal_url}}"
-        section: Application
-        required: false
-        default: "{{backend.internal_url}}"
-        translations:
-          es:
-            label: "URL interna del backend"
-            description: "URL interna de Docker usada por Nginx para hacer proxy de las solicitudes /api al servicio backend. Usar el nombre del servicio Docker Compose, no localhost."
-
-  # ──────────────────────────────────────────────────────────────────────────
-  # Backend — Django REST Framework + Channels + Celery
-  # ──────────────────────────────────────────────────────────────────────────
-        # ── Theme ──────────────────────────────────────────────────────────────
         # ── Secondary Theme (Neutrals) ──────────────────────────────────────────
         REACT_APP_SECONDARY_50:
           type: color
@@ -624,6 +595,36 @@ services:
           type: color
           section: Theme
           default: "{{resources.theme.info_600}}"
+
+    port: 80
+    public: true
+    route: /
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    env:
+
+      # ── Application ──────────────────────────────────────────────────────
+      BACKEND_URL:
+        type: url
+        label: "Internal Backend URL"
+        description: "Docker-internal URL used by Nginx to proxy /api requests to the backend service. Should use the Docker Compose service name, not localhost."
+        placeholder: "{{backend.internal_url}}"
+        section: Application
+        required: false
+        default: "{{backend.internal_url}}"
+        translations:
+          es:
+            label: "URL interna del backend"
+            description: "URL interna de Docker usada por Nginx para hacer proxy de las solicitudes /api al servicio backend. Usar el nombre del servicio Docker Compose, no localhost."
+
+  # ──────────────────────────────────────────────────────────────────────────
+  # Backend — Django REST Framework + Channels + Celery
+  # ──────────────────────────────────────────────────────────────────────────
+        # ── Theme ──────────────────────────────────────────────────────────────
   playwright:
     type: internal
     cpu: 0.25
@@ -632,7 +633,7 @@ services:
     working_dir: /app
     profiles:
       - test
-    command: sh -c "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"
+    command: ["sh", "-c", "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"]
     depends_on:
       - frontend
     volumes:
@@ -1207,7 +1208,7 @@ services:
     build:
       context: ./BackEndApi
       dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery worker --loglevel=info
+    command: ["celery", "-A", "config.celery", "worker", "--loglevel=info"]
     healthcheck:
       test: ["CMD-SHELL", "celery -A config.celery inspect ping --timeout 5"]
       interval: 30s
@@ -1400,7 +1401,7 @@ services:
     build:
       context: ./BackEndApi
       dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: ["celery", "-A", "config.celery", "beat", "--loglevel=info", "--scheduler", "django_celery_beat.schedulers:DatabaseScheduler"]
     healthcheck:
       test: ["CMD-SHELL", "kill -0 1"]
       interval: 60s
@@ -1621,7 +1622,7 @@ services:
     memory: 512
     order: 6
     image: redis:7-alpine
-    command: redis-server --appendonly yes
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
       - redis_data:/data
 {% endraw %}

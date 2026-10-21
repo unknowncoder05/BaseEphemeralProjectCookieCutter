@@ -348,135 +348,135 @@ services:
   # ────────────────────────────────────────────────────────────────────────────
   # Backend — Django + uvicorn --reload (hot-reload on source change)
   # ────────────────────────────────────────────────────────────────────────────
-        # ── Secondary Theme (Neutrals) ──────────────────────────────────────────
-        REACT_APP_SECONDARY_50:
-          type: color
-          label: "Secondary 50"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_50}}"
+      # ── Secondary Theme (Neutrals) ──────────────────────────────────────────
+      REACT_APP_SECONDARY_50:
+        type: color
+        label: "Secondary 50"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_50}}"
 
-        REACT_APP_SECONDARY_100:
-          type: color
-          label: "Secondary 100"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_100}}"
+      REACT_APP_SECONDARY_100:
+        type: color
+        label: "Secondary 100"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_100}}"
 
-        REACT_APP_SECONDARY_200:
-          type: color
-          label: "Secondary 200"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_200}}"
+      REACT_APP_SECONDARY_200:
+        type: color
+        label: "Secondary 200"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_200}}"
 
-        REACT_APP_SECONDARY_300:
-          type: color
-          label: "Secondary 300"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_300}}"
+      REACT_APP_SECONDARY_300:
+        type: color
+        label: "Secondary 300"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_300}}"
 
-        REACT_APP_SECONDARY_400:
-          type: color
-          label: "Secondary 400"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_400}}"
+      REACT_APP_SECONDARY_400:
+        type: color
+        label: "Secondary 400"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_400}}"
 
-        REACT_APP_SECONDARY_500:
-          type: color
-          label: "Secondary 500"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_500}}"
+      REACT_APP_SECONDARY_500:
+        type: color
+        label: "Secondary 500"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_500}}"
 
-        REACT_APP_SECONDARY_600:
-          type: color
-          label: "Secondary 600"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_600}}"
+      REACT_APP_SECONDARY_600:
+        type: color
+        label: "Secondary 600"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_600}}"
 
-        REACT_APP_SECONDARY_700:
-          type: color
-          label: "Secondary 700"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_700}}"
+      REACT_APP_SECONDARY_700:
+        type: color
+        label: "Secondary 700"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_700}}"
 
-        REACT_APP_SECONDARY_800:
-          type: color
-          label: "Secondary 800"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_800}}"
+      REACT_APP_SECONDARY_800:
+        type: color
+        label: "Secondary 800"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_800}}"
 
-        REACT_APP_SECONDARY_900:
-          type: color
-          label: "Secondary 900"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_900}}"
-        # ── Functional Colors ──────────────────────────────────────────────────
-        REACT_APP_SUCCESS_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_50}}"
-        REACT_APP_SUCCESS_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_500}}"
-        REACT_APP_SUCCESS_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_600}}"
+      REACT_APP_SECONDARY_900:
+        type: color
+        label: "Secondary 900"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_900}}"
+      # ── Functional Colors ──────────────────────────────────────────────────
+      REACT_APP_SUCCESS_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_50}}"
+      REACT_APP_SUCCESS_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_500}}"
+      REACT_APP_SUCCESS_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_600}}"
 
-        REACT_APP_DANGER_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_50}}"
-        REACT_APP_DANGER_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_500}}"
-        REACT_APP_DANGER_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_600}}"
+      REACT_APP_DANGER_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_50}}"
+      REACT_APP_DANGER_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_500}}"
+      REACT_APP_DANGER_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_600}}"
 
-        REACT_APP_WARNING_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_50}}"
-        REACT_APP_WARNING_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_500}}"
-        REACT_APP_WARNING_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_600}}"
+      REACT_APP_WARNING_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_50}}"
+      REACT_APP_WARNING_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_500}}"
+      REACT_APP_WARNING_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_600}}"
 
-        REACT_APP_INFO_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_50}}"
-        REACT_APP_INFO_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_500}}"
-        REACT_APP_INFO_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_600}}"
+      REACT_APP_INFO_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_50}}"
+      REACT_APP_INFO_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_500}}"
+      REACT_APP_INFO_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_600}}"
   playwright:
     type: internal
     cpu: 0.25
     memory: 512
     image: mcr.microsoft.com/playwright:v1.59.1-jammy
     working_dir: /app
-    command: sh -c "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"
+    command: ["sh", "-c", "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"]
     depends_on:
       - frontend
     volumes:
