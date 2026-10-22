@@ -46,12 +46,8 @@ x-backend-base: &backend-base
   volumes:
     - .:/project                  # full repo bind-mount (read-write for manage.py artifacts)
     - dev_python_venv:/venv       # cached pip packages — survives restarts
-    - ./packages/pm-utils/pm_utils:/venv/lib/python3.12/site-packages/pm_utils
-    - ./packages/pm-auth/pm_auth:/venv/lib/python3.12/site-packages/pm_auth
-    - ./packages/pm-billing/pm_billing:/venv/lib/python3.12/site-packages/pm_billing
-    - ./packages/pm-ai/pm_ai:/venv/lib/python3.12/site-packages/pm_ai
-    - ./packages/pm-github/pm_github:/venv/lib/python3.12/site-packages/pm_github
-    - ./packages/pm-sqlite-snapshots/pm_sqlite_snapshots:/venv/lib/python3.12/site-packages/pm_sqlite_snapshots
+    # Use the declared installed dependencies. Missing host package directories
+    # must not become empty mounts that hide their installed Python modules.
   depends_on:
     postgres:
       condition: service_healthy
