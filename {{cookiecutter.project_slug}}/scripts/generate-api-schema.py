@@ -22,9 +22,12 @@ def main():
             '--format', 'openapi-json', '--validate',
             '--file', '/project/' + pending.relative_to(root).as_posix(),
         ], cwd=root, check=True, timeout=900)
-        schema = json.loads(pending.read_text())
+        rendered = pending.read_text(encoding='utf-8')
+        schema = json.loads(rendered)
         if not str(schema.get('openapi', '')).startswith('3.') or not schema.get('paths'):
             raise ValueError('The backend generated no usable OpenAPI paths.')
+        # Keep repeated generation compatible with the repository EOF gate.
+        pending.write_text(rendered.rstrip() + '\n', encoding='utf-8')
         pending.replace(output)
     finally:
         pending.unlink(missing_ok=True)
