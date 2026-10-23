@@ -285,6 +285,17 @@ When an agent runs testing or smoke validation for this template, run these chec
 
 These checks are wired into `projectmaker.yml` `smoke_test.steps` and `projectmaker.dev.yml` (`test_contract` and `test_e2e` commands), and should not be skipped.
 
+## Backend application CLI
+
+This project includes `./cli/app`, a dependency-free Python CLI for its own
+backend. Run `./cli/app --help` and read [cli/README.md](cli/README.md) for
+login, API requests, uploads, downloads, and configuring a deployed API URL.
+The CLI uses the backend's normal authorization; it does not access the database
+directly. Extend the CLI and its tests alongside new application workflows.
+
+`python3 scripts/check-app-cli.py` checks the CLI without a running application.
+It runs during template generation and in the required pre-commit gate.
+
 ### Offline API contract validation
 
 `cd frontend && npm run validate:api-contract` derives the OpenAPI schema from this checkout's Django models and routes before generating TypeScript types. It runs the declared development backend image with cached Python dependencies and schema-only settings; PostgreSQL, Redis, the HTTP server and deployment credentials are not required. Docker must be available, and a cold dependency install requires network access.
