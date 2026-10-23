@@ -43,8 +43,8 @@ export const Navbar: React.FC = () => {
 
   return (
     <nav className={`sticky top-0 z-40 transition-all duration-200 ${
-      isScrolled 
-        ? 'bg-white/80 dark:bg-secondary-800/80 backdrop-blur-md shadow-md py-1' 
+      isScrolled
+        ? 'bg-white/80 dark:bg-secondary-800/80 backdrop-blur-md shadow-md py-1'
         : 'bg-white dark:bg-secondary-800 border-b border-secondary-200 dark:border-secondary-700 py-0'
     }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

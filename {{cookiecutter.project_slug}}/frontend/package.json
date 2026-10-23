@@ -51,7 +51,7 @@
     "eject": "react-scripts eject",
     "type-check": "tsc --noEmit",
     "type-check:watch": "tsc --noEmit --watch",
-    "ui:guardrails": "npm run validate:api-contract && npm run lint:i18n && npm run lint:styles && node ./scripts/check-ui-guardrails.mjs",
+    "ui:guardrails": "npm run lint:i18n && npm run lint:styles && node ./scripts/check-ui-guardrails.mjs",
     "gen:api-types": "node ./scripts/generate-api-types.mjs",
     "sync:api-types": "npm run gen:api-types",
     "validate:api-contract": "npm run sync:api-types && npm run type-check"

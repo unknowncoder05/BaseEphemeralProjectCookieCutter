@@ -48,7 +48,7 @@ export const Dashboard: React.FC = () => {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Breadcrumbs />
-        
+
         {/* Hero */}
         <div className="text-center mb-16 pt-8">
           <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 mb-4">

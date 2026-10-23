@@ -198,7 +198,7 @@ CHANNEL_LAYERS = {
 SENTRY_DSN = os.getenv('SENTRY_DSN')
 if SENTRY_DSN and ENVIRONMENT == 'PRODUCTION':
     import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration 
+    from sentry_sdk.integrations.django import DjangoIntegration
     sentry_sdk.init(
         dsn=SENTRY_DSN,
         integrations=[DjangoIntegration()],
@@ -233,8 +233,8 @@ MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{PUBLIC_MEDIA_LOCATION}/'
 # CORS
 CORS_ALLOW_ALL_ORIGINS = False
 CORS_ALLOW_CREDENTIALS = True
-_cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '*')                                                                                         
-if _cors_origins != '*':                                                                                                                  
+_cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '*')
+if _cors_origins != '*':
     CORS_ALLOWED_ORIGINS = _cors_origins.split(',')
     print('CORS_ALLOWED_ORIGINS', CORS_ALLOWED_ORIGINS)
 else:

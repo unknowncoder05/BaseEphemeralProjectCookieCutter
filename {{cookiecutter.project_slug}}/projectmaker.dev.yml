@@ -1195,5 +1195,4 @@ services:
         default: "5432"
         min: 1
         max: 65535
-
-{% endraw %}
+{% endraw -%}

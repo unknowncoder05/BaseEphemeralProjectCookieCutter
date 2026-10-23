@@ -42,6 +42,7 @@
     "*.tfstate.backup",
     "*.zip",
     "terraform/lambda_functions",
+    "scripts/codeswarm_quality",
     "BackEndApi/src/api",
     "*.html"
   ]

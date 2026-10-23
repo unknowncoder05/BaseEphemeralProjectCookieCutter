@@ -39,13 +39,13 @@ export const SmartImage: React.FC<SmartImageProps> = ({
   return (
     <div className={`relative overflow-hidden ${containerClassName}`}>
       {isLoading && (
-        <Skeleton 
-          className="absolute inset-0 z-10" 
-          width="100%" 
-          height="100%" 
+        <Skeleton
+          className="absolute inset-0 z-10"
+          width="100%"
+          height="100%"
         />
       )}
-      
+
       <img
         src={currentSrc}
         alt={alt}

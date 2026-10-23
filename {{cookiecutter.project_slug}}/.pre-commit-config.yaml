@@ -40,7 +40,7 @@ repos:
         always_run: true
       - id: react-static-quality
         name: React TypeScript, translations, styles, and UI guardrails
-        entry: bash -c 'cd frontend && { test -x node_modules/.bin/tsc || ./scripts/install-deps.sh; } && npm run type-check && npm run ui:guardrails'
+        entry: bash -c 'cd frontend && { test -x node_modules/.bin/tsc || ./scripts/install-deps.sh; } && npm run validate:api-contract && npm run ui:guardrails'
         language: system
         files: ^frontend/.*\.(css|html|js|jsx|json|ts|tsx)$
         pass_filenames: false
