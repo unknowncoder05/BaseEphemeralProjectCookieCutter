@@ -6,7 +6,7 @@
 # Repo pulls are handled externally by the deployment service (SSM commands)
 # before containers are started — never from inside the container.
 
-set -e
+set -eo pipefail
 
 # ── Python package install (hash-based, idempotent) ──────────────────────────
 # /venv is a named Docker volume shared by all backend services so packages
@@ -16,7 +16,10 @@ REQ_PATH="/project/BackEndApi/requirements/${REQUIREMENTS_FILE}"
 HASH_FILE="/venv/.req-hash"
 
 if [ -f "${REQ_PATH}" ]; then
-    CURRENT_HASH=$(sha256sum "${REQ_PATH}" | cut -d' ' -f1)
+    # local.txt includes base.txt, where pinned SDK versions live. Hash the
+    # requirements directory so changing an included pin invalidates this cache.
+    CURRENT_HASH=$(find "$(dirname "${REQ_PATH}")" -type f -exec sha256sum {} + \
+        | LC_ALL=C sort | sha256sum | cut -d' ' -f1)
     CACHED_HASH=$(cat "${HASH_FILE}" 2>/dev/null || echo "")
 
     if [ "${CURRENT_HASH}" != "${CACHED_HASH}" ]; then
