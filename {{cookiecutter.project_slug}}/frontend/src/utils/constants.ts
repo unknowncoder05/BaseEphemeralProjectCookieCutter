@@ -2,7 +2,7 @@
 // These values must match the backend Django choices
 export const AUTH_PROVIDERS = {
   SMS: 'SMS',
-  WHATSAPP: 'WH', 
+  WHATSAPP: 'WH',
   CONSOLE: 'D',
 } as const;
 

@@ -83,11 +83,11 @@ export const validateAccount = createAsyncThunk(
     try {
       const response = await apiService.validateAccount(data);
       const { access, refresh } = response.data;
-      
+
       // Store tokens in localStorage
       localStorage.setItem('access_token', access);
       localStorage.setItem('refresh_token', refresh);
-      
+
       return response.data;
     } catch (error: any) {
       return rejectWithValue(error.response?.data?.message || 'Account validation failed');

@@ -14,7 +14,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   height
 }) => {
   const baseClass = "animate-pulse bg-secondary-200 dark:bg-secondary-700";
-  
+
   const variantClasses = {
     rect: "rounded-md",
     circle: "rounded-full",
@@ -27,7 +27,7 @@ export const Skeleton: React.FC<SkeletonProps> = ({
   };
 
   return (
-    <div 
+    <div
       className={`${baseClass} ${variantClasses[variant]} ${className}`}
       style={style}
     />

@@ -9,7 +9,7 @@ def aws_ssm_parameter_serialize(path, param):
     if param['Type'] == 'SecureString':
         print('AWS SSM PARAMETER STORE SecureString variables serialization not implemented yet')
         return name, param['Value']
-    
+
 def get_params_batch_from_ssm(client, path, parameter_names):
     response = client.get_parameters(
         Names=[path+param_name for param_name in parameter_names],

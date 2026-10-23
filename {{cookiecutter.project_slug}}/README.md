@@ -130,7 +130,7 @@ WebSocket endpoint: \`ws://<host>/ws/\` (JWT auth on connect).
 ## Agent Instructions
 - **Update Requirement**: Any time a new page, significant navigation change, or new API endpoint is added, update the corresponding mapping sections in this README.
 - **Planning**: Before implementing new features, refer to the existing view and API maps to identify redundancies and ensure the change aligns with the established architecture.
-- **Consistency**: 
+- **Consistency**:
     - Keep the "Frontend Views & Navigation Flow" and "Backend API Mapping" sections in sync.
     - Ensure new routes are added to the "Frontend Routes" table.
     - Ensure new endpoints are added to the "Backend API Endpoints" table.
@@ -284,3 +284,9 @@ When an agent runs testing or smoke validation for this template, run these chec
 3. End-to-end tests: `npm run test:e2e:ci`
 
 These checks are wired into `projectmaker.yml` `smoke_test.steps` and `projectmaker.dev.yml` (`test_contract` and `test_e2e` commands), and should not be skipped.
+
+### Offline API contract validation
+
+`cd frontend && npm run validate:api-contract` derives the OpenAPI schema from this checkout's Django models and routes before generating TypeScript types. It runs the declared development backend image with cached Python dependencies and schema-only settings; PostgreSQL, Redis, the HTTP server and deployment credentials are not required. Docker must be available, and a cold dependency install requires network access.
+
+Run `python3 scripts/generate-api-schema.py` (or `make -C BackEndApi schema`) to generate only `frontend/src/generated/openapi.schema.json`. Generation is validated and atomic: failure preserves the previous artifact but fails the check, so stale types cannot make a failed regeneration pass. Frontend-only containers can consume the generated artifact; an explicit `API_SCHEMA_URL` selects a deployed contract instead. No localhost endpoint is guessed when the contract is missing.

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { 
-  Button, 
-  Card, 
-  Badge, 
-  Skeleton, 
-  SmartImage, 
-  EmptyState, 
+import {
+  Button,
+  Card,
+  Badge,
+  Skeleton,
+  SmartImage,
+  EmptyState,
   Breadcrumbs,
   Loading,
   Input
@@ -75,16 +75,16 @@ const ComponentLibrary: React.FC = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
             <div className="space-y-2">
               <p className="text-sm text-secondary-500">Valid Image with Shimmer</p>
-              <SmartImage 
-                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80" 
+              <SmartImage
+                src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80"
                 alt="Demo"
                 containerClassName="aspect-video rounded-xl shadow-lg"
               />
             </div>
             <div className="space-y-2">
               <p className="text-sm text-secondary-500">Broken Image (Auto-Fallback)</p>
-              <SmartImage 
-                src="https://invalid-image-url.com/broken.jpg" 
+              <SmartImage
+                src="https://invalid-image-url.com/broken.jpg"
                 alt="Broken Demo"
                 containerClassName="aspect-video rounded-xl shadow-lg"
               />
@@ -114,8 +114,8 @@ const ComponentLibrary: React.FC = () => {
         {/* Empty States */}
         <section className="space-y-4">
           <h2 className="text-xl font-semibold text-secondary-800 dark:text-secondary-200 border-b border-secondary-200 dark:border-secondary-700 pb-2">Empty States</h2>
-          <EmptyState 
-            title="No records found" 
+          <EmptyState
+            title="No records found"
             description="Your search didn't match any results. Try broadening your criteria or adding a new item."
             action={<Button variant="primary">Add New Item</Button>}
           />

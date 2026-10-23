@@ -4,7 +4,7 @@ from rest_framework import pagination
 
 # Utilities
 from urllib.parse import urlencode, urlparse, urlunparse, parse_qs
-import math 
+import math
 
 
 class OffsetPagination(pagination.LimitOffsetPagination):
@@ -17,17 +17,17 @@ class OffsetPagination(pagination.LimitOffsetPagination):
         next_offset = (self.offset + self.limit) if (self.offset + self.limit) < self.count else None
         previous_offset = (self.offset - self.limit) if (self.offset - self.limit) > 0 else None
         last = u._replace(query=urlencode(query, True))
-        
+
         if self.offset == 0:
             first = None
         else:
             first = self.request._current_scheme_host + urlunparse(first)
-        
+
         if self.offset == (self.count // self.limit) * self.limit:
             last = None
         else:
             last = self.request._current_scheme_host + urlunparse(last)
-        
+
         current_items = min(self.count-self.offset, 12)
         current_page = math.ceil((self.offset-1)/self.limit)+1
         return Response({
@@ -53,17 +53,17 @@ class StartEndPagination(pagination.LimitOffsetPagination):
         first = u._replace(query=urlencode(query, True))
         query['offset'] = (self.count // self.limit) * self.limit
         last = u._replace(query=urlencode(query, True))
-        
+
         if self.offset == 0:
             first = None
         else:
             first = self.request._current_scheme_host + urlunparse(first)
-        
+
         if self.offset == (self.count // self.limit) * self.limit:
             last = None
         else:
             last = self.request._current_scheme_host + urlunparse(last)
-        
+
         return Response({
             'links':{
                 'first': first,

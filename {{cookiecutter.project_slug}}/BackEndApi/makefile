@@ -68,10 +68,9 @@ tools:
 
 logs:
 	docker compose -f $(DOCKER_COMPOSE_FILE) logs -f -t
-	
+
 
 schema:
-	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --file /app/openapi.schema.json --validate
+	python3 ../scripts/generate-api-schema.py
 
-schema-check:
-	docker compose -f $(DOCKER_COMPOSE_FILE) run --rm django python manage.py spectacular --validate
+schema-check: schema

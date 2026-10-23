@@ -95,7 +95,7 @@ export const CommandPalette: React.FC = () => {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center pt-24 sm:pt-40">
       <div className="fixed inset-0 bg-secondary-900/60 backdrop-blur-sm" onClick={() => setIsOpen(false)} />
-      
+
       <div className="relative w-full max-w-lg overflow-hidden bg-white dark:bg-secondary-800 rounded-xl shadow-2xl border border-secondary-200 dark:border-secondary-700 mx-4">
         <div className="flex items-center px-4 py-3 border-b border-secondary-100 dark:border-secondary-700">
           <svg className="w-5 h-5 text-secondary-600 dark:text-secondary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -149,7 +149,7 @@ export const CommandPalette: React.FC = () => {
             </div>
           )}
         </div>
-        
+
         <div className="px-4 py-3 bg-secondary-50 dark:bg-secondary-800/50 border-t border-secondary-100 dark:border-secondary-700 flex justify-between items-center">
           <div className="flex gap-4">
             <span className="flex items-center text-[10px] text-secondary-600 dark:text-secondary-300">

@@ -116,7 +116,7 @@ export const SettingsPage: React.FC = () => {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <Breadcrumbs />
-        
+
         {/* Profile Section */}
         <div className="pm-surface-panel rounded-lg shadow-sm mb-6">
           <div className="px-6 py-4 border-b border-[var(--border-subtle)]">

@@ -137,7 +137,7 @@ export const ItemList: React.FC<ItemListProps> = ({ onViewItem, onCreateItem }) 
 
       {/* Items grid */}
       {filteredItems.length === 0 ? (
-        <EmptyState 
+        <EmptyState
           title={items.length === 0 ? t('items.empty.noneTitle') : t('items.empty.filteredTitle')}
           description={items.length === 0 ? t('items.empty.noneDescription') : t('items.empty.filteredDescription')}
           action={items.length === 0 ? <Button onClick={onCreateItem}>{t('items.form.createAction')}</Button> : undefined}

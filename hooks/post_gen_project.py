@@ -4,15 +4,18 @@ import os
 import shutil
 import subprocess
 import json
+import html
+from pathlib import Path
+import re
 
 # Template variables (these will be replaced by Jinja2)
-PROJECT_NAME = '{{ cookiecutter.project_name }}'
-PROJECT_SLUG = '{{ cookiecutter.project_slug }}'
-PROJECT_SLUG_DASHED = '{{ cookiecutter.project_slug_dashed }}'
-DESCRIPTION = '{{ cookiecutter.description }}'
-AUTHOR_NAME = '{{ cookiecutter.author_name }}'
-AUTHOR_EMAIL = '{{ cookiecutter.author_email }}'
-DOMAIN_NAME = '{{ cookiecutter.domain_name }}'
+PROJECT_NAME = {{ cookiecutter.project_name | tojson }}
+PROJECT_SLUG = {{ cookiecutter.project_slug | tojson }}
+PROJECT_SLUG_DASHED = {{ cookiecutter.project_slug_dashed | tojson }}
+DESCRIPTION = {{ cookiecutter.description | tojson }}
+AUTHOR_NAME = {{ cookiecutter.author_name | tojson }}
+AUTHOR_EMAIL = {{ cookiecutter.author_email | tojson }}
+DOMAIN_NAME = {{ cookiecutter.domain_name | tojson }}
 
 
 def replace_in_file(filepath, replacements):
@@ -48,9 +51,33 @@ def update_package_json():
 
             with open(package_json_path, 'w') as f:
                 json.dump(data, f, indent=2)
+                f.write("\n")
             print(f"Updated {package_json_path}")
         except Exception as e:
             print(f"Warning: Could not update package.json: {e}")
+
+
+def update_public_metadata():
+    """Write product metadata as HTML/JSON data, preserving the app scaffold."""
+    index = Path('frontend/public/index.html')
+    if index.is_file():
+        content = index.read_text(encoding='utf-8')
+        content = re.sub(
+            r'<title>.*?</title>',
+            lambda match: '<title>' + html.escape(PROJECT_NAME) + '</title>',
+            content, count=1, flags=re.DOTALL,
+        )
+        content = re.sub(
+            r'<meta\s+name="description"\s+content="[^"]*"\s*/?>',
+            lambda match: '<meta name="description" content="' + html.escape(DESCRIPTION, quote=True) + '" />',
+            content, count=1,
+        )
+        index.write_text(content, encoding='utf-8')
+    manifest = Path('frontend/public/manifest.json')
+    if manifest.is_file():
+        data = json.loads(manifest.read_text(encoding='utf-8'))
+        data.update(name=PROJECT_NAME, short_name=PROJECT_NAME, description=DESCRIPTION)
+        manifest.write_text(json.dumps(data, indent=2) + '\n', encoding='utf-8')
 
 
 def replace_project_references():
@@ -60,7 +87,6 @@ def replace_project_references():
         'MyProject': PROJECT_NAME,
         'myproject': PROJECT_SLUG,
         'my-project': PROJECT_SLUG_DASHED,
-        '{{cookiecutter.project_name}}': PROJECT_NAME,
         '__CODESWARM_STORAGE_SLUG__': PROJECT_SLUG,
         # Legacy names that might still exist
         'BaseEphemeralCookieCutter': PROJECT_SLUG,
@@ -75,8 +101,6 @@ def replace_project_references():
 
     # Files and directories to process
     paths_to_process = [
-        'frontend/src',
-        'frontend/public',
         'frontend',
         'BackEndApi',
         'terraform',
@@ -232,6 +256,7 @@ def main():
     # Replace project references in source files
     print("Replacing project references...")
     replace_project_references()
+    update_public_metadata()
 
     # Remove AI integration if not selected
     if '{{ cookiecutter.use_ai_integration }}' != 'y':
@@ -247,7 +272,7 @@ def main():
     init_git_repo()
 
     print("\n" + "=" * 60)
-    print("Project '{{ cookiecutter.project_name }}' created successfully!")
+    print(f"Project '{PROJECT_NAME}' created successfully!")
     print("=" * 60)
     print("\nNext steps:")
     print("1. cd {{ cookiecutter.project_slug }}")

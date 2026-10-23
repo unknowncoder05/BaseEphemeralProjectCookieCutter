@@ -1,43 +1,36 @@
 import { existsSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
 
-const outFile = 'src/generated/api-types.ts';
-const localSchema = '../BackEndApi/src/openapi.schema.json';
+const frontendRoot = fileURLToPath(new URL('..', import.meta.url));
+const projectRoot = path.dirname(frontendRoot);
+const localSchema = path.join(frontendRoot, 'src/generated/openapi.schema.json');
+const outFile = path.join(frontendRoot, 'src/generated/api-types.ts');
+let schemaSource = process.env.API_SCHEMA_URL;
 
-async function isReachable(url) {
-  try {
-    const response = await fetch(url, { method: 'HEAD' });
-    return response.ok || response.status === 405;
-  } catch {
-    return false;
+if (!schemaSource) {
+  if (existsSync(path.join(projectRoot, 'BackEndApi/src/manage.py'))) {
+    // Always derive from this checkout, so backend edits cannot reuse stale types.
+    const generation = spawnSync('python3', [path.join(projectRoot, 'scripts/generate-api-schema.py')], {
+      cwd: projectRoot,
+      stdio: 'inherit',
+    });
+    if (generation.error || generation.status !== 0) {
+      console.error('Backend schema generation failed. Docker and the declared backend dependencies are required.');
+      process.exit(generation.status ?? 1);
+    }
   }
-}
-
-async function resolveSchemaSource() {
-  if (existsSync(localSchema)) return localSchema;
-  if (process.env.API_SCHEMA_URL) return process.env.API_SCHEMA_URL;
-
-  const backendPort = process.env.BACKEND_PORT || process.env.REACT_APP_BACKEND_PORT || '8000';
-  const candidates = [
-    `http://127.0.0.1:${backendPort}/api/v1/schema/`,
-    `http://localhost:${backendPort}/api/v1/schema/`,
-    'http://backend:8000/api/v1/schema/',
-  ];
-
-  for (const candidate of candidates) {
-    if (await isReachable(candidate)) return candidate;
+  if (!existsSync(localSchema)) {
+    console.error('No backend schema is available. Run python3 scripts/generate-api-schema.py from the full checkout, or set API_SCHEMA_URL explicitly.');
+    process.exit(1);
   }
-
-  return candidates[0];
+  schemaSource = localSchema;
 }
-
-const schemaSource = await resolveSchemaSource();
 
 const result = spawnSync('openapi-typescript', [schemaSource, '-o', outFile], {
+  cwd: frontendRoot,
   stdio: 'inherit',
   shell: process.platform === 'win32',
 });
-
-if (result.status !== 0) {
-  process.exit(result.status ?? 1);
-}
+if (result.error || result.status !== 0) process.exit(result.status ?? 1);
