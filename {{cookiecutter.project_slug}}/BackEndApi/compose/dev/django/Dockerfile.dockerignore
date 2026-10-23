@@ -1,0 +1,16 @@
+# Only declared backend dependency inputs and startup scripts enter this build.
+**
+!BackEndApi/
+!BackEndApi/requirements/
+!BackEndApi/requirements/**
+!BackEndApi/compose/
+!BackEndApi/compose/**
+!packages/
+!packages/**
+**/__pycache__
+**/*.pyc
+**/.git
+**/build
+**/dist
+**/*.egg-info
+**/.pytest_cache

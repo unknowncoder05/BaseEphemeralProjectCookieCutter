@@ -17,9 +17,16 @@ HASH_FILE="/venv/.req-hash"
 
 if [ -f "${REQ_PATH}" ]; then
     # local.txt includes base.txt, where pinned SDK versions live. Hash the
-    # requirements directory so changing an included pin invalidates this cache.
-    CURRENT_HASH=$(find "$(dirname "${REQ_PATH}")" -type f -exec sha256sum {} + \
-        | LC_ALL=C sort | sha256sum | cut -d' ' -f1)
+    # requirements and vendored packages so changed inputs invalidate this cache.
+    CURRENT_HASH=$({ printf '%s\n' "${REQUIREMENTS_FILE}";
+        find "$(dirname "${REQ_PATH}")" -type f -exec sha256sum {} + | LC_ALL=C sort;
+        if [ -d /project/packages ]; then
+            find /project/packages -type f ! -path '*/__pycache__/*' ! -name '*.pyc' \
+                ! -path '*/.git/*' ! -path '*/build/*' ! -path '*/dist/*' \
+                ! -path '*.egg-info/*' ! -path '*/.pytest_cache/*' \
+                -exec sha256sum {} + | LC_ALL=C sort;
+        fi
+    } | sha256sum | cut -d' ' -f1)
     CACHED_HASH=$(cat "${HASH_FILE}" 2>/dev/null || echo "")
 
     if [ "${CURRENT_HASH}" != "${CACHED_HASH}" ]; then
@@ -36,7 +43,8 @@ if [ -f "${REQ_PATH}" ]; then
         fi
     fi
 else
-    echo "[dev] Requirements file not found at ${REQ_PATH} — skipping pip install."
+    echo "[dev] Requirements file not found at ${REQ_PATH}." >&2
+    exit 1
 fi
 
 exec "$@"

@@ -41,8 +41,10 @@ x-backend-env: &backend-env
 
 x-backend-base: &backend-base
   build:
-    context: ./BackEndApi
-    dockerfile: compose/dev/django/Dockerfile
+    context: .
+    dockerfile: BackEndApi/compose/dev/django/Dockerfile
+    args:
+      REQUIREMENTS_FILE: ${REQUIREMENTS_FILE:-local.txt}
   volumes:
     - .:/project                  # full repo bind-mount (read-write for manage.py artifacts)
     - dev_python_venv:/venv       # cached pip packages — survives restarts
