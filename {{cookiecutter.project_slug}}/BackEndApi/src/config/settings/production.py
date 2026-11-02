@@ -236,11 +236,8 @@ CORS_ALLOW_CREDENTIALS = True
 _cors_origins = os.getenv('CORS_ALLOWED_ORIGINS', '*')
 if _cors_origins != '*':
     CORS_ALLOWED_ORIGINS = _cors_origins.split(',')
-    print('CORS_ALLOWED_ORIGINS', CORS_ALLOWED_ORIGINS)
 else:
     CORS_ALLOW_ALL_ORIGINS = True
-print('CORS_ALLOW_ALL_ORIGINS', CORS_ALLOW_ALL_ORIGINS)
-print('CORS_ALLOW_CREDENTIALS', CORS_ALLOW_CREDENTIALS)
 
 # Email
 EMAIL_NO_REPLY = os.getenv('EMAIL_NO_REPLY', 'info@app.com')

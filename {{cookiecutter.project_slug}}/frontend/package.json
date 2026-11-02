@@ -56,6 +56,13 @@
     "sync:api-types": "npm run gen:api-types",
     "validate:api-contract": "npm run sync:api-types && npm run type-check"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^react-router-dom$": "<rootDir>/node_modules/react-router-dom/dist/index.js",
+      "^react-router/dom$": "<rootDir>/node_modules/react-router/dist/development/dom-export.js",
+      "^axios$": "<rootDir>/node_modules/axios/dist/node/axios.cjs"
+    }
+  },
   "eslintConfig": {
     "extends": [
       "react-app",

@@ -1,6 +1,6 @@
 # ProjectMaker Shared Utilities
 pm-utils @ git+https://github.com/unknowncoder05/pm-utils.git@e8cee022d30a0ff48eb07dfcfaa26c330aadb7c6
-pm-auth @ git+https://github.com/unknowncoder05/pm-auth.git@6d92dcdeb404485b1211debe599e9eb2ed93a288
+pm-auth @ git+https://github.com/unknowncoder05/pm-auth.git@006165864561ac1b6647dca04fc539991c672376
 {%- if cookiecutter.use_github_integration == 'y' %}
 pm-github @ file:///project/packages/pm-github
 {%- endif %}

@@ -84,7 +84,7 @@ services:
     build:
       context: ./BackEndApi
       dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery worker --loglevel=info
+    command: /start-celeryworker
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: "5432"
@@ -111,7 +111,7 @@ services:
     build:
       context: ./BackEndApi
       dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+    command: /start-celerybeat
     environment:
       POSTGRES_HOST: postgres
       POSTGRES_PORT: "5432"

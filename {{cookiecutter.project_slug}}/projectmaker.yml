@@ -1,6 +1,28 @@
 {% raw %}
 version: "1"
 
+hosting:
+  provider: ec2
+  build:
+    instance_type: t3.medium
+  runtime:
+    initial_instance_type: t3.medium
+    allowed_instance_types: [t3.small, t3.medium, t3.large, t3.xlarge]
+    usage_policy:
+      mode: automatic
+      observation_window_minutes: 60
+      min_samples: 12
+      max_sample_age_minutes: 10
+      scale_up:
+        cpu_percent: 70
+        memory_percent: 75
+      scale_down:
+        cpu_percent: 25
+        memory_percent: 30
+      headroom_percent: 25
+      cooldown_minutes: 60
+      missing_metrics: hold
+
 # ──────────────────────────────────────────────────────────────────────────────
 # Commands — run against the deployed containers via the ProjectMaker UI.
 #
@@ -236,7 +258,7 @@ services:
   # ──────────────────────────────────────────────────────────────────────────
   frontend:
     type: frontend
-    cpu: 0.5
+    cpu: 0.25
     memory: 512
     order: 2
     build:
@@ -502,128 +524,128 @@ services:
   # Backend — Django REST Framework + Channels + Celery
   # ──────────────────────────────────────────────────────────────────────────
         # ── Theme ──────────────────────────────────────────────────────────────
-        # ── Secondary Theme (Neutrals) ──────────────────────────────────────────
-        REACT_APP_SECONDARY_50:
-          type: color
-          label: "Secondary 50"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_50}}"
+      # ── Secondary Theme (Neutrals) ──────────────────────────────────────────
+      REACT_APP_SECONDARY_50:
+        type: color
+        label: "Secondary 50"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_50}}"
 
-        REACT_APP_SECONDARY_100:
-          type: color
-          label: "Secondary 100"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_100}}"
+      REACT_APP_SECONDARY_100:
+        type: color
+        label: "Secondary 100"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_100}}"
 
-        REACT_APP_SECONDARY_200:
-          type: color
-          label: "Secondary 200"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_200}}"
+      REACT_APP_SECONDARY_200:
+        type: color
+        label: "Secondary 200"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_200}}"
 
-        REACT_APP_SECONDARY_300:
-          type: color
-          label: "Secondary 300"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_300}}"
+      REACT_APP_SECONDARY_300:
+        type: color
+        label: "Secondary 300"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_300}}"
 
-        REACT_APP_SECONDARY_400:
-          type: color
-          label: "Secondary 400"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_400}}"
+      REACT_APP_SECONDARY_400:
+        type: color
+        label: "Secondary 400"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_400}}"
 
-        REACT_APP_SECONDARY_500:
-          type: color
-          label: "Secondary 500"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_500}}"
+      REACT_APP_SECONDARY_500:
+        type: color
+        label: "Secondary 500"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_500}}"
 
-        REACT_APP_SECONDARY_600:
-          type: color
-          label: "Secondary 600"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_600}}"
+      REACT_APP_SECONDARY_600:
+        type: color
+        label: "Secondary 600"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_600}}"
 
-        REACT_APP_SECONDARY_700:
-          type: color
-          label: "Secondary 700"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_700}}"
+      REACT_APP_SECONDARY_700:
+        type: color
+        label: "Secondary 700"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_700}}"
 
-        REACT_APP_SECONDARY_800:
-          type: color
-          label: "Secondary 800"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_800}}"
+      REACT_APP_SECONDARY_800:
+        type: color
+        label: "Secondary 800"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_800}}"
 
-        REACT_APP_SECONDARY_900:
-          type: color
-          label: "Secondary 900"
-          section: Theme
-          required: false
-          default: "{{resources.theme.secondary_900}}"
-        # ── Functional Colors ──────────────────────────────────────────────────
-        REACT_APP_SUCCESS_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_50}}"
-        REACT_APP_SUCCESS_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_500}}"
-        REACT_APP_SUCCESS_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.success_600}}"
+      REACT_APP_SECONDARY_900:
+        type: color
+        label: "Secondary 900"
+        section: Theme
+        required: false
+        default: "{{resources.theme.secondary_900}}"
+      # ── Functional Colors ──────────────────────────────────────────────────
+      REACT_APP_SUCCESS_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_50}}"
+      REACT_APP_SUCCESS_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_500}}"
+      REACT_APP_SUCCESS_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.success_600}}"
 
-        REACT_APP_DANGER_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_50}}"
-        REACT_APP_DANGER_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_500}}"
-        REACT_APP_DANGER_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.danger_600}}"
+      REACT_APP_DANGER_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_50}}"
+      REACT_APP_DANGER_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_500}}"
+      REACT_APP_DANGER_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.danger_600}}"
 
-        REACT_APP_WARNING_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_50}}"
-        REACT_APP_WARNING_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_500}}"
-        REACT_APP_WARNING_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.warning_600}}"
+      REACT_APP_WARNING_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_50}}"
+      REACT_APP_WARNING_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_500}}"
+      REACT_APP_WARNING_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.warning_600}}"
 
-        REACT_APP_INFO_50:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_50}}"
-        REACT_APP_INFO_500:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_500}}"
-        REACT_APP_INFO_600:
-          type: color
-          section: Theme
-          default: "{{resources.theme.info_600}}"
+      REACT_APP_INFO_50:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_50}}"
+      REACT_APP_INFO_500:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_500}}"
+      REACT_APP_INFO_600:
+        type: color
+        section: Theme
+        default: "{{resources.theme.info_600}}"
   playwright:
     type: internal
     cpu: 0.25
@@ -632,7 +654,7 @@ services:
     working_dir: /app
     profiles:
       - test
-    command: sh -c "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"
+    command: ["sh", "-c", "cd /app && ./scripts/install-deps.sh && npm run test:e2e:mocked"]
     depends_on:
       - frontend
     volumes:
@@ -649,551 +671,543 @@ services:
 
   backend:
     type: backend
-    cpu: 1
+    cpu: 0.75
     memory: 1024
     order: 1
     build:
-      context: ./BackEndApi
-      dockerfile: compose/production/django/Dockerfile
+        context: ./BackEndApi
+        dockerfile: compose/production/django/Dockerfile
     port: 8000
     public: true
     route: /api
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 120s
+        test: ["CMD", "curl", "-f", "http://localhost:8000/api/v1/health/"]
+        interval: 30s
+        timeout: 10s
+        retries: 3
+        start_period: 120s
     env:
 
-      # ── Application ────────────────────────────────────────────────────────
-      DJANGO_SETTINGS_MODULE:
-        type: select
-        label: "Django Settings Module"
-        description: "Python dotted path to the Django settings file. Keep 'production' for deployed environments."
-        section: Application
-        required: false
-        default: "config.settings.production"
-        options:
-          - "config.settings.production"
-          - "config.settings.local"
-        translations:
-          es:
-            label: "Módulo de configuración de Django"
-            description: "Ruta Python al archivo de configuración de Django. Mantener 'production' para entornos desplegados."
+        # ── Application ────────────────────────────────────────────────────────
+        DJANGO_SETTINGS_MODULE:
+          type: select
+          label: "Django Settings Module"
+          description: "Python dotted path to the Django settings file. Keep 'production' for deployed environments."
+          section: Application
+          required: false
+          default: "config.settings.production"
+          options:
+            - "config.settings.production"
+            - "config.settings.local"
+          translations:
+            es:
+              label: "Módulo de configuración de Django"
+              description: "Ruta Python al archivo de configuración de Django. Mantener 'production' para entornos desplegados."
 
-      ENVIRONMENT:
-        type: select
-        label: "Environment"
-        description: "Runtime environment label. Affects logging, feature flags, and Sentry error grouping."
-        section: Application
-        required: false
-        default: "production"
-        options:
-          - "production"
-          - "staging"
-          - "local"
-        translations:
-          es:
-            label: "Entorno"
-            description: "Etiqueta del entorno de ejecución. Afecta el registro, los indicadores de características y el agrupamiento de errores en Sentry."
+        ENVIRONMENT:
+          type: select
+          label: "Environment"
+          description: "Runtime environment label. Affects logging, feature flags, and Sentry error grouping."
+          section: Application
+          required: false
+          default: "production"
+          options:
+            - "production"
+            - "staging"
+            - "local"
+          translations:
+            es:
+              label: "Entorno"
+              description: "Etiqueta del entorno de ejecución. Afecta el registro, los indicadores de características y el agrupamiento de errores en Sentry."
 
-      DJANGO_DEBUG:
-        type: boolean
-        label: "Debug Mode"
-        description: "Enable Django debug mode. Must be disabled in production — debug mode exposes full stack traces and disables security hardening."
-        section: Application
-        required: false
-        default: "false"
-        translations:
-          es:
-            label: "Modo de depuración"
-            description: "Activa el modo debug de Django. Debe estar desactivado en producción — el modo debug expone trazas completas y deshabilita el endurecimiento de seguridad."
+        DJANGO_DEBUG:
+          type: boolean
+          label: "Debug Mode"
+          description: "Enable Django debug mode. Must be disabled in production — debug mode exposes full stack traces and disables security hardening."
+          section: Application
+          required: false
+          default: "false"
+          translations:
+            es:
+              label: "Modo de depuración"
+              description: "Activa el modo debug de Django. Debe estar desactivado en producción — el modo debug expone trazas completas y deshabilita el endurecimiento de seguridad."
 
-      # ── Security ───────────────────────────────────────────────────────────
-      DJANGO_SECRET_KEY:
-        type: secret
-        label: "Django Secret Key"
-        description: "Cryptographic key for signing cookies, sessions, and CSRF tokens. Must be long (50+ chars), random, and kept private. Rotate if ever exposed."
-        placeholder: "django-insecure-xxxxxxxxxxxxxxxxxxxx"
-        section: Security
-        required: true
-        default: ""
-        generate: secret_key
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Clave secreta de Django"
-            description: "Clave criptográfica para firmar cookies, sesiones y tokens CSRF. Debe ser larga (50+ caracteres), aleatoria y mantenerse privada. Rotar si alguna vez se expone."
+        # ── Security ───────────────────────────────────────────────────────────
+        DJANGO_SECRET_KEY:
+          type: secret
+          label: "Django Secret Key"
+          description: "Cryptographic key for signing cookies, sessions, and CSRF tokens. Must be long (50+ chars), random, and kept private. Rotate if ever exposed."
+          placeholder: "django-insecure-xxxxxxxxxxxxxxxxxxxx"
+          section: Security
+          required: true
+          default: ""
+          generate: secret_key
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Clave secreta de Django"
+              description: "Clave criptográfica para firmar cookies, sesiones y tokens CSRF. Debe ser larga (50+ caracteres), aleatoria y mantenerse privada. Rotar si alguna vez se expone."
 
-      DJANGO_ADMIN_URL:
-        type: string
-        label: "Admin URL Path"
-        description: "URL path segment for the Django admin panel (security through obscurity). Change from the default 'admin/' to make it harder to find."
-        placeholder: "secret-admin-path/"
-        section: Security
-        required: false
-        default: "admin/"
-        translations:
-          es:
-            label: "Ruta del panel de administración"
-            description: "Segmento de ruta URL del panel de administración de Django (oscuridad por seguridad). Cambiar el valor por defecto 'admin/' para dificultar su descubrimiento."
+        DJANGO_ADMIN_URL:
+          type: string
+          label: "Admin URL Path"
+          description: "URL path segment for the Django admin panel (security through obscurity). Change from the default 'admin/' to make it harder to find."
+          placeholder: "secret-admin-path/"
+          section: Security
+          required: false
+          default: "admin/"
+          translations:
+            es:
+              label: "Ruta del panel de administración"
+              description: "Segmento de ruta URL del panel de administración de Django (oscuridad por seguridad). Cambiar el valor por defecto 'admin/' para dificultar su descubrimiento."
 
-      PASSWORD_RESET_METHOD:
-        type: select
-        label: "Password Reset Method"
-        description: "How users receive their password reset and account recovery tokens. 'email' sends a link; 'otp' sends a code via the user's preferred channel (SMS/WhatsApp); 'console' prints the code to container logs (development only)."
-        section: Security
-        required: false
-        default: "email"
-        options:
-          - "email"
-          - "otp"
-          - "console"
-        translations:
-          es:
-            label: "Método de restablecimiento de contraseña"
-            description: "Cómo los usuarios reciben sus tokens de restablecimiento de contraseña y recuperación de cuenta. 'email' envía un enlace; 'otp' envía un código por el canal preferido del usuario (SMS/WhatsApp); 'console' imprime el código en los logs del contenedor (solo desarrollo)."
+        PASSWORD_RESET_METHOD:
+          type: select
+          label: "Password Reset Method"
+          description: "How users receive their password reset and account recovery tokens. 'email' sends a link; 'otp' sends a code via the user's preferred channel (SMS/WhatsApp); 'console' prints the code to container logs (development only)."
+          section: Security
+          required: false
+          default: "email"
+          options:
+            - "email"
+            - "otp"
+            - "console"
+          translations:
+            es:
+              label: "Método de restablecimiento de contraseña"
+              description: "Cómo los usuarios reciben sus tokens de restablecimiento de contraseña y recuperación de cuenta. 'email' envía un enlace; 'otp' envía un código por el canal preferido del usuario (SMS/WhatsApp); 'console' imprime el código en los logs del contenedor (solo desarrollo)."
 
-      PASSWORD_RESET_FRONTEND_URL:
-        type: url
-        label: "Password Reset Frontend URL"
-        description: "Frontend page that handles the password reset link. Receives ?uid=...&token=... query params. Only used when PASSWORD_RESET_METHOD is 'email'."
-        placeholder: "https://myapp.example.com/reset-password"
-        section: Security
-        required: false
-        default: "{{deployment_url}}/reset-password"
-        translations:
-          es:
-            label: "URL de restablecimiento de contraseña"
-            description: "Página del frontend que gestiona el enlace de restablecimiento de contraseña. Recibe los parámetros ?uid=...&token=... Solo se usa cuando PASSWORD_RESET_METHOD es 'email'."
+        PASSWORD_RESET_FRONTEND_URL:
+          type: url
+          label: "Password Reset Frontend URL"
+          description: "Frontend page that handles the password reset link. Receives ?uid=...&token=... query params. Only used when PASSWORD_RESET_METHOD is 'email'."
+          placeholder: "https://myapp.example.com/reset-password"
+          section: Security
+          required: false
+          default: "{{deployment_url}}/reset-password"
+          translations:
+            es:
+              label: "URL de restablecimiento de contraseña"
+              description: "Página del frontend que gestiona el enlace de restablecimiento de contraseña. Recibe los parámetros ?uid=...&token=... Solo se usa cuando PASSWORD_RESET_METHOD es 'email'."
 
-      ACCOUNT_RECOVERY_FRONTEND_URL:
-        type: url
-        label: "Account Recovery Frontend URL"
-        description: "Frontend page that handles the account recovery link. Receives ?uid=...&token=... query params. Only used when PASSWORD_RESET_METHOD is 'email'."
-        placeholder: "https://myapp.example.com/recover-account"
-        section: Security
-        required: false
-        default: "{{deployment_url}}/recover-account"
-        translations:
-          es:
-            label: "URL de recuperación de cuenta"
-            description: "Página del frontend que gestiona el enlace de recuperación de cuenta. Recibe los parámetros ?uid=...&token=... Solo se usa cuando PASSWORD_RESET_METHOD es 'email'."
+        ACCOUNT_RECOVERY_FRONTEND_URL:
+          type: url
+          label: "Account Recovery Frontend URL"
+          description: "Frontend page that handles the account recovery link. Receives ?uid=...&token=... query params. Only used when PASSWORD_RESET_METHOD is 'email'."
+          placeholder: "https://myapp.example.com/recover-account"
+          section: Security
+          required: false
+          default: "{{deployment_url}}/recover-account"
+          translations:
+            es:
+              label: "URL de recuperación de cuenta"
+              description: "Página del frontend que gestiona el enlace de recuperación de cuenta. Recibe los parámetros ?uid=...&token=... Solo se usa cuando PASSWORD_RESET_METHOD es 'email'."
 
-      # ── Database ───────────────────────────────────────────────────────────
-      POSTGRES_DB:
-        type: string
-        label: "Database Name"
-        description: "Name of the PostgreSQL database."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 2
-        translations:
-          es:
-            label: "Nombre de la base de datos"
-            description: "Nombre de la base de datos PostgreSQL."
+        # ── Database ───────────────────────────────────────────────────────────
+        POSTGRES_DB:
+          type: string
+          label: "Database Name"
+          description: "Name of the PostgreSQL database."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 2
+          translations:
+            es:
+              label: "Nombre de la base de datos"
+              description: "Nombre de la base de datos PostgreSQL."
 
-      POSTGRES_USER:
-        type: string
-        label: "Database User"
-        description: "PostgreSQL username."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 3
-        translations:
-          es:
-            label: "Usuario de la base de datos"
-            description: "Nombre de usuario PostgreSQL."
+        POSTGRES_USER:
+          type: string
+          label: "Database User"
+          description: "PostgreSQL username."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 3
+          translations:
+            es:
+              label: "Usuario de la base de datos"
+              description: "Nombre de usuario PostgreSQL."
 
-      POSTGRES_PASSWORD:
-        type: secret
-        label: "Database Password"
-        description: "Password for the PostgreSQL user."
-        section: Database
-        required: true
-        default: ""
-        generate: password
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Contraseña de la base de datos"
-            description: "Contraseña del usuario PostgreSQL."
+        POSTGRES_PASSWORD:
+          type: secret
+          label: "Database Password"
+          description: "Password for the PostgreSQL user."
+          section: Database
+          required: true
+          default: ""
+          generate: password
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Contraseña de la base de datos"
+              description: "Contraseña del usuario PostgreSQL."
 
-      POSTGRES_HOST:
-        type: string
-        label: "Database Host"
-        description: "Hostname of the PostgreSQL server. Use the Docker Compose service name when running with Compose."
-        placeholder: "postgres"
-        section: Database
-        required: false
-        default: "postgres"
-        translations:
-          es:
-            label: "Host de la base de datos"
-            description: "Nombre de host del servidor PostgreSQL. Usar el nombre del servicio Docker Compose cuando se ejecuta con Compose."
+        POSTGRES_HOST:
+          type: string
+          label: "Database Host"
+          description: "Hostname of the PostgreSQL server. Use the Docker Compose service name when running with Compose."
+          placeholder: "postgres"
+          section: Database
+          required: false
+          default: "postgres"
+          translations:
+            es:
+              label: "Host de la base de datos"
+              description: "Nombre de host del servidor PostgreSQL. Usar el nombre del servicio Docker Compose cuando se ejecuta con Compose."
 
-      POSTGRES_PORT:
-        type: number
-        label: "Database Port"
-        description: "TCP port on which PostgreSQL is listening."
-        section: Database
-        required: false
-        default: "5432"
-        min: 1
-        max: 65535
-        translations:
-          es:
-            label: "Puerto de la base de datos"
-            description: "Puerto TCP en el que escucha PostgreSQL."
+        POSTGRES_PORT:
+          type: number
+          label: "Database Port"
+          description: "TCP port on which PostgreSQL is listening."
+          section: Database
+          required: false
+          default: "5432"
+          min: 1
+          max: 65535
+          translations:
+            es:
+              label: "Puerto de la base de datos"
+              description: "Puerto TCP en el que escucha PostgreSQL."
 
-      DB_ENGINE: &sqlite_snapshot_db_engine
-        type: select
-        label: "Database Engine"
-        description: "Django database engine. Use SQLite for ephemeral deployments that persist through snapshots."
-        section: Database
-        required: false
-        default: "django.db.backends.postgresql"
-        options:
-          - "django.db.backends.postgresql"
-          - "django.db.backends.sqlite3"
+        DB_ENGINE: &sqlite_snapshot_db_engine
+          type: select
+          label: "Database Engine"
+          description: "Django database engine. Use SQLite for ephemeral deployments that persist through snapshots."
+          section: Database
+          required: false
+          default: "django.db.backends.postgresql"
+          options:
+            - "django.db.backends.postgresql"
+            - "django.db.backends.sqlite3"
 
-      SQLITE_DATABASE_PATH: &sqlite_snapshot_database_path
-        type: string
-        label: "SQLite Database Path"
-        description: "Filesystem path for the SQLite database when DB_ENGINE is sqlite3."
-        placeholder: "/tmp/projectmaker.sqlite3"
-        section: Database
-        required: false
-        default: "/tmp/projectmaker.sqlite3"
+        SQLITE_DATABASE_PATH: &sqlite_snapshot_database_path
+          type: string
+          label: "SQLite Database Path"
+          description: "Filesystem path for the SQLite database when DB_ENGINE is sqlite3."
+          placeholder: "/tmp/projectmaker.sqlite3"
+          section: Database
+          required: false
+          default: "/tmp/projectmaker.sqlite3"
 
-      SQLITE_SNAPSHOTS_ENABLED: &sqlite_snapshots_enabled
-        type: boolean
-        label: "SQLite Snapshots Enabled"
-        description: "Enable periodic SQLite exports to object storage."
-        section: Storage
-        required: false
-        default: "false"
+        SQLITE_SNAPSHOTS_ENABLED: &sqlite_snapshots_enabled
+          type: boolean
+          label: "SQLite Snapshots Enabled"
+          description: "Enable periodic SQLite exports to object storage."
+          section: Storage
+          required: false
+          default: "false"
 
-      SQLITE_SNAPSHOTS_STORAGE_BACKEND: &sqlite_snapshots_storage_backend
-        type: select
-        label: "SQLite Snapshot Storage"
-        description: "Storage backend for SQLite snapshot archives."
-        section: Storage
-        required: false
-        default: "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
-        options:
-          - "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
-          - "pm_sqlite_snapshots.storage.local.LocalSnapshotStorage"
+        SQLITE_SNAPSHOTS_STORAGE_BACKEND: &sqlite_snapshots_storage_backend
+          type: select
+          label: "SQLite Snapshot Storage"
+          description: "Storage backend for SQLite snapshot archives."
+          section: Storage
+          required: false
+          default: "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
+          options:
+            - "pm_sqlite_snapshots.storage.s3.S3SnapshotStorage"
+            - "pm_sqlite_snapshots.storage.local.LocalSnapshotStorage"
 
-      SQLITE_SNAPSHOTS_S3_BUCKET: &sqlite_snapshots_s3_bucket
-        durable_identity: {group: sqlite_snapshots, role: bucket}
-        type: string
-        label: "SQLite Snapshot S3 Bucket"
-        description: "Private S3 bucket used for SQLite snapshot archives."
-        placeholder: "my-private-bucket"
-        section: Storage
-        required: false
-        default: "{{resources.storage.private_media.bucket_name}}"
+        SQLITE_SNAPSHOTS_S3_BUCKET: &sqlite_snapshots_s3_bucket
+          durable_identity: {group: sqlite_snapshots, role: bucket}
+          type: string
+          label: "SQLite Snapshot S3 Bucket"
+          description: "Private S3 bucket used for SQLite snapshot archives."
+          placeholder: "my-private-bucket"
+          section: Storage
+          required: false
+          default: "{{resources.storage.private_media.bucket_name}}"
 
-      SQLITE_SNAPSHOTS_S3_PREFIX: &sqlite_snapshots_s3_prefix
-        durable_identity: {group: sqlite_snapshots, role: prefix}
-        type: string
-        label: "SQLite Snapshot S3 Prefix"
-        description: "S3 key prefix for SQLite snapshot archives."
-        placeholder: "my-app/sqlite/"
-        section: Storage
-        required: false
-        default: "__CODESWARM_STORAGE_SLUG__/sqlite/"
+        SQLITE_SNAPSHOTS_S3_PREFIX: &sqlite_snapshots_s3_prefix
+          durable_identity: {group: sqlite_snapshots, role: prefix}
+          type: string
+          label: "SQLite Snapshot S3 Prefix"
+          description: "S3 key prefix for SQLite snapshot archives."
+          placeholder: "my-app/sqlite/"
+          section: Storage
+          required: false
+          default: "__CODESWARM_STORAGE_SLUG__/sqlite/"
 
-      SQLITE_SNAPSHOTS_INTERVAL_SECONDS: &sqlite_snapshots_interval
-        type: number
-        label: "SQLite Snapshot Interval"
-        description: "Seconds between periodic SQLite snapshot exports."
-        section: Storage
-        required: false
-        default: "300"
-        min: 60
-        max: 86400
+        SQLITE_SNAPSHOTS_INTERVAL_SECONDS: &sqlite_snapshots_interval
+          type: number
+          label: "SQLite Snapshot Interval"
+          description: "Seconds between periodic SQLite snapshot exports."
+          section: Storage
+          required: false
+          default: "300"
+          min: 60
+          max: 86400
 
-      SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: &sqlite_snapshots_export_shutdown
-        type: boolean
-        label: "Export SQLite On Shutdown"
-        description: "Export a SQLite snapshot when the process exits normally."
-        section: Storage
-        required: false
-        default: "true"
+        SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: &sqlite_snapshots_export_shutdown
+          type: boolean
+          label: "Export SQLite On Shutdown"
+          description: "Export a SQLite snapshot when the process exits normally."
+          section: Storage
+          required: false
+          default: "true"
 
-      SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: &sqlite_snapshots_restore_startup
-        type: boolean
-        label: "Restore SQLite On Startup"
-        description: "Restore the latest SQLite snapshot during startup."
-        section: Storage
-        required: false
-        default: "true"
+        SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: &sqlite_snapshots_restore_startup
+          type: boolean
+          label: "Restore SQLite On Startup"
+          description: "Restore the latest SQLite snapshot during startup."
+          section: Storage
+          required: false
+          default: "true"
 
-      SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: &sqlite_snapshots_restore_missing
-        type: boolean
-        label: "Restore SQLite If Missing"
-        description: "Only restore automatically when the SQLite file is missing."
-        section: Storage
-        required: false
-        default: "true"
+        SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: &sqlite_snapshots_restore_missing
+          type: boolean
+          label: "Restore SQLite If Missing"
+          description: "Only restore automatically when the SQLite file is missing."
+          section: Storage
+          required: false
+          default: "true"
 
-      SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING: &sqlite_snapshots_fail_missing
-        type: boolean
-        label: "Fail If SQLite Snapshot Missing"
-        description: "Fail startup when restore is enabled and no snapshot exists."
-        section: Storage
-        required: false
-        default: "true"
+        SQLITE_SNAPSHOTS_KEEP_LAST: &sqlite_snapshots_keep_last
+          type: number
+          label: "SQLite Snapshots To Keep"
+          description: "Number of latest SQLite snapshots retained by prune operations."
+          section: Storage
+          required: false
+          default: "20"
+          min: 1
+          max: 100
 
-      SQLITE_SNAPSHOTS_KEEP_LAST: &sqlite_snapshots_keep_last
-        type: number
-        label: "SQLite Snapshots To Keep"
-        description: "Number of latest SQLite snapshots retained by prune operations."
-        section: Storage
-        required: false
-        default: "20"
-        min: 1
-        max: 100
+        # ── Cache ──────────────────────────────────────────────────────────────
+        REDIS_URL:
+          type: string
+          label: "Redis URL"
+          description: "Redis connection string used as the Celery broker and result backend. Uses the Docker service name by default."
+          placeholder: "redis://redis:6379/0"
+          section: Cache
+          required: false
+          default: "redis://redis:6379/0"
+          translations:
+            es:
+              label: "URL de Redis"
+              description: "Cadena de conexión Redis usada como broker y backend de resultados de Celery. Usa el nombre del servicio Docker por defecto."
 
-      # ── Cache ──────────────────────────────────────────────────────────────
-      REDIS_URL:
-        type: string
-        label: "Redis URL"
-        description: "Redis connection string used as the Celery broker and result backend. Uses the Docker service name by default."
-        placeholder: "redis://redis:6379/0"
-        section: Cache
-        required: false
-        default: "redis://redis:6379/0"
-        translations:
-          es:
-            label: "URL de Redis"
-            description: "Cadena de conexión Redis usada como broker y backend de resultados de Celery. Usa el nombre del servicio Docker por defecto."
+        REDIS_CHANNEL_LAYER_HOST:
+          type: string
+          label: "Redis Channel Layer Host"
+          description: "Hostname of the Redis instance used for the Django Channels WebSocket layer."
+          placeholder: "redis"
+          section: Cache
+          required: false
+          default: "redis"
+          translations:
+            es:
+              label: "Host Redis para Channel Layer"
+              description: "Nombre de host de la instancia Redis usada para la capa WebSocket de Django Channels."
 
-      REDIS_CHANNEL_LAYER_HOST:
-        type: string
-        label: "Redis Channel Layer Host"
-        description: "Hostname of the Redis instance used for the Django Channels WebSocket layer."
-        placeholder: "redis"
-        section: Cache
-        required: false
-        default: "redis"
-        translations:
-          es:
-            label: "Host Redis para Channel Layer"
-            description: "Nombre de host de la instancia Redis usada para la capa WebSocket de Django Channels."
+        # ── CORS ───────────────────────────────────────────────────────────────
+        CORS_ALLOWED_ORIGINS:
+          type: string
+          label: "CORS Allowed Origins"
+          description: "Comma-separated list of origins permitted to make cross-site requests (e.g. https://myapp.example.com). Use * to allow all origins — not recommended in production."
+          placeholder: "https://myapp.example.com"
+          section: CORS
+          required: false
+          default: "*"
+          translations:
+            es:
+              label: "Orígenes CORS permitidos"
+              description: "Lista de orígenes separados por comas autorizados para solicitudes cross-site (ej. https://miaplicacion.ejemplo.com). Usar * para permitir todos — no recomendado en producción."
+              placeholder: "https://miaplicacion.ejemplo.com"
 
-      # ── CORS ───────────────────────────────────────────────────────────────
-      CORS_ALLOWED_ORIGINS:
-        type: string
-        label: "CORS Allowed Origins"
-        description: "Comma-separated list of origins permitted to make cross-site requests (e.g. https://myapp.example.com). Use * to allow all origins — not recommended in production."
-        placeholder: "https://myapp.example.com"
-        section: CORS
-        required: false
-        default: "*"
-        translations:
-          es:
-            label: "Orígenes CORS permitidos"
-            description: "Lista de orígenes separados por comas autorizados para solicitudes cross-site (ej. https://miaplicacion.ejemplo.com). Usar * para permitir todos — no recomendado en producción."
-            placeholder: "https://miaplicacion.ejemplo.com"
+        # ── Email ──────────────────────────────────────────────────────────────
+        DJANGO_EMAIL_BACKEND:
+          type: select
+          label: "Email Backend"
+          description: "Django email backend class. Use 'SMTP' for real email delivery. 'Console' prints emails to container logs — useful for debugging."
+          section: Email
+          required: false
+          default: "django.core.mail.backends.console.EmailBackend"
+          options:
+            - "django.core.mail.backends.console.EmailBackend"
+            - "django.core.mail.backends.smtp.EmailBackend"
+            - "django.core.mail.backends.dummy.EmailBackend"
+          translations:
+            es:
+              label: "Backend de correo electrónico"
+              description: "Clase de backend de correo de Django. Usar 'SMTP' para envío real. 'Console' imprime los correos en los logs del contenedor — útil para depuración."
 
-      # ── Email ──────────────────────────────────────────────────────────────
-      DJANGO_EMAIL_BACKEND:
-        type: select
-        label: "Email Backend"
-        description: "Django email backend class. Use 'SMTP' for real email delivery. 'Console' prints emails to container logs — useful for debugging."
-        section: Email
-        required: false
-        default: "django.core.mail.backends.console.EmailBackend"
-        options:
-          - "django.core.mail.backends.console.EmailBackend"
-          - "django.core.mail.backends.smtp.EmailBackend"
-          - "django.core.mail.backends.dummy.EmailBackend"
-        translations:
-          es:
-            label: "Backend de correo electrónico"
-            description: "Clase de backend de correo de Django. Usar 'SMTP' para envío real. 'Console' imprime los correos en los logs del contenedor — útil para depuración."
+        EMAIL_NO_REPLY:
+          type: string
+          label: "No-Reply Email Address"
+          description: "Sender address used for system-generated emails (notifications, password resets, etc.)."
+          placeholder: "noreply@example.com"
+          section: Email
+          required: false
+          default: "info@app.com"
+          translations:
+            es:
+              label: "Dirección de correo sin respuesta"
+              description: "Dirección remitente usada para correos generados por el sistema (notificaciones, restablecimiento de contraseña, etc.)."
+              placeholder: "noreply@ejemplo.com"
 
-      EMAIL_NO_REPLY:
-        type: string
-        label: "No-Reply Email Address"
-        description: "Sender address used for system-generated emails (notifications, password resets, etc.)."
-        placeholder: "noreply@example.com"
-        section: Email
-        required: false
-        default: "info@app.com"
-        translations:
-          es:
-            label: "Dirección de correo sin respuesta"
-            description: "Dirección remitente usada para correos generados por el sistema (notificaciones, restablecimiento de contraseña, etc.)."
-            placeholder: "noreply@ejemplo.com"
+        # ── Monitoring ─────────────────────────────────────────────────────────
+        SENTRY_DSN:
+          type: secret
+          label: "Sentry DSN"
+          description: "Data Source Name from your Sentry project. Enables error tracking and performance monitoring. Leave blank to disable Sentry."
+          placeholder: "https://xxxx@oxxxx.ingest.sentry.io/xxxx"
+          section: Monitoring
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "DSN de Sentry"
+              description: "Data Source Name de tu proyecto Sentry. Activa el seguimiento de errores y monitoreo de rendimiento. Dejar vacío para deshabilitar Sentry."
 
-      # ── Monitoring ─────────────────────────────────────────────────────────
-      SENTRY_DSN:
-        type: secret
-        label: "Sentry DSN"
-        description: "Data Source Name from your Sentry project. Enables error tracking and performance monitoring. Leave blank to disable Sentry."
-        placeholder: "https://xxxx@oxxxx.ingest.sentry.io/xxxx"
-        section: Monitoring
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "DSN de Sentry"
-            description: "Data Source Name de tu proyecto Sentry. Activa el seguimiento de errores y monitoreo de rendimiento. Dejar vacío para deshabilitar Sentry."
+        # ── AI Integration ─────────────────────────────────────────────────────
+        OPENAI_API_KEY:
+          type: secret
+          label: "OpenAI API Key"
+          description: "API key for OpenAI integrations (GPT-powered features, embeddings, etc.). Leave blank to disable AI features."
+          placeholder: "sk-..."
+          section: "AI Integration"
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Clave de API de OpenAI"
+              description: "Clave de API para integraciones de OpenAI (funciones GPT, embeddings, etc.). Dejar vacío para deshabilitar las funciones de IA."
 
-      # ── AI Integration ─────────────────────────────────────────────────────
-      OPENAI_API_KEY:
-        type: secret
-        label: "OpenAI API Key"
-        description: "API key for OpenAI integrations (GPT-powered features, embeddings, etc.). Leave blank to disable AI features."
-        placeholder: "sk-..."
-        section: "AI Integration"
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Clave de API de OpenAI"
-            description: "Clave de API para integraciones de OpenAI (funciones GPT, embeddings, etc.). Dejar vacío para deshabilitar las funciones de IA."
+        # ── GitHub OAuth ───────────────────────────────────────────────────────
+        GITHUB_CLIENT_ID:
+          type: string
+          label: "GitHub OAuth Client ID"
+          description: "Client ID from your GitHub OAuth App. Required to enable GitHub login. Create one at github.com/settings/developers."
+          placeholder: "Ov23liXXXXXXXXXXXXXX"
+          section: "GitHub OAuth"
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Client ID de GitHub OAuth"
+              description: "Client ID de tu aplicación OAuth de GitHub. Requerido para habilitar el inicio de sesión con GitHub. Crear en github.com/settings/developers."
 
-      # ── GitHub OAuth ───────────────────────────────────────────────────────
-      GITHUB_CLIENT_ID:
-        type: string
-        label: "GitHub OAuth Client ID"
-        description: "Client ID from your GitHub OAuth App. Required to enable GitHub login. Create one at github.com/settings/developers."
-        placeholder: "Ov23liXXXXXXXXXXXXXX"
-        section: "GitHub OAuth"
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Client ID de GitHub OAuth"
-            description: "Client ID de tu aplicación OAuth de GitHub. Requerido para habilitar el inicio de sesión con GitHub. Crear en github.com/settings/developers."
+        GITHUB_CLIENT_SECRET:
+          type: secret
+          label: "GitHub OAuth Client Secret"
+          description: "Client secret from your GitHub OAuth App. Keep this private."
+          section: "GitHub OAuth"
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Client Secret de GitHub OAuth"
+              description: "Client secret de tu aplicación OAuth de GitHub. Mantener privado."
 
-      GITHUB_CLIENT_SECRET:
-        type: secret
-        label: "GitHub OAuth Client Secret"
-        description: "Client secret from your GitHub OAuth App. Keep this private."
-        section: "GitHub OAuth"
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Client Secret de GitHub OAuth"
-            description: "Client secret de tu aplicación OAuth de GitHub. Mantener privado."
+        GITHUB_REDIRECT_URI:
+          type: url
+          label: "GitHub OAuth Redirect URI"
+          description: "Callback URL that GitHub redirects to after authentication. Must exactly match the URL registered in your GitHub OAuth App."
+          placeholder: "{{deployment_url}}/settings/github/callback"
+          section: "GitHub OAuth"
+          required: false
+          default: "{{deployment_url}}/settings/github/callback"
+          translations:
+            es:
+              label: "URI de redirección de GitHub OAuth"
+              description: "URL de retorno a la que GitHub redirige tras la autenticación. Debe coincidir exactamente con la URL registrada en tu aplicación OAuth de GitHub."
 
-      GITHUB_REDIRECT_URI:
-        type: url
-        label: "GitHub OAuth Redirect URI"
-        description: "Callback URL that GitHub redirects to after authentication. Must exactly match the URL registered in your GitHub OAuth App."
-        placeholder: "{{deployment_url}}/settings/github/callback"
-        section: "GitHub OAuth"
-        required: false
-        default: "{{deployment_url}}/settings/github/callback"
-        translations:
-          es:
-            label: "URI de redirección de GitHub OAuth"
-            description: "URL de retorno a la que GitHub redirige tras la autenticación. Debe coincidir exactamente con la URL registrada en tu aplicación OAuth de GitHub."
+        # ── WhatsApp ───────────────────────────────────────────────────────────
+        WHATSAPP_AUTHORIZATION_TOKEN:
+          type: secret
+          label: "WhatsApp Authorization Token"
+          description: "Bearer token for the WhatsApp Business Cloud API. Leave blank to disable WhatsApp messaging."
+          section: WhatsApp
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Token de autorización de WhatsApp"
+              description: "Token Bearer para la API de WhatsApp Business Cloud. Dejar vacío para deshabilitar la mensajería de WhatsApp."
 
-      # ── WhatsApp ───────────────────────────────────────────────────────────
-      WHATSAPP_AUTHORIZATION_TOKEN:
-        type: secret
-        label: "WhatsApp Authorization Token"
-        description: "Bearer token for the WhatsApp Business Cloud API. Leave blank to disable WhatsApp messaging."
-        section: WhatsApp
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Token de autorización de WhatsApp"
-            description: "Token Bearer para la API de WhatsApp Business Cloud. Dejar vacío para deshabilitar la mensajería de WhatsApp."
+        WHATSAPP_MESSAGE_URI:
+          type: url
+          label: "WhatsApp Messages API URI"
+          description: "Endpoint URL for sending WhatsApp messages via the Business Cloud API."
+          placeholder: "https://graph.facebook.com/v18.0/YOUR_PHONE_NUMBER_ID/messages"
+          section: WhatsApp
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "URI de la API de mensajes de WhatsApp"
+              description: "URL del endpoint para enviar mensajes de WhatsApp a través de la API Business Cloud."
 
-      WHATSAPP_MESSAGE_URI:
-        type: url
-        label: "WhatsApp Messages API URI"
-        description: "Endpoint URL for sending WhatsApp messages via the Business Cloud API."
-        placeholder: "https://graph.facebook.com/v18.0/YOUR_PHONE_NUMBER_ID/messages"
-        section: WhatsApp
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "URI de la API de mensajes de WhatsApp"
-            description: "URL del endpoint para enviar mensajes de WhatsApp a través de la API Business Cloud."
+        # ── Storage ────────────────────────────────────────────────────────────
+        AWS_REGION_NAME:
+          type: string
+          label: "AWS Region"
+          description: "AWS region for S3 media storage and other AWS services (e.g. us-east-1, eu-west-1)."
+          placeholder: "us-east-1"
+          section: Storage
+          required: false
+          default: "us-east-1"
+          translations:
+            es:
+              label: "Región de AWS"
+              description: "Región de AWS para el almacenamiento de medios en S3 y otros servicios de AWS."
 
-      # ── Storage ────────────────────────────────────────────────────────────
-      AWS_REGION_NAME:
-        type: string
-        label: "AWS Region"
-        description: "AWS region for S3 media storage and other AWS services (e.g. us-east-1, eu-west-1)."
-        placeholder: "us-east-1"
-        section: Storage
-        required: false
-        default: "us-east-1"
-        translations:
-          es:
-            label: "Región de AWS"
-            description: "Región de AWS para el almacenamiento de medios en S3 y otros servicios de AWS."
+        AWS_ACCESS_KEY_ID:
+          type: secret
+          label: "AWS Access Key ID"
+          description: "Access key ID for S3 media file storage. Leave blank to use local disk storage instead."
+          placeholder: "AKIAIOSFODNN7EXAMPLE"
+          section: Storage
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "ID de clave de acceso de AWS"
+              description: "ID de clave de acceso para el almacenamiento de archivos multimedia en S3. Dejar vacío para usar el almacenamiento en disco local."
 
-      AWS_ACCESS_KEY_ID:
-        type: secret
-        label: "AWS Access Key ID"
-        description: "Access key ID for S3 media file storage. Leave blank to use local disk storage instead."
-        placeholder: "AKIAIOSFODNN7EXAMPLE"
-        section: Storage
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "ID de clave de acceso de AWS"
-            description: "ID de clave de acceso para el almacenamiento de archivos multimedia en S3. Dejar vacío para usar el almacenamiento en disco local."
+        AWS_SECRET_ACCESS_KEY:
+          type: secret
+          label: "AWS Secret Access Key"
+          description: "Secret access key paired with AWS_ACCESS_KEY_ID for S3 access."
+          section: Storage
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Clave de acceso secreta de AWS"
+              description: "Clave de acceso secreta emparejada con AWS_ACCESS_KEY_ID para el acceso a S3."
 
-      AWS_SECRET_ACCESS_KEY:
-        type: secret
-        label: "AWS Secret Access Key"
-        description: "Secret access key paired with AWS_ACCESS_KEY_ID for S3 access."
-        section: Storage
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Clave de acceso secreta de AWS"
-            description: "Clave de acceso secreta emparejada con AWS_ACCESS_KEY_ID para el acceso a S3."
+        AWS_STORAGE_BUCKET_NAME:
+          type: string
+          label: "S3 Bucket Name"
+          description: "Name of the S3 bucket where user-uploaded media files are stored."
+          placeholder: "my-app-media-prod"
+          section: Storage
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Nombre del bucket S3"
+              description: "Nombre del bucket S3 donde se almacenan los archivos multimedia subidos por usuarios."
 
-      AWS_STORAGE_BUCKET_NAME:
-        type: string
-        label: "S3 Bucket Name"
-        description: "Name of the S3 bucket where user-uploaded media files are stored."
-        placeholder: "my-app-media-prod"
-        section: Storage
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Nombre del bucket S3"
-            description: "Nombre del bucket S3 donde se almacenan los archivos multimedia subidos por usuarios."
-
-      AWS_PRIVATE_STORAGE_BUCKET_NAME:
-        type: string
-        label: "Private S3 Bucket Name"
-        description: "Name of the private S3 bucket used for non-public user uploads."
-        placeholder: "my-app-private-media-prod"
-        section: Storage
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Nombre del bucket S3 privado"
-            description: "Nombre del bucket S3 privado para archivos subidos que no deben ser públicos."
+        AWS_PRIVATE_STORAGE_BUCKET_NAME:
+          type: string
+          label: "Private S3 Bucket Name"
+          description: "Name of the private S3 bucket used for non-public user uploads."
+          placeholder: "my-app-private-media-prod"
+          section: Storage
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Nombre del bucket S3 privado"
+              description: "Nombre del bucket S3 privado para archivos subidos que no deben ser públicos."
 
   # ──────────────────────────────────────────────────────────────────────────
   # Celery Worker — processes async background tasks
@@ -1201,192 +1215,191 @@ services:
   # ──────────────────────────────────────────────────────────────────────────
   celery-worker:
     type: worker
-    cpu: 0.5
+    cpu: 0.25
     memory: 512
     order: 3
     build:
-      context: ./BackEndApi
-      dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery worker --loglevel=info
+        context: ./BackEndApi
+        dockerfile: compose/production/django/Dockerfile
+    command: ["/start-celeryworker"]
     healthcheck:
-      test: ["CMD-SHELL", "celery -A config.celery inspect ping --timeout 5"]
-      interval: 30s
-      timeout: 10s
-      retries: 3
-      start_period: 60s
+        test: ["CMD-SHELL", "celery -A config.celery inspect ping --destination celery@$$HOSTNAME --timeout 10"]
+        interval: 300s
+        timeout: 45s
+        retries: 2
+        start_period: 60s
     env:
 
-      # ── Application ────────────────────────────────────────────────────────
-      DJANGO_SETTINGS_MODULE:
-        type: select
-        label: "Django Settings Module"
-        description: "Must match the backend service settings module."
-        section: Application
-        required: false
-        default: "config.settings.production"
-        options:
-          - "config.settings.production"
-          - "config.settings.local"
-        translations:
-          es:
-            label: "Módulo de configuración de Django"
-            description: "Debe coincidir con el módulo de configuración del servicio backend."
+        # ── Application ────────────────────────────────────────────────────────
+        DJANGO_SETTINGS_MODULE:
+          type: select
+          label: "Django Settings Module"
+          description: "Must match the backend service settings module."
+          section: Application
+          required: false
+          default: "config.settings.production"
+          options:
+            - "config.settings.production"
+            - "config.settings.local"
+          translations:
+            es:
+              label: "Módulo de configuración de Django"
+              description: "Debe coincidir con el módulo de configuración del servicio backend."
 
-      ENVIRONMENT:
-        type: select
-        label: "Environment"
-        description: "Runtime environment label. Must match the backend service."
-        section: Application
-        required: false
-        default: "production"
-        options:
-          - "production"
-          - "staging"
-          - "local"
-        translations:
-          es:
-            label: "Entorno"
-            description: "Etiqueta del entorno de ejecución. Debe coincidir con el servicio backend."
+        ENVIRONMENT:
+          type: select
+          label: "Environment"
+          description: "Runtime environment label. Must match the backend service."
+          section: Application
+          required: false
+          default: "production"
+          options:
+            - "production"
+            - "staging"
+            - "local"
+          translations:
+            es:
+              label: "Entorno"
+              description: "Etiqueta del entorno de ejecución. Debe coincidir con el servicio backend."
 
-      DJANGO_DEBUG:
-        type: boolean
-        label: "Debug Mode"
-        description: "Enable Django debug mode. Must match the backend service and be disabled in production."
-        section: Application
-        required: false
-        default: "false"
-        translations:
-          es:
-            label: "Modo de depuración"
-            description: "Activa el modo debug de Django. Debe coincidir con el servicio backend y estar desactivado en producción."
+        DJANGO_DEBUG:
+          type: boolean
+          label: "Debug Mode"
+          description: "Enable Django debug mode. Must match the backend service and be disabled in production."
+          section: Application
+          required: false
+          default: "false"
+          translations:
+            es:
+              label: "Modo de depuración"
+              description: "Activa el modo debug de Django. Debe coincidir con el servicio backend y estar desactivado en producción."
 
-      # ── Security ───────────────────────────────────────────────────────────
-      DJANGO_SECRET_KEY:
-        type: secret
-        label: "Django Secret Key"
-        description: "Must be identical to the backend service secret key."
-        section: Security
-        required: true
-        default: ""
-        generate: secret_key
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Clave secreta de Django"
-            description: "Debe ser idéntica a la clave secreta del servicio backend."
+        # ── Security ───────────────────────────────────────────────────────────
+        DJANGO_SECRET_KEY:
+          type: secret
+          label: "Django Secret Key"
+          description: "Must be identical to the backend service secret key."
+          section: Security
+          required: true
+          default: ""
+          generate: secret_key
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Clave secreta de Django"
+              description: "Debe ser idéntica a la clave secreta del servicio backend."
 
-      # ── Database ───────────────────────────────────────────────────────────
-      POSTGRES_DB:
-        type: string
-        label: "Database Name"
-        description: "Must match the backend and postgres service database name."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 2
-        translations:
-          es:
-            label: "Nombre de la base de datos"
-            description: "Debe coincidir con el nombre de base de datos del backend y el servicio postgres."
+        # ── Database ───────────────────────────────────────────────────────────
+        POSTGRES_DB:
+          type: string
+          label: "Database Name"
+          description: "Must match the backend and postgres service database name."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 2
+          translations:
+            es:
+              label: "Nombre de la base de datos"
+              description: "Debe coincidir con el nombre de base de datos del backend y el servicio postgres."
 
-      POSTGRES_USER:
-        type: string
-        label: "Database User"
-        description: "Must match the backend and postgres service database user."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 3
-        translations:
-          es:
-            label: "Usuario de la base de datos"
-            description: "Debe coincidir con el usuario de base de datos del backend y el servicio postgres."
+        POSTGRES_USER:
+          type: string
+          label: "Database User"
+          description: "Must match the backend and postgres service database user."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 3
+          translations:
+            es:
+              label: "Usuario de la base de datos"
+              description: "Debe coincidir con el usuario de base de datos del backend y el servicio postgres."
 
-      POSTGRES_PASSWORD:
-        type: secret
-        label: "Database Password"
-        description: "Must match the backend and postgres service database password."
-        section: Database
-        required: true
-        default: ""
-        generate: password
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Contraseña de la base de datos"
-            description: "Debe coincidir con la contraseña de base de datos del backend y el servicio postgres."
+        POSTGRES_PASSWORD:
+          type: secret
+          label: "Database Password"
+          description: "Must match the backend and postgres service database password."
+          section: Database
+          required: true
+          default: ""
+          generate: password
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Contraseña de la base de datos"
+              description: "Debe coincidir con la contraseña de base de datos del backend y el servicio postgres."
 
-      POSTGRES_HOST:
-        type: string
-        label: "Database Host"
-        description: "Hostname of the PostgreSQL server."
-        placeholder: "postgres"
-        section: Database
-        required: false
-        default: "postgres"
-        translations:
-          es:
-            label: "Host de la base de datos"
-            description: "Nombre de host del servidor PostgreSQL."
+        POSTGRES_HOST:
+          type: string
+          label: "Database Host"
+          description: "Hostname of the PostgreSQL server."
+          placeholder: "postgres"
+          section: Database
+          required: false
+          default: "postgres"
+          translations:
+            es:
+              label: "Host de la base de datos"
+              description: "Nombre de host del servidor PostgreSQL."
 
-      POSTGRES_PORT:
-        type: number
-        label: "Database Port"
-        description: "Port on which PostgreSQL is listening."
-        section: Database
-        required: false
-        default: "5432"
-        min: 1
-        max: 65535
-        translations:
-          es:
-            label: "Puerto de la base de datos"
-            description: "Puerto en el que escucha PostgreSQL."
+        POSTGRES_PORT:
+          type: number
+          label: "Database Port"
+          description: "Port on which PostgreSQL is listening."
+          section: Database
+          required: false
+          default: "5432"
+          min: 1
+          max: 65535
+          translations:
+            es:
+              label: "Puerto de la base de datos"
+              description: "Puerto en el que escucha PostgreSQL."
 
-      DB_ENGINE: *sqlite_snapshot_db_engine
-      SQLITE_DATABASE_PATH: *sqlite_snapshot_database_path
-      SQLITE_SNAPSHOTS_ENABLED: *sqlite_snapshots_enabled
-      SQLITE_SNAPSHOTS_STORAGE_BACKEND: *sqlite_snapshots_storage_backend
-      SQLITE_SNAPSHOTS_S3_BUCKET: *sqlite_snapshots_s3_bucket
-      SQLITE_SNAPSHOTS_S3_PREFIX: *sqlite_snapshots_s3_prefix
-      SQLITE_SNAPSHOTS_INTERVAL_SECONDS: *sqlite_snapshots_interval
-      SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: *sqlite_snapshots_export_shutdown
-      SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: *sqlite_snapshots_restore_startup
-      SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: *sqlite_snapshots_restore_missing
-      SQLITE_SNAPSHOTS_FAIL_STARTUP_IF_RESTORE_MISSING: *sqlite_snapshots_fail_missing
-      SQLITE_SNAPSHOTS_KEEP_LAST: *sqlite_snapshots_keep_last
+        DB_ENGINE: *sqlite_snapshot_db_engine
+        SQLITE_DATABASE_PATH: *sqlite_snapshot_database_path
+        SQLITE_SNAPSHOTS_ENABLED: *sqlite_snapshots_enabled
+        SQLITE_SNAPSHOTS_STORAGE_BACKEND: *sqlite_snapshots_storage_backend
+        SQLITE_SNAPSHOTS_S3_BUCKET: *sqlite_snapshots_s3_bucket
+        SQLITE_SNAPSHOTS_S3_PREFIX: *sqlite_snapshots_s3_prefix
+        SQLITE_SNAPSHOTS_INTERVAL_SECONDS: *sqlite_snapshots_interval
+        SQLITE_SNAPSHOTS_EXPORT_ON_SHUTDOWN: *sqlite_snapshots_export_shutdown
+        SQLITE_SNAPSHOTS_RESTORE_ON_STARTUP: *sqlite_snapshots_restore_startup
+        SQLITE_SNAPSHOTS_RESTORE_IF_DB_MISSING: *sqlite_snapshots_restore_missing
+        SQLITE_SNAPSHOTS_KEEP_LAST: *sqlite_snapshots_keep_last
 
-      # ── Cache ──────────────────────────────────────────────────────────────
-      REDIS_URL:
-        type: string
-        label: "Redis URL"
-        description: "Redis connection string for the Celery task broker and result backend."
-        placeholder: "redis://redis:6379/0"
-        section: Cache
-        required: false
-        default: "redis://redis:6379/0"
-        translations:
-          es:
-            label: "URL de Redis"
-            description: "Cadena de conexión Redis para el broker de tareas Celery y el backend de resultados."
+        # ── Cache ──────────────────────────────────────────────────────────────
+        REDIS_URL:
+          type: string
+          label: "Redis URL"
+          description: "Redis connection string for the Celery task broker and result backend."
+          placeholder: "redis://redis:6379/0"
+          section: Cache
+          required: false
+          default: "redis://redis:6379/0"
+          translations:
+            es:
+              label: "URL de Redis"
+              description: "Cadena de conexión Redis para el broker de tareas Celery y el backend de resultados."
 
-      # ── AI Integration ─────────────────────────────────────────────────────
-      OPENAI_API_KEY:
-        type: secret
-        label: "OpenAI API Key"
-        description: "API key for OpenAI-powered background tasks. Must match the backend service key."
-        placeholder: "sk-..."
-        section: "AI Integration"
-        required: false
-        default: ""
-        translations:
-          es:
-            label: "Clave de API de OpenAI"
-            description: "Clave de API para tareas en segundo plano basadas en OpenAI. Debe coincidir con la clave del servicio backend."
+        # ── AI Integration ─────────────────────────────────────────────────────
+        OPENAI_API_KEY:
+          type: secret
+          label: "OpenAI API Key"
+          description: "API key for OpenAI-powered background tasks. Must match the backend service key."
+          placeholder: "sk-..."
+          section: "AI Integration"
+          required: false
+          default: ""
+          translations:
+            es:
+              label: "Clave de API de OpenAI"
+              description: "Clave de API para tareas en segundo plano basadas en OpenAI. Debe coincidir con la clave del servicio backend."
 
   # ──────────────────────────────────────────────────────────────────────────
   # Celery Beat — periodic task scheduler (cron-style)
@@ -1394,165 +1407,165 @@ services:
   # ──────────────────────────────────────────────────────────────────────────
   celery-beat:
     type: worker
-    cpu: 0.5
+    cpu: 0.1
     memory: 512
     order: 4
     build:
-      context: ./BackEndApi
-      dockerfile: compose/production/django/Dockerfile
-    command: celery -A config.celery beat --loglevel=info --scheduler django_celery_beat.schedulers:DatabaseScheduler
+        context: ./BackEndApi
+        dockerfile: compose/production/django/Dockerfile
+    command: ["/start-celerybeat"]
     healthcheck:
-      test: ["CMD-SHELL", "kill -0 1"]
-      interval: 60s
-      timeout: 5s
-      retries: 3
-      start_period: 10s
+        test: ["CMD-SHELL", "kill -0 1"]
+        interval: 60s
+        timeout: 5s
+        retries: 3
+        start_period: 10s
     env:
 
-      # ── Application ────────────────────────────────────────────────────────
-      DJANGO_SETTINGS_MODULE:
-        type: select
-        label: "Django Settings Module"
-        description: "Must match the backend service settings module."
-        section: Application
-        required: false
-        default: "config.settings.production"
-        options:
-          - "config.settings.production"
-          - "config.settings.local"
-        translations:
-          es:
-            label: "Módulo de configuración de Django"
-            description: "Debe coincidir con el módulo de configuración del servicio backend."
+        # ── Application ────────────────────────────────────────────────────────
+        DJANGO_SETTINGS_MODULE:
+          type: select
+          label: "Django Settings Module"
+          description: "Must match the backend service settings module."
+          section: Application
+          required: false
+          default: "config.settings.production"
+          options:
+            - "config.settings.production"
+            - "config.settings.local"
+          translations:
+            es:
+              label: "Módulo de configuración de Django"
+              description: "Debe coincidir con el módulo de configuración del servicio backend."
 
-      ENVIRONMENT:
-        type: select
-        label: "Environment"
-        description: "Runtime environment label. Must match the backend service."
-        section: Application
-        required: false
-        default: "production"
-        options:
-          - "production"
-          - "staging"
-          - "local"
-        translations:
-          es:
-            label: "Entorno"
-            description: "Etiqueta del entorno de ejecución. Debe coincidir con el servicio backend."
+        ENVIRONMENT:
+          type: select
+          label: "Environment"
+          description: "Runtime environment label. Must match the backend service."
+          section: Application
+          required: false
+          default: "production"
+          options:
+            - "production"
+            - "staging"
+            - "local"
+          translations:
+            es:
+              label: "Entorno"
+              description: "Etiqueta del entorno de ejecución. Debe coincidir con el servicio backend."
 
-      DJANGO_DEBUG:
-        type: boolean
-        label: "Debug Mode"
-        description: "Enable Django debug mode. Must match the backend service and be disabled in production."
-        section: Application
-        required: false
-        default: "false"
-        translations:
-          es:
-            label: "Modo de depuración"
-            description: "Activa el modo debug de Django. Debe coincidir con el servicio backend y estar desactivado en producción."
+        DJANGO_DEBUG:
+          type: boolean
+          label: "Debug Mode"
+          description: "Enable Django debug mode. Must match the backend service and be disabled in production."
+          section: Application
+          required: false
+          default: "false"
+          translations:
+            es:
+              label: "Modo de depuración"
+              description: "Activa el modo debug de Django. Debe coincidir con el servicio backend y estar desactivado en producción."
 
-      # ── Security ───────────────────────────────────────────────────────────
-      DJANGO_SECRET_KEY:
-        type: secret
-        label: "Django Secret Key"
-        description: "Must be identical to the backend service secret key."
-        section: Security
-        required: true
-        default: ""
-        generate: secret_key
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Clave secreta de Django"
-            description: "Debe ser idéntica a la clave secreta del servicio backend."
+        # ── Security ───────────────────────────────────────────────────────────
+        DJANGO_SECRET_KEY:
+          type: secret
+          label: "Django Secret Key"
+          description: "Must be identical to the backend service secret key."
+          section: Security
+          required: true
+          default: ""
+          generate: secret_key
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Clave secreta de Django"
+              description: "Debe ser idéntica a la clave secreta del servicio backend."
 
-      # ── Database ───────────────────────────────────────────────────────────
-      POSTGRES_DB:
-        type: string
-        label: "Database Name"
-        description: "Must match the backend and postgres service database name."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 2
-        translations:
-          es:
-            label: "Nombre de la base de datos"
-            description: "Debe coincidir con el nombre de base de datos del backend y el servicio postgres."
+        # ── Database ───────────────────────────────────────────────────────────
+        POSTGRES_DB:
+          type: string
+          label: "Database Name"
+          description: "Must match the backend and postgres service database name."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 2
+          translations:
+            es:
+              label: "Nombre de la base de datos"
+              description: "Debe coincidir con el nombre de base de datos del backend y el servicio postgres."
 
-      POSTGRES_USER:
-        type: string
-        label: "Database User"
-        description: "Must match the backend and postgres service database user."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 3
-        translations:
-          es:
-            label: "Usuario de la base de datos"
-            description: "Debe coincidir con el usuario de base de datos del backend y el servicio postgres."
+        POSTGRES_USER:
+          type: string
+          label: "Database User"
+          description: "Must match the backend and postgres service database user."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 3
+          translations:
+            es:
+              label: "Usuario de la base de datos"
+              description: "Debe coincidir con el usuario de base de datos del backend y el servicio postgres."
 
-      POSTGRES_PASSWORD:
-        type: secret
-        label: "Database Password"
-        description: "Must match the backend and postgres service database password."
-        section: Database
-        required: true
-        default: ""
-        generate: password
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Contraseña de la base de datos"
-            description: "Debe coincidir con la contraseña de base de datos del backend y el servicio postgres."
+        POSTGRES_PASSWORD:
+          type: secret
+          label: "Database Password"
+          description: "Must match the backend and postgres service database password."
+          section: Database
+          required: true
+          default: ""
+          generate: password
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Contraseña de la base de datos"
+              description: "Debe coincidir con la contraseña de base de datos del backend y el servicio postgres."
 
-      POSTGRES_HOST:
-        type: string
-        label: "Database Host"
-        description: "Hostname of the PostgreSQL server."
-        placeholder: "postgres"
-        section: Database
-        required: false
-        default: "postgres"
-        translations:
-          es:
-            label: "Host de la base de datos"
-            description: "Nombre de host del servidor PostgreSQL."
+        POSTGRES_HOST:
+          type: string
+          label: "Database Host"
+          description: "Hostname of the PostgreSQL server."
+          placeholder: "postgres"
+          section: Database
+          required: false
+          default: "postgres"
+          translations:
+            es:
+              label: "Host de la base de datos"
+              description: "Nombre de host del servidor PostgreSQL."
 
-      POSTGRES_PORT:
-        type: number
-        label: "Database Port"
-        description: "Port on which PostgreSQL is listening."
-        section: Database
-        required: false
-        default: "5432"
-        min: 1
-        max: 65535
-        translations:
-          es:
-            label: "Puerto de la base de datos"
-            description: "Puerto en el que escucha PostgreSQL."
+        POSTGRES_PORT:
+          type: number
+          label: "Database Port"
+          description: "Port on which PostgreSQL is listening."
+          section: Database
+          required: false
+          default: "5432"
+          min: 1
+          max: 65535
+          translations:
+            es:
+              label: "Puerto de la base de datos"
+              description: "Puerto en el que escucha PostgreSQL."
 
-      # ── Cache ──────────────────────────────────────────────────────────────
-      REDIS_URL:
-        type: string
-        label: "Redis URL"
-        description: "Redis connection string for the Celery beat scheduler."
-        placeholder: "redis://redis:6379/0"
-        section: Cache
-        required: false
-        default: "redis://redis:6379/0"
-        translations:
-          es:
-            label: "URL de Redis"
-            description: "Cadena de conexión Redis para el planificador de Celery beat."
+        # ── Cache ──────────────────────────────────────────────────────────────
+        REDIS_URL:
+          type: string
+          label: "Redis URL"
+          description: "Redis connection string for the Celery beat scheduler."
+          placeholder: "redis://redis:6379/0"
+          section: Cache
+          required: false
+          default: "redis://redis:6379/0"
+          translations:
+            es:
+              label: "URL de Redis"
+              description: "Cadena de conexión Redis para el planificador de Celery beat."
 
   # ──────────────────────────────────────────────────────────────────────────
   # PostgreSQL — relational database
@@ -1564,52 +1577,52 @@ services:
     order: 5
     image: postgres:15-alpine
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+        - postgres_data:/var/lib/postgresql/data
     env:
 
-      # ── Database ───────────────────────────────────────────────────────────
-      POSTGRES_DB:
-        type: string
-        label: "Database Name"
-        description: "Name of the database created on first boot. Shared across backend, celery-worker, and celery-beat services."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 2
-        translations:
-          es:
-            label: "Nombre de la base de datos"
-            description: "Nombre de la base de datos creada en el primer arranque. Compartido con los servicios backend, celery-worker y celery-beat."
+        # ── Database ───────────────────────────────────────────────────────────
+        POSTGRES_DB:
+          type: string
+          label: "Database Name"
+          description: "Name of the database created on first boot. Shared across backend, celery-worker, and celery-beat services."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 2
+          translations:
+            es:
+              label: "Nombre de la base de datos"
+              description: "Nombre de la base de datos creada en el primer arranque. Compartido con los servicios backend, celery-worker y celery-beat."
 
-      POSTGRES_USER:
-        type: string
-        label: "Database User"
-        description: "PostgreSQL user created on first boot. Shared across backend, celery-worker, and celery-beat services."
-        placeholder: "postgres"
-        section: Database
-        required: true
-        default: "postgres"
-        order: 3
-        translations:
-          es:
-            label: "Usuario de la base de datos"
-            description: "Usuario PostgreSQL creado en el primer arranque. Compartido con los servicios backend, celery-worker y celery-beat."
+        POSTGRES_USER:
+          type: string
+          label: "Database User"
+          description: "PostgreSQL user created on first boot. Shared across backend, celery-worker, and celery-beat services."
+          placeholder: "postgres"
+          section: Database
+          required: true
+          default: "postgres"
+          order: 3
+          translations:
+            es:
+              label: "Usuario de la base de datos"
+              description: "Usuario PostgreSQL creado en el primer arranque. Compartido con los servicios backend, celery-worker y celery-beat."
 
-      POSTGRES_PASSWORD:
-        type: secret
-        label: "Database Password"
-        description: "Password for the PostgreSQL user. Shared across backend, celery-worker, and celery-beat services."
-        section: Database
-        required: true
-        default: ""
-        generate: password
-        immutable: true
-        order: 1
-        translations:
-          es:
-            label: "Contraseña de la base de datos"
-            description: "Contraseña del usuario PostgreSQL. Compartida con los servicios backend, celery-worker y celery-beat."
+        POSTGRES_PASSWORD:
+          type: secret
+          label: "Database Password"
+          description: "Password for the PostgreSQL user. Shared across backend, celery-worker, and celery-beat services."
+          section: Database
+          required: true
+          default: ""
+          generate: password
+          immutable: true
+          order: 1
+          translations:
+            es:
+              label: "Contraseña de la base de datos"
+              description: "Contraseña del usuario PostgreSQL. Compartida con los servicios backend, celery-worker y celery-beat."
 
   # ──────────────────────────────────────────────────────────────────────────
   # Redis — message broker and cache
@@ -1617,11 +1630,11 @@ services:
   # ──────────────────────────────────────────────────────────────────────────
   redis:
     type: internal
-    cpu: 0.25
+    cpu: 0.1
     memory: 512
     order: 6
     image: redis:7-alpine
-    command: redis-server --appendonly yes
+    command: ["redis-server", "--appendonly", "yes"]
     volumes:
-      - redis_data:/data
+        - redis_data:/data
 {% endraw -%}
