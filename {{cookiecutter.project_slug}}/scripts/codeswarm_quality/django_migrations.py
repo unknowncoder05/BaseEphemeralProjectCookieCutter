@@ -8,6 +8,26 @@ from .models import Finding
 
 
 DESTRUCTIVE = {"DeleteModel", "RemoveField", "RenameField", "RenameModel"}
+SCHEMA_OPERATIONS = {
+    "AddConstraint", "AddField", "AddIndex", "AlterField",
+    "AlterIndexTogether", "AlterModelTable", "AlterModelTableComment",
+    "AlterOrderWithRespectTo", "AlterUniqueTogether", "CreateModel",
+    "DeleteModel", "RemoveConstraint", "RemoveField", "RemoveIndex",
+    "RenameField", "RenameIndex", "RenameModel",
+}
+
+
+def _is_non_atomic_migration(tree: ast.Module) -> bool:
+    for node in tree.body:
+        if not isinstance(node, ast.ClassDef) or node.name != "Migration":
+            continue
+        for statement in node.body:
+            if not isinstance(statement, (ast.Assign, ast.AnnAssign)):
+                continue
+            targets = statement.targets if isinstance(statement, ast.Assign) else [statement.target]
+            if any(isinstance(target, ast.Name) and target.id == "atomic" for target in targets):
+                return constant_bool(statement.value, True) is False
+    return False
 
 
 def check_django(path: str, text: str) -> list[Finding]:
@@ -19,6 +39,16 @@ def check_django(path: str, text: str) -> list[Finding]:
         return [Finding("error", "migration.syntax", path, f"cannot parse migration: {exc}")]
 
     findings: list[Finding] = []
+    if _is_non_atomic_migration(tree) and any(
+        isinstance(node, ast.Call) and operation_name(node) in SCHEMA_OPERATIONS
+        for node in ast.walk(tree)
+    ):
+        findings.append(Finding(
+            "error", "migration.non-atomic-schema", path,
+            "atomic=False with Django schema operations can leave committed partial DDL after "
+            "a crash; split schema changes into atomic migrations and keep only explicitly "
+            "idempotent operations in the non-atomic migration",
+        ))
     for node in ast.walk(tree):
         if not isinstance(node, ast.Call):
             continue

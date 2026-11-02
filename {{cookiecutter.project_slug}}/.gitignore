@@ -61,7 +61,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-package-lock.json
 yarn.lock
 
 # React build
