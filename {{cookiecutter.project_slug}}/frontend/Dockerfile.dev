@@ -15,4 +15,8 @@ COPY package.json package-lock.json* ./
 COPY scripts/install-deps.sh ./scripts/install-deps.sh
 RUN ./scripts/install-deps.sh
 
+# Keep bootstrap outside /app so the source bind mount cannot hide it.
+COPY entrypoint.dev.sh /usr/local/bin/frontend-entrypoint.sh
+ENTRYPOINT ["sh", "/usr/local/bin/frontend-entrypoint.sh"]
+
 CMD ["npm", "start"]
