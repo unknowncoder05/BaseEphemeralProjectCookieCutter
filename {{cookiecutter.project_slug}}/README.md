@@ -285,6 +285,20 @@ When an agent runs testing or smoke validation for this template, run these chec
 
 These checks are wired into `projectmaker.yml` `smoke_test.steps` and `projectmaker.dev.yml` (`test_contract` and `test_e2e` commands), and should not be skipped.
 
+For one-off frontend checks, use the development service so its entrypoint
+prepares the named `node_modules` volume before running the selected command:
+
+```bash
+docker compose -f docker-compose.dev.yml run --rm --no-deps frontend sh -lc 'npm run type-check'
+make test-frontend
+```
+
+The entrypoint uses the versioned `frontend/scripts/install-deps.sh` when the
+package manifest or lockfile hash changes, then runs your command. This also
+applies when Compose overrides the service command. Rebuilding the image alone
+does not update an existing dependency volume. Keep the entrypoint enabled;
+`--entrypoint` overrides skip this bootstrap.
+
 ## Backend application CLI
 
 This project includes `./cli/app`, a dependency-free Python CLI for its own
