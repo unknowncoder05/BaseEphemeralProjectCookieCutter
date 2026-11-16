@@ -315,8 +315,13 @@ class EmailFailureGracefulTests(APITestCase):
 
     def test_forgot_password_email_failure_returns_200(self):
         """Even if sending mail raises, the endpoint must return 200."""
-        with patch("django.core.mail.send_mail", side_effect=Exception("SMTP down")):
+        with (
+            patch("pm_auth.api.users.serializers.password_reset.send_mail", side_effect=Exception("SMTP down")) as mail,
+            self.assertLogs("pm_auth.api.users.serializers.password_reset", level="ERROR") as logs,
+        ):
             resp = self.client.post(FORGOT_PW, {"email": self.user.email}, format="json")
+        mail.assert_called_once()
+        self.assertIn("SMTP down", "\n".join(logs.output))
         self.assertEqual(resp.status_code, status.HTTP_200_OK, resp.data)
 
     def test_request_recovery_email_failure_returns_200(self):
@@ -326,8 +331,13 @@ class EmailFailureGracefulTests(APITestCase):
         pw_rec_method = patch("pm_auth.api.users.conf.UsersSettings.password_reset_method",
                               new_callable=lambda: property(lambda self: "email"))
         pw_rec_method.start()
-        with patch("django.core.mail.send_mail", side_effect=Exception("SMTP down")):
+        with (
+            patch("pm_auth.api.users.serializers.password_reset.send_mail", side_effect=Exception("SMTP down")) as mail,
+            self.assertLogs("pm_auth.api.users.serializers.password_reset", level="ERROR") as logs,
+        ):
             resp = self.client.post(REQ_REC, {"email": self.user.email}, format="json")
+        mail.assert_called_once()
+        self.assertIn("SMTP down", "\n".join(logs.output))
         self.assertEqual(resp.status_code, status.HTTP_200_OK, resp.data)
         pw_rec_method.stop()
 
